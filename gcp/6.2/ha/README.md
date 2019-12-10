@@ -1,62 +1,55 @@
- FortiGate-VM GCP HA deployment
-## Description
-  A Terraform script to deploy HA(a-p) ForttiGate-VM on Google Cloud Platform
+# Deployment of FortiGate-VM HA on the Google Cloud Platform (GCP)
+## Introduction
+A Terraform script to deploy FortiGate-VM HA (A-P) on GCP.
 
 ## Requirements
 * [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 0.12.0
-* Terraform Google Provider 2.11.0
-* Terraform Google Provider Beta 2.13
-* A [GCP service account keys](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
+* Terraform Provider for Google Cloud Platform 2.11.0
+* Terraform Provider for Google Cloud Platform Beta 2.13
+* A [GCP service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
 
 ## Deployment overview
-Terraform deploys the following components
-   - A VPC with one public subnet
+Terraform deploys the following components:
+   - A Virtual Private Cloud (VPC) with one public subnet
    - A VPC with three private subnets
-   - Two FortiGate-VM instances with four nics
-   - Four firewall rules, one for external, one for internal, one for sync, one for hamgmt
+   - Two FortiGate-VM instances with four NICs
+   - Four firewall rules: one for external, one for internal, one for sync, and one for HA management.
 
 ## Deployment
-To deploy the FortiGate-VM GCP:
-  1. Clone the repository.
-  2. Change to the XXXX directory.  Put the GCP service account key file as account.json in the folder.
-     Then, customize the setting in the vars.tf file  and initialize the providers and modules:
+To deploy the FortiGate-VM to GCP:
+1. Clone the repository.
+2. Rename the service account key file to `account.json` and upload this file to the XXXX directory.
+3. Customize variables in the `vars.tf` file as needed.
+4. Initialize the providers and modules:
+   ```sh
+   $ cd XXXXX
+   $ terraform init
+    ```
+5. Submit the Terraform plan:
+   ```sh
+   $ terraform plan
+   ```
+6. Verify output.
+7. Confirm and apply the plan:
+   ```sh
+   $ terraform apply
+   ```
+8. If output is satisfactory, type `yes`.
 
-     ```sh
-     $ cd XXXXX
-     $ terraform init
-     ```
-
-  3. Submit the Terraform plan using the command below.
-
-     ```sh
-     $ terraform plan
-     ```
-
-  4. Verify output.
-  5. Confirm and apply the plan:
-
-     ```sh
-     $ terraform apply
-     ```
-
-  6. If output is satisfactory, type `yes`.
-  7. After the deployment, user can login to the FortiGate-VM instance via the output information.
-
-     ```sh
-     Outputs:
-	FortiGate-HA-Cluster-IP = XXX.XXX.XXX.XXX
-	FortiGate-HA-Master-MGMT-IP = XXX.XXX.XXX.XXX
-	FortiGate-HA-Slave-MGMT-IP = XXX.XXX.XXX.XXX
-	FortiGate-Password = <password here>
-	FortiGate-Username = admin
-     ```
+Output will include the information necessary to log in to the FortiGate-VM instances:
+```sh
+FortiGate-HA-Cluster-IP = XXX.XXX.XXX.XXX
+FortiGate-HA-Master-MGMT-IP = XXX.XXX.XXX.XXX
+FortiGate-HA-Slave-MGMT-IP = XXX.XXX.XXX.XXX
+FortiGate-Password = <password here>
+FortiGate-Username = admin
+```
 
 ## Destroy the instance
 To destroy the instance, use the command:
-
-        ```sh
-    $ terraform destroy
-    ```
+```sh
+$ terraform destroy
+```
 
 # Support
 Fortinet-provided scripts in this and other GitHub projects do not fall under the regular Fortinet technical support scope and are not supported by FortiCare Support Services.
