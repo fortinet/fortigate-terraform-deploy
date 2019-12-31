@@ -1,0 +1,15 @@
+# ignore license file
+*.lic
+
+#ignore txt file
+*.txt
+
+#ignore json file
+*.json
+
+#ignore mis files
+#master
+#slave
+
+# ignore terraform state file
+terraform.tfstate*
