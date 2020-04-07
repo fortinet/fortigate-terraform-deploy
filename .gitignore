@@ -13,3 +13,6 @@
 
 # ignore terraform state file
 terraform.tfstate*
+
+# ignore the pem file
+*.pem
