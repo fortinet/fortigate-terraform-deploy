@@ -14,6 +14,7 @@ Terraform deploys the following components:
    - A Azure Virtual Network with 4 subnets
    - Two FortiGate-VM (PAYG) instances with four NICs.
    - Two firewall rules.
+   - A Ubuntu Client instance.
 
 ## Deployment
 To deploy the FortiGate-VM to Azure:

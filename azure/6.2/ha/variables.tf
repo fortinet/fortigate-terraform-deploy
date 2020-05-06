@@ -14,7 +14,29 @@ variable "size" {
 
 variable "location" {
   type    = string
-  default = "westus"
+  default = "westus2"
+}
+
+// To use custom image
+// by default is false
+variable "custom" {
+  default = false
+}
+
+//  Custom image blob uri
+variable "customuri" {
+  type    = string
+  default = "https://<location of the custom image blob uri>"
+}
+
+variable "custom_image_name" {
+  type    = string
+  default = "<custom image name>"
+}
+
+variable "custom_image_resource_group_name" {
+  type    = string
+  default = "<custom image resource group>"
 }
 
 variable "publisher" {
@@ -50,8 +72,8 @@ variable "adminpassword" {
 
 // HTTPS Port
 variable "adminsport" {
-   type    = string
-   default = "8443"
+  type    = string
+  default = "8443"
 }
 
 variable "vnetcidr" {

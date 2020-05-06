@@ -41,7 +41,7 @@ resource "azurerm_subnet" "hamgmtsubnet" {
 
 
 // Allocated Public IP
-resource "azurerm_public_ip" "ClusterPublicIp" {
+resource "azurerm_public_ip" "ClusterPublicIP" {
   name                = "ClusterPublicIP"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
@@ -52,7 +52,7 @@ resource "azurerm_public_ip" "ClusterPublicIp" {
   }
 }
 
-resource "azurerm_public_ip" "ActiveMGMTIp" {
+resource "azurerm_public_ip" "ActiveMGMTIP" {
   name                = "ActiveMGMTIP"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
@@ -63,7 +63,7 @@ resource "azurerm_public_ip" "ActiveMGMTIp" {
   }
 }
 
-resource "azurerm_public_ip" "PassiveMGMTIp" {
+resource "azurerm_public_ip" "PassiveMGMTIP" {
   name                = "PassiveMGMTIP"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
@@ -160,7 +160,7 @@ resource "azurerm_network_interface" "activeport1" {
     private_ip_address_allocation = "Static"
     private_ip_address            = var.activeport1
     primary                       = true
-    public_ip_address_id          = azurerm_public_ip.ClusterPublicIp.id
+    public_ip_address_id          = azurerm_public_ip.ClusterPublicIP.id
   }
 
   tags = {
@@ -213,7 +213,7 @@ resource "azurerm_network_interface" "activeport4" {
     subnet_id                     = azurerm_subnet.hamgmtsubnet.id
     private_ip_address_allocation = "Static"
     private_ip_address            = var.activeport4
-    public_ip_address_id          = azurerm_public_ip.ActiveMGMTIp.id
+    public_ip_address_id          = azurerm_public_ip.ActiveMGMTIP.id
   }
 
   tags = {
@@ -316,7 +316,7 @@ resource "azurerm_network_interface" "passiveport4" {
     subnet_id                     = azurerm_subnet.hamgmtsubnet.id
     private_ip_address_allocation = "Static"
     private_ip_address            = var.passiveport4
-    public_ip_address_id          = azurerm_public_ip.PassiveMGMTIp.id
+    public_ip_address_id          = azurerm_public_ip.PassiveMGMTIP.id
   }
 
   tags = {
