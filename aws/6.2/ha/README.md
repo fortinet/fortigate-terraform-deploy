@@ -1,6 +1,6 @@
 # Deployment of FortiGate-VM (PAYG) Cluster on the AWS
 ## Introduction
-A Terraform script to deploy a FortiGate-VM (PAYG) Cluster on AWS
+A Terraform script to deploy a FortiGate-VM (PAYG) Cluster on AWS in Cross-AZ  Topology
 
 ## Requirements
 * [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 0.12.0
@@ -10,8 +10,8 @@ A Terraform script to deploy a FortiGate-VM (PAYG) Cluster on AWS
 
 ## Deployment overview
 Terraform deploys the following components:
-   - A AWS VPC with 4 subnets
-   - Two FortiGate-VM (PAYG) instances with four NICs.
+   - A AWS VPC: 4 subnets in AZ1, and 4 subnets in AZ2.
+   - Two FortiGate-VM (PAYG) instances with four NICs in 2 different AZs.
    - Two Network Security Group rules: one for external, one for internal.
    - Two Route tables: one for internal subnet and one for external subnet.
 
