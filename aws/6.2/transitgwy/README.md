@@ -33,7 +33,7 @@ To enable such a scenario, three Transit Gateway Route Tables are created.  One 
 * Spoke1/Spoke2/Mgmt VPC each gets a t2.micro Ubuntu instance to validate the network connectivity over ssh and ICMP (ping).
 * The instance in the 'shared' is assigned with a public IP in order to have easy access to the Environment.
 
-![transit-gateway-architecture](./doc/transit-gateway.png?raw=true "Transit Gateway Architecture")
+![transit-gateway-architecture](./output/transit-gateway.png?raw=true "Transit Gateway Architecture")
 
 ## Deployment
 * Clone the repository.
