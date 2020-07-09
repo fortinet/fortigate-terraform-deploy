@@ -11,10 +11,10 @@ A Terraform script to deploy a FortiGate-VM Cluster on Azure
 
 ## Deployment overview
 Terraform deploys the following components:
-   - A Azure Virtual Network with 4 subnets
+   - An Azure Virtual Network with 4 subnets
    - Two FortiGate-VM (PAYG) instances with four NICs.
    - Two firewall rules.
-   - A Ubuntu Client instance.
+   - An Ubuntu Client instance.
 
 ## Deployment
 To deploy the FortiGate-VM to Azure:
