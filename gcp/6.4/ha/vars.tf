@@ -11,7 +11,7 @@ variable "zone" {
 # GCP project name
 variable "project" {
   type    = string
-  default = "<gcp project name>"
+  default = "<gcp project>"
 }
 # GCP service account JSON file.
 variable "account" {
@@ -19,11 +19,11 @@ variable "account" {
   default = "account.json"
 }
 # FortiGate Image name
-# 6.4.1 payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-641-20200610-001-w-license
-# 6.4.1 byol is projects/fortigcp-project-001/global/images/fortinet-fgt-641-20200610-001-w-license
+# 6.4.2 payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-642-20200810-001-w-license
+# 6.4.2 byol is projects/fortigcp-project-001/global/images/fortinet-fgt-642-20200810-001-w-license
 variable "image" {
   type    = string
-  default = "projects/fortigcp-project-001/global/images/fortinet-fgt-641-20200610-001-w-license"
+  default = "projects/fortigcp-project-001/global/images/fortinet-fgt-642-20200810-001-w-license"
 }
 # GCP instance machine type
 variable "machine" {
@@ -58,12 +58,12 @@ variable "mgmt_subnet" {
 # license file for active
 variable "licenseFile" {
   type    = string
-  default = "license.lic"
+  default = "license1.lic"
 }
 # license file for passive
 variable "licenseFile2" {
   type    = string
-  default = "license.lic"
+  default = "license2.lic"
 }
 
 # hamgmt gateway ip, depends on your mgmt subnet cidr
