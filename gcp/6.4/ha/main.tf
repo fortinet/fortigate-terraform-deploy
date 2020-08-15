@@ -214,6 +214,16 @@ resource "google_compute_address" "static" {
   name = "cluster-ip-${random_string.random_name_post.result}"
 }
 
+# Create static active instance management ip
+resource "google_compute_address" "static2" {
+  name = "activemgmt-ip-${random_string.random_name_post.result}"
+}
+
+# Create static passive instance management ip
+resource "google_compute_address" "static3" {
+  name = "passivemgmt-ip-${random_string.random_name_post.result}"
+}
+
 # Create FGTVM compute active instance
 resource "google_compute_instance" "default" {
   name           = "fgt-${random_string.random_name_post.result}"
@@ -252,6 +262,7 @@ resource "google_compute_instance" "default" {
     subnetwork = google_compute_subnetwork.mgmt_subnet.name
     network_ip = var.active_port4_ip
     access_config {
+      nat_ip = google_compute_address.static2.address
     }
   }
 
@@ -301,6 +312,7 @@ resource "google_compute_instance" "default2" {
     subnetwork = google_compute_subnetwork.mgmt_subnet.name
     network_ip = var.passive_port4_ip
     access_config {
+      nat_ip = google_compute_address.static3.address
     }
   }
   metadata = {
@@ -337,3 +349,4 @@ output "FortiGate-Username" {
 output "FortiGate-Password" {
   value = google_compute_instance.default.instance_id
 }
+
