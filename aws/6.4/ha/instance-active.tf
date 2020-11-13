@@ -113,6 +113,7 @@ data "template_file" "activeFortiGate" {
     port4_ip        = "${var.activeport4}"
     port4_mask      = "${var.activeport4mask}"
     passive_peerip  = "${var.passiveport3}"
+    passive_peergwy = "${cidrhost(aws_subnet.hasyncsubnetaz1.cidr_block, 1)}"
     mgmt_gateway_ip = "${var.activeport4gateway}"
     defaultgwy      = "${var.activeport1gateway}"
     adminsport      = "${var.adminsport}"
