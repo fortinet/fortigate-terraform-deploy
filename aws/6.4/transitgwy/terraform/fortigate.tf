@@ -313,7 +313,7 @@ resource "aws_eip" "eip-shared" {
 
 # Create the instances
 resource "aws_instance" "fgt1" {
-  ami                  = var.fgt-ond-amis[var.region]
+  ami                  = var.license_type == "byol" ? var.fgtvmbyolami[var.region] : var.fgt-ond-amis[var.region]
   instance_type        = var.instance_type
   availability_zone    = var.availability_zone1
   key_name             = var.keypair
@@ -337,7 +337,7 @@ resource "aws_instance" "fgt1" {
 }
 
 resource "aws_instance" "fgt2" {
-  ami                  = var.fgt-ond-amis[var.region]
+  ami                  = var.license_type == "byol" ? var.fgtvmbyolami[var.region] : var.fgt-ond-amis[var.region]
   instance_type        = var.instance_type
   availability_zone    = var.availability_zone2
   key_name             = var.keypair
@@ -365,6 +365,8 @@ data "template_file" "fgt_userdata1" {
 
   vars = {
     fgt_id               = "FGT-Active"
+    type                 = "${var.license_type}"
+    license_file         = "${var.license}"
     fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt1-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr1}")])
     fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt1-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr1}")])
     fgt_mgmt_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt1-mgmt.private_ips), 0), cidrnetmask("${var.security_vpc_mgmt_subnet_cidr1}")])
@@ -384,6 +386,8 @@ data "template_file" "fgt_userdata2" {
 
   vars = {
     fgt_id               = "FGT-Passive"
+    type                 = "${var.license_type}"
+    license_file         = "${var.license2}"
     fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt2-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr2}")])
     fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr2}")])
     fgt_mgmt_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt2-mgmt.private_ips), 0), cidrnetmask("${var.security_vpc_mgmt_subnet_cidr2}")])

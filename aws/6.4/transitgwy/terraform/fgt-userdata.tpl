@@ -1,3 +1,10 @@
+Content-Type: multipart/mixed; boundary="==AWS=="
+MIME-Version: 1.0
+
+--==AWS==
+Content-Type: text/x-shellscript; charset="us-ascii"
+MIME-Version: 1.0
+
 config system global
 set hostname ${fgt_id}
 end
@@ -102,3 +109,15 @@ edit 3
 set object firewall.vip
 next
 end
+
+%{ if type == "byol" }
+--==AWS==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="license"
+
+${file(license_file)}
+
+%{ endif }
+--==AWS==--

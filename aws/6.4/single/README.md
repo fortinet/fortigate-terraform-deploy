@@ -1,4 +1,4 @@
-# Deployment of a FortiGate-VM  on the AWS
+# Deployment of a FortiGate-VM (BYOL/PAYG)  on the AWS
 ## Introduction
 A Terraform script to deploy a FortiGate-VM on AWS
 

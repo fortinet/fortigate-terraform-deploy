@@ -1,4 +1,4 @@
-# Deployment of FortiGate-VM (PAYG) A-A on the AWS
+# Deployment of FortiGate-VM (PAYG/BYOL) A-A on the AWS
 ## Introduction
 A Terraform script to deploy a FortiGate-VM A-A on AWS in single AZ with two load balancers.
 

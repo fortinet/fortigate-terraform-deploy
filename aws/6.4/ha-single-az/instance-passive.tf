@@ -57,7 +57,7 @@ resource "aws_network_interface_sg_attachment" "passivehasyncattachment" {
 
 resource "aws_instance" "fgtpassive" {
   depends_on           = [aws_instance.fgtactive]
-  ami                  = lookup(var.fgtvmami, var.region)
+  ami                  = var.license_type == "byol" ? var.fgtvmbyolami[var.region] : var.fgtvmami[var.region]
   instance_type        = var.size
   availability_zone    = var.az
   key_name             = var.keyname
@@ -105,6 +105,8 @@ resource "aws_instance" "fgtpassive" {
 data "template_file" "passiveFortiGate" {
   template = "${file("${var.bootstrap-passive}")}"
   vars = {
+    type            = "${var.license_type}"
+    license_file    = "${var.license2}"
     port1_ip        = "${var.passiveport1}"
     port1_mask      = "${var.passiveport1mask}"
     port2_ip        = "${var.passiveport2}"

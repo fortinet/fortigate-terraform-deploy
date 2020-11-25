@@ -3,16 +3,16 @@ variable access_key {}
 variable secret_key {}
 
 variable "region" {
-  default = "us-west-1"
+  default = "eu-west-1"
 }
 
 variable "az" {
-  default = "us-west-1a"
+  default = "eu-west-1a"
 }
 // IAM role that has proper permission for HA
 // Refer to https://docs.fortinet.com/vm/aws/fortigate/6.2/aws-cookbook/6.2.0/229470/deploying-fortigate-vm-active-passive-ha-aws-between-multiple-zones
 variable "iam" {
-  default = "<AWS IAM role>"
+  default = "<AWS IAM Role>"
 }
 
 variable "vpccidr" {
@@ -31,14 +31,15 @@ variable "hasynccidr" {
   default = "10.1.2.0/24"
 }
 
-// Preshare key for autoscale
-variable "presharekey" {
-  default = "Test123#"
-}
-
 variable "hamgmtcidr" {
   default = "10.1.3.0/24"
 }
+
+// Preshare key for autoscale
+variable "presharekey" {
+  default = "Test123#"
+} 
+
 // Load Balancer Listen rules for forwarding the traffic
 variable "test_forwarding_config" {
   default = {
@@ -47,28 +48,60 @@ variable "test_forwarding_config" {
   }
 }
 
-// AMIs are for FGTVM-AWS(PAYG) - 6.4.1
+// License Type to create FortiGate-VM
+// Provide the license type for FortiGate-VM Instances, either byol or payg.
+variable "license_type" {
+  default     = "byol"
+}
+
+
+// AMIs are for FGTVM-AWS(PAYG) - 6.4.3
 variable "fgtvmami" {
   type = map
   default = {
-    us-west-2      = "ami-02cbcc029e8550e2f"
-    us-west-1      = "ami-075a3a13e2b2fc908"
-    us-east-1      = "ami-016ac6c1a802f99a1"
-    us-east-2      = "ami-0470a65a67f774b54"
-    ap-east-1      = "ami-0d82609784db73afd"
-    ap-south-1     = "ami-07a7a8bc7b8280414"
-    ap-northeast-2 = "ami-0d714b0e360fbc378"
-    ap-southeast-1 = "ami-06bbcc3ed16453638"
-    ap-southeast-2 = "ami-0468c6395d63fdd96"
-    ap-northeast-1 = "ami-06e83b5511ad5c7f1"
-    ca-central-1   = "ami-09ea7263a6246dd3d"
-    eu-central-1   = "ami-0cd63578d8a6fc4cd"
-    eu-west-1      = "ami-0d78759a784f8085d"
-    eu-west-2      = "ami-0e65eb4dd45ee4258"
-    eu-west-3      = "ami-0b47346da759bd67e"
-    eu-north-1     = "ami-014dde07dffde2c0f"
-    me-south-1     = "ami-0b0432582909ba94a"
-    sa-east-1      = "ami-03bf81fbb4967011c"
+    us-west-2      = "ami-0ddbc0e996e124572"
+    us-west-1      = "ami-01d7f9197c106f3b4"
+    us-east-1      = "ami-0c184c594e9203c45"
+    us-east-2      = "ami-0fcf6b58d6d82a53f"
+    ap-east-1      = "ami-06a747a157d4b78ec"
+    ap-south-1     = "ami-0afa25566526b5c3a"
+    ap-northeast-2 = "ami-05eb0d45254a7a0ce"
+    ap-southeast-1 = "ami-0015dc48d24804323"
+    ap-southeast-2 = "ami-04b5dda77d0a5c9e7"
+    ap-northeast-1 = "ami-05bd4d10b85a28745"
+    ca-central-1   = "ami-0224f468fd52b1b28"
+    eu-central-1   = "ami-0046e253de29782f4"
+    eu-west-1      = "ami-00d3e7b592e7b9c73"
+    eu-west-2      = "ami-08b2373c2c6e94882"
+    eu-west-3      = "ami-0965b5ec92e30ebd4"
+    eu-north-1     = "ami-041765016e33a5496"
+    me-south-1     = "ami-0ba296ca31432a756"
+    sa-east-1      = "ami-07ca8d72b427216b4"
+  }
+}
+
+// AMIs are for FGTVM AWS(BYOL) - 6.4.3
+variable "fgtvmbyolami" {
+  type = map
+  default = {
+    us-west-2      = "ami-073592d096f2699ad"
+    us-west-1      = "ami-0717fc4ad21d83d92"
+    us-east-1      = "ami-056b8cbed90f235f7"
+    us-east-2      = "ami-0fa6c260237788eb1"
+    ap-east-1      = "ami-08de303af09fb2ba5"
+    ap-south-1     = "ami-01fe3471c95b0bd8d"
+    ap-northeast-2 = "ami-0741cc6aa50ee2f15"
+    ap-southeast-1 = "ami-0066ff4bb5b3beb87"
+    ap-southeast-2 = "ami-041c504cef8087823"
+    ap-northeast-1 = "ami-0ed1410fa91b8fe63"
+    ca-central-1   = "ami-00e3f08f2797559b4"
+    eu-central-1   = "ami-09df5f66c63f3af7b"
+    eu-west-1      = "ami-0a14533f2a9dcad5f"
+    eu-west-2      = "ami-0079c171f690bd729"
+    eu-west-3      = "ami-033da5aa41d3d6710"
+    eu-north-1     = "ami-08dbc6001d5d8d9e1"
+    me-south-1     = "ami-0042f1e48c7a55a75"
+    sa-east-1      = "ami-086b55d007b3f2cf0"
   }
 }
 
@@ -76,9 +109,9 @@ variable "size" {
   default = "c5n.xlarge"
 }
 
-//  Existing SSH Key on the AWS
+//  Existing SSH Key on the AWS 
 variable "keyname" {
-  default = "<AWS SSH key>"
+  default = "<AWS SSH Key>"
 }
 
 // HTTPS access port
@@ -177,5 +210,20 @@ variable "bootstrap-passive" {
   // Change to your own path
   type    = string
   default = "config-passive.conf"
+}
+
+
+// license file for the active fgt
+variable "license" {
+  // Change to your own byol license file, license.lic
+  type    = string
+  default = "license.lic"
+}
+
+// license file for the passive fgt
+variable "license2" {
+  // Change to your own byol license file, license2.lic
+  type    = string
+  default = "license2.lic"
 }
 
