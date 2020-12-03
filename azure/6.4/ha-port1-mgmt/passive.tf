@@ -63,13 +63,13 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
   storage_image_reference {
     publisher = var.custom ? null : var.publisher
     offer     = var.custom ? null : var.fgtoffer
-    sku       = var.custom ? null : var.fgtsku
+    sku       = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
     version   = var.custom ? null : var.fgtversion
     id        = var.custom ? element(azurerm_image.custom.*.id, 0) : null
   }
 
   plan {
-    name      = var.fgtsku
+    name      = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
     publisher = var.publisher
     product   = var.fgtoffer
   }
@@ -115,6 +115,8 @@ data "template_file" "passiveFortiGate" {
   template = "${file("${var.bootstrap-passive}")}"
 
   vars = {
+    type            = "${var.license_type}"
+    license_file    = "${var.license2}"
     port1_ip        = "${var.passiveport1}"
     port1_mask      = "${var.passiveport1mask}"
     port2_ip        = "${var.passiveport2}"

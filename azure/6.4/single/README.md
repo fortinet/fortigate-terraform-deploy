@@ -1,6 +1,6 @@
-# Deployment of a FortiGate-VM  on the Azure
+# Deployment of a FortiGate-VM(BYOL/PAYG)  on the Azure
 ## Introduction
-A Terraform script to deploy a FortiGate-VM on Azure
+A Terraform script to deploy a FortiGate-VM(BYOL/PAYG) on Azure
 
 ## Requirements
 * [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 0.12.0
@@ -13,7 +13,7 @@ A Terraform script to deploy a FortiGate-VM on Azure
 Terraform deploys the following components:
    - Azure Virtual Network with 2 subnets
    - One FortiGate-VM instances with 2 NICs
-   - Two firewall rules: one for external, one for internal, one for sync, and one for HA management.
+   - Two firewall rules: one for external, one for internal.
 
 ## Deployment
 To deploy the FortiGate-VM to Azure:

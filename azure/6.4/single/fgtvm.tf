@@ -74,12 +74,12 @@ resource "azurerm_virtual_machine" "fgtvm" {
   storage_image_reference {
     publisher = var.publisher
     offer     = var.fgtoffer
-    sku       = var.fgtsku
+    sku       = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
     version   = var.fgtversion
   }
 
   plan {
-    name      = var.fgtsku
+    name      = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
     publisher = var.publisher
     product   = var.fgtoffer
   }
@@ -123,4 +123,8 @@ resource "azurerm_virtual_machine" "fgtvm" {
 
 data "template_file" "fgtvm" {
   template = "${file("${var.bootstrap-fgtvm}")}"
+  vars = {
+    type            = "${var.license_type}"
+    license_file    = "${var.license}"
+  }
 }

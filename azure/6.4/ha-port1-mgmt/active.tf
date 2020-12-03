@@ -75,13 +75,13 @@ resource "azurerm_virtual_machine" "activefgtvm" {
   storage_image_reference {
     publisher = var.custom ? null : var.publisher
     offer     = var.custom ? null : var.fgtoffer
-    sku       = var.custom ? null : var.fgtsku
+    sku       = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
     version   = var.custom ? null : var.fgtversion
     id        = var.custom ? element(azurerm_image.custom.*.id, 0) : null
   }
 
   plan {
-    name      = var.fgtsku
+    name      = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
     publisher = var.publisher
     product   = var.fgtoffer
   }
@@ -127,6 +127,8 @@ resource "azurerm_virtual_machine" "activefgtvm" {
 data "template_file" "activeFortiGate" {
   template = "${file("${var.bootstrap-active}")}"
   vars = {
+    type            = "${var.license_type}"
+    license_file    = "${var.license}"
     port1_ip        = "${var.activeport1}"
     port1_mask      = "${var.activeport1mask}"
     port2_ip        = "${var.activeport2}"

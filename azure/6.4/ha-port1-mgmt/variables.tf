@@ -4,6 +4,7 @@ variable client_id {}
 variable client_secret {}
 variable tenant_id {}
 
+
 //  For HA, choose instance size that support 4 nics at least
 //  Check : https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes
 variable "size" {
@@ -16,7 +17,7 @@ variable "location" {
   default = "westus2"
 }
 
-// To use custom image
+// To use custom image 
 // by default is false
 variable "custom" {
   default = false
@@ -25,7 +26,7 @@ variable "custom" {
 //  Custom image blob uri
 variable "customuri" {
   type    = string
-  default = "https://<location of the custom image blob uri>"
+  default = "<custom image blob uri>"
 }
 
 variable "custom_image_name" {
@@ -38,6 +39,12 @@ variable "custom_image_resource_group_name" {
   default = "<custom image resource group>"
 }
 
+// License Type to create FortiGate-VM
+// Provide the license type for FortiGate-VM Instances, either byol or payg.
+variable "license_type" {
+  default     = "payg"
+}
+
 variable "publisher" {
   type    = string
   default = "fortinet"
@@ -48,14 +55,19 @@ variable "fgtoffer" {
   default = "fortinet_fortigate-vm_v5"
 }
 
+// BYOL sku: fortinet_fg-vm
+// PAYG sku: fortinet_fg-vm_payg_20190624
 variable "fgtsku" {
-  type    = string
-  default = "fortinet_fg-vm_payg_20190624"
+  type = map
+  default = {
+     byol = "fortinet_fg-vm"
+     payg = "fortinet_fg-vm_payg_20190624"
+  }
 }
 
 variable "fgtversion" {
   type    = string
-  default = "6.4.2"
+  default = "6.4.3"
 }
 
 
@@ -177,5 +189,20 @@ variable "bootstrap-passive" {
   // Change to your own path
   type    = string
   default = "config-passive.conf"
+}
+
+
+// license file for the active fgt
+variable "license" {
+  // Change to your own byol license file, license.lic
+  type    = string
+  default = "license.txt"
+}
+
+// license file for the passive fgt
+variable "license2" {
+  // Change to your own byol license file, license2.lic
+  type    = string
+  default = "license2.txt"
 }
 

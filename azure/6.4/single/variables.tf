@@ -1,4 +1,4 @@
-// Azure configu ation
+// Azure configuration
 variable subscription_id {}
 variable client_id {}
 variable client_secret {}
@@ -31,6 +31,12 @@ variable "custom_image_resource_group_name" {
   default = "<custom image resource group>"
 }
 
+// License Type to create FortiGate-VM
+// Provide the license type for FortiGate-VM Instances, either byol or payg.
+variable "license_type" {
+  default     = "byol"
+}
+
 variable "publisher" {
   type    = string
   default = "fortinet"
@@ -41,14 +47,19 @@ variable "fgtoffer" {
   default = "fortinet_fortigate-vm_v5"
 }
 
+// BYOL sku: fortinet_fg-vm
+// PAYG sku: fortinet_fg-vm_payg_20190624
 variable "fgtsku" {
-  type    = string
-  default = "fortinet_fg-vm_payg_20190624"
+  type = map
+  default = {
+     byol = "fortinet_fg-vm"
+     payg = "fortinet_fg-vm_payg_20190624"
+  }
 }
 
 variable "fgtversion" {
   type    = string
-  default = "6.4.1"
+  default = "6.4.3"
 }
 
 variable "adminusername" {
@@ -82,5 +93,12 @@ variable "bootstrap-fgtvm" {
   // Change to your own path
   type    = string
   default = "fgtvm.conf"
+}
+
+// license file for the fgt
+variable "license" {
+  // Change to your own byol license file, license.lic
+  type    = string
+  default = "license.txt"
 }
 
