@@ -117,6 +117,9 @@ data "template_file" "activeFortiGate" {
     passive_peerip  = "${var.passiveport3}"
     mgmt_gateway_ip = "${var.activeport4gateway}"
     defaultgwy      = "${var.activeport1gateway}"
+    privategwy      = "${var.activeport2gateway}"
+    vpc_ip          = cidrhost(var.vpccidr, 0)
+    vpc_mask        = cidrnetmask(var.vpccidr)
     adminsport      = "${var.adminsport}"
   }
 }
