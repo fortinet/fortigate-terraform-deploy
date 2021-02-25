@@ -209,8 +209,7 @@ resource "aws_iam_policy" "APICallpolicy" {
               "ec2:AssociateAddress",
               "ec2:AssignPrivateIpAddresses",
               "ec2:UnassignPrivateIpAddresses",
-              "ec2:ReplaceRoute",
-              "s3:GetObject"
+              "ec2:ReplaceRoute"
             ],
             "Resource": "*"
         }
