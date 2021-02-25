@@ -103,6 +103,7 @@ resource "aws_security_group" "public_allow" {
     to_port     = 22
     protocol    = "6"
     cidr_blocks = ["0.0.0.0/0"]
+    description = ""
   }
 
   ingress {
@@ -110,6 +111,7 @@ resource "aws_security_group" "public_allow" {
     to_port     = 443
     protocol    = "6"
     cidr_blocks = ["0.0.0.0/0"]
+    description = ""
   }
 
   ingress {
@@ -117,8 +119,16 @@ resource "aws_security_group" "public_allow" {
     to_port     = 8443
     protocol    = "6"
     cidr_blocks = ["0.0.0.0/0"]
+    description = ""
   }
 
+  ingress {
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "ping"
+  }
 
   egress {
     from_port   = 0
