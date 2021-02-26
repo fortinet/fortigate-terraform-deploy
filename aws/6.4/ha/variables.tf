@@ -198,12 +198,20 @@ variable "activeport1gateway" {
   default = "20.1.0.1"
 }
 
+variable "activeport2gateway" {
+  default = "20.1.1.1"
+}
+
 variable "activeport4gateway" {
   default = "20.1.3.1"
 }
 
 variable "passiveport1gateway" {
   default = "20.1.10.1"
+}
+
+variable "passiveport2gateway" {
+  default = "20.1.11.1"
 }
 
 variable "passiveport4gateway" {
