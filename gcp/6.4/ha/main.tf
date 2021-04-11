@@ -2,22 +2,21 @@
 terraform {
   required_version = ">=0.12.0"
   required_providers {
-    google      = "2.11.0"
-    google-beta = "2.13"
+    google      = ">=2.11.0"
+    google-beta = ">=2.13"
   }
 }
 provider "google" {
-  credentials = file("${var.account}")
-  project     = var.project
-  region      = "us-central1"
-  zone        = "us-central1-c"
-
+  project      = var.project
+  region       = "us-central1"
+  zone         = "us-central1-c"
+  access_token = var.token
 }
 provider "google-beta" {
-  credentials = file("${var.account}")
-  project     = var.project
-  region      = var.region
-  zone        = var.zone
+  project      = var.project
+  region       = var.region
+  zone         = var.zone
+  access_token = var.token
 }
 
 # Randomize string to avoid duplication
@@ -268,7 +267,7 @@ resource "google_compute_instance" "default" {
 
   metadata = {
     user-data = "${data.template_file.setup-active.rendered}"
-    license = fileexists("${path.module}/${var.licenseFile}") ? "${file(var.licenseFile)}" : null
+    license   = fileexists("${path.module}/${var.licenseFile}") ? "${file(var.licenseFile)}" : null
   }
   service_account {
     scopes = ["userinfo-email", "compute-rw", "storage-ro", "cloud-platform"]
@@ -317,7 +316,7 @@ resource "google_compute_instance" "default2" {
   }
   metadata = {
     user-data = "${data.template_file.setup-passive.rendered}"
-    license = fileexists("${path.module}/${var.licenseFile2}") ? "${file(var.licenseFile2)}" : null
+    license   = fileexists("${path.module}/${var.licenseFile2}") ? "${file(var.licenseFile2)}" : null
   }
   service_account {
     scopes = ["userinfo-email", "compute-rw", "storage-ro", "cloud-platform"]

@@ -2,22 +2,21 @@
 terraform {
   required_version = ">=0.12.0"
   required_providers {
-    google = "2.11.0"
-    google-beta ="2.13"
+    google      = ">=2.11.0"
+    google-beta = ">=2.13"
   }
 }
 provider "google" {
-  credentials = "${file("account.json")}"
-  project     = "${var.project}"
-  region      = "us-central1"
-  zone        = "us-central1-c"
-
+  project      = var.project
+  region       = var.region
+  zone         = var.zone
+  access_token = var.token
 }
 provider "google-beta" {
-  credentials = "${file("account.json")}"
-  project     = "${var.project}"
-  region      = "${var.region}"
-  zone        = "${var.zone}"
+  project      = var.project
+  region       = var.region
+  zone         = var.zone
+  access_token = var.token
 }
 
 # Randomize string to avoid duplication

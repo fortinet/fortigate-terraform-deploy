@@ -4,9 +4,9 @@ A Terraform script to deploy FortiGate-VM HA (A-P) on GCP.
 
 ## Requirements
 * [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 0.12.0
-* Terraform Provider for Google Cloud Platform 2.11.0
-* Terraform Provider for Google Cloud Platform Beta 2.13
-* A [GCP service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
+* Terraform Provider for Google Cloud Platform >=2.11.0
+* Terraform Provider for Google Cloud Platform Beta >=2.13
+* A [GCP OAuth2 access token](https://developers.google.com/identity/protocols/OAuth2)
 
 ## Deployment overview
 Terraform deploys the following components:
@@ -18,7 +18,7 @@ Terraform deploys the following components:
 ## Deployment
 To deploy the FortiGate-VM to GCP:
 1. Clone the repository.
-2. Rename the service account key file to `account.json` and upload this file to the XXXX directory.
+2. Obtain a GCP OAuth2 token and input it in the vars.tf file.
 3. Customize variables in the `vars.tf` file as needed.
 4. Initialize the providers and modules:
    ```sh
