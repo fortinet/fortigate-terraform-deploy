@@ -13,17 +13,17 @@ variable "project" {
   type    = string
   default = "<gcp project>"
 }
-# GCP service account JSON file.
-variable "account" {
+# GCP oauth access token
+variable "token" {
   type    = string
-  default = "account.json"
+  default = "<gcp oauth access token>"
 }
 # FortiGate Image name
-# 6.4.2 payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-642-20200810-001-w-license
-# 6.4.2 byol is projects/fortigcp-project-001/global/images/fortinet-fgt-642-20200810-001-w-license
+# 6.4.5 payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-645-20210302-001-w-license
+# 6.4.5 byol is projects/fortigcp-project-001/global/images/fortinet-fgt-645-20210302-001-w-license
 variable "image" {
   type    = string
-  default = "projects/fortigcp-project-001/global/images/fortinet-fgt-642-20200810-001-w-license"
+  default = "projects/fortigcp-project-001/global/images/fortinet-fgtondemand-645-20210302-001-w-license"
 }
 # GCP instance machine type
 variable "machine" {
