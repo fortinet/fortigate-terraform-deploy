@@ -18,7 +18,7 @@ Terraform deploys the following components:
 ## Deployment
 To deploy the FortiGate-VM to Azure:
 1. Clone the repository.
-2. Customize variables in the `terraform.tfvars` and `variables.tf` file as needed.
+2. Customize variables in the `terraform.tfvars.example` and `variables.tf` file as needed.  And rename `terraform.tfvars.example` to `terraform.tfvars`.
 3. Initialize the providers and modules:
    ```sh
    $ cd XXXXX
