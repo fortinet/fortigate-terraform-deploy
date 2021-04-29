@@ -7,4 +7,5 @@
 *.tfplan
 *.tfstate
 *.tfstate.backup
+*.csv
 .terraform/
