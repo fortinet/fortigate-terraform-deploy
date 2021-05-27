@@ -104,54 +104,58 @@ variable "license_type" {
   default = "payg"
 }
 
-
-// AMIs are for FGTVM-AWS(PAYG) - 6.4.4
+// AMIs are for FGTVM-AWS(PAYG) - 6.4.5
 variable "fgtvmami" {
   type = map
   default = {
-    us-west-2      = "ami-00b7c2fdcc89f090a"
-    us-west-1      = "ami-08f558c88d066cd22"
-    us-east-1      = "ami-07a2b724815412830"
-    us-east-2      = "ami-0edd7a2e2ddd15b13"
-    ap-east-1      = "ami-06fd2d4785b68d8cf"
-    ap-south-1     = "ami-037195aab5c0862bb"
-    ap-northeast-2 = "ami-05bcba53c232cc81c"
-    ap-southeast-1 = "ami-07c7d2b7860822939"
-    ap-southeast-2 = "ami-0e9c903b7a4fa5504"
-    ap-northeast-1 = "ami-0c84d4defa5bf575f"
-    ca-central-1   = "ami-0cd53df921304e190"
-    eu-central-1   = "ami-0243001b5a7ac84fa"
-    eu-west-1      = "ami-080914b57c95affc4"
-    eu-west-2      = "ami-0a042f452e36fe070"
-    eu-west-3      = "ami-06839d1b6c5b22390"
-    eu-north-1     = "ami-0c72003c6b2d1a573"
-    me-south-1     = "ami-07eee8c78fb8bbe6e"
-    sa-east-1      = "ami-01576fcc0419c1be7"
+    us-west-2      = "ami-0bd63e9b6f030819a"
+    us-west-1      = "ami-0109010188b5b573b"
+    us-east-1      = "ami-08ea233f6c1af5e84"
+    us-east-2      = "ami-04c250698411252c9"
+    ap-east-1      = "ami-0f86b4d9e4042517c"
+    ap-south-1     = "ami-02623434e90a4eb94"
+    ap-northeast-3 = "ami-0dad396c8a078d79a"
+    ap-northeast-2 = "ami-09e9c92b84ea58aaf"
+    ap-southeast-1 = "ami-086e03d1b2585d1d8"
+    ap-southeast-2 = "ami-097983da0f89a0165"
+    ap-northeast-1 = "ami-03d14586c97618b09"
+    ca-central-1   = "ami-09cd0ee65f8a7cbd6"
+    eu-central-1   = "ami-0479cc1e690725514"
+    eu-west-1      = "ami-04acaa2b439d0ab7a"
+    eu-west-2      = "ami-00f80eeec7920b5ab"
+    eu-south-1     = "ami-001b7d48c8f37d191"
+    eu-west-3      = "ami-0105ba9c9d7df062e"
+    eu-north-1     = "ami-05472a2645b39adce"
+    me-south-1     = "ami-037ce9c4a95c5a335"
+    sa-east-1      = "ami-025e01b791a5b0bd6"
   }
 }
 
-// AMIs are for FGTVM AWS(BYOL) - 6.4.4
+
+// AMIs are for FGTVM AWS(BYOL) - 6.4.5
 variable "fgtvmbyolami" {
   type = map
   default = {
-    us-west-2      = "ami-081dc0143534e7a10"
-    us-west-1      = "ami-0c7336886c55caf99"
-    us-east-1      = "ami-048bcc579fae59b10"
-    us-east-2      = "ami-0415913c8102a5fd6"
-    ap-east-1      = "ami-0825413a2e42daea8"
-    ap-south-1     = "ami-0d1d3ce256537fe84"
-    ap-northeast-2 = "ami-051e5f232fb9e8047"
-    ap-southeast-1 = "ami-0af57535c61bc6c30"
-    ap-southeast-2 = "ami-0cdb73f24016bdba4"
-    ap-northeast-1 = "ami-0ede7fceeb91d9ec4"
-    ca-central-1   = "ami-0cf732b7a31e698d4"
-    eu-central-1   = "ami-05b3feef6ce4eb779"
-    eu-west-1      = "ami-049e7c376b1a39b6e"
-    eu-west-2      = "ami-062610ff75716be70"
-    eu-west-3      = "ami-07ad717aeb7589448"
-    eu-north-1     = "ami-04441fa360060eb3a"
-    me-south-1     = "ami-002240bf66e41453e"
-    sa-east-1      = "ami-04acf42b911191b07"
+    us-west-2      = "ami-093c91ef5edce49a6"
+    us-west-1      = "ami-0abf93087b8b6039c"
+    us-east-1      = "ami-07e907b5ae3b6ad27"
+    us-east-2      = "ami-0369456bca7679c37"
+    ap-east-1      = "ami-0607c244f54cebd77"
+    ap-south-1     = "ami-0ab141906704f2a51"
+    ap-northeast-3 = "ami-0fa22d36cbb805b1d"
+    ap-northeast-2 = "ami-036c90e71abd027ba"
+    ap-southeast-1 = "ami-0cd6daf941ce15238"
+    ap-southeast-2 = "ami-05fcd1eda54018e13"
+    ap-northeast-1 = "ami-0b8771d8318131ea0"
+    ca-central-1   = "ami-0c4cecd2e2f91c577"
+    eu-central-1   = "ami-0e3b4279c34108da8"
+    eu-west-1      = "ami-0c3fd9d2d765f52d7"
+    eu-west-2      = "ami-01e98c30685d313a9"
+    eu-south-1     = "ami-01c4700850d722eef"
+    eu-west-3      = "ami-05fb5ba112997f4c4"
+    eu-north-1     = "ami-0d2ff02042bdbaa74"
+    me-south-1     = "ami-001a8c09bb54d3afc"
+    sa-east-1      = "ami-09fe162de6d31c4de"
   }
 }
 
