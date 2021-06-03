@@ -2,7 +2,7 @@
 
 resource "azurerm_virtual_network" "fgtvnetwork" {
   name                = "fgtvnetwork"
-  address_space       = ["${var.vnetcidr}"]
+  address_space       = [var.vnetcidr]
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
@@ -15,28 +15,28 @@ resource "azurerm_subnet" "publicsubnet" {
   name                 = "publicSubnet"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.fgtvnetwork.name
-  address_prefix       = var.publiccidr
+  address_prefixes     = [var.publiccidr]
 }
 
 resource "azurerm_subnet" "privatesubnet" {
   name                 = "privateSubnet"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.fgtvnetwork.name
-  address_prefix       = var.privatecidr
+  address_prefixes     = [var.privatecidr]
 }
 
 resource "azurerm_subnet" "hasyncsubnet" {
   name                 = "HASyncSubnet"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.fgtvnetwork.name
-  address_prefix       = var.hasynccidr
+  address_prefixes     = [var.hasynccidr]
 }
 
 resource "azurerm_subnet" "hamgmtsubnet" {
   name                 = "HAMGMTSubnet"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.fgtvnetwork.name
-  address_prefix       = var.hamgmtcidr
+  address_prefixes     = [var.hamgmtcidr]
 }
 
 

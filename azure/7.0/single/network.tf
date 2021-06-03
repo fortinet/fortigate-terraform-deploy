@@ -15,14 +15,14 @@ resource "azurerm_subnet" "publicsubnet" {
   name                 = "publicSubnet"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.fgtvnetwork.name
-  address_prefix       = var.publiccidr
+  address_prefixes     = [var.publiccidr]
 }
 
 resource "azurerm_subnet" "privatesubnet" {
   name                 = "privateSubnet"
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
   virtual_network_name = azurerm_virtual_network.fgtvnetwork.name
-  address_prefix       = var.privatecidr
+  address_prefixes     = [var.privatecidr]
 }
 
 
