@@ -125,26 +125,26 @@ resource "azurerm_virtual_machine" "activefgtvm" {
 }
 
 data "template_file" "activeFortiGate" {
-  template = "${file("${var.bootstrap-active}")}"
+  template = file(var.bootstrap-active)
   vars = {
-    type            = "${var.license_type}"
-    license_file    = "${var.license}"
-    port1_ip        = "${var.activeport1}"
-    port1_mask      = "${var.activeport1mask}"
-    port2_ip        = "${var.activeport2}"
-    port2_mask      = "${var.activeport2mask}"
-    port3_ip        = "${var.activeport3}"
-    port3_mask      = "${var.activeport3mask}"
-    port4_ip        = "${var.activeport4}"
-    port4_mask      = "${var.activeport4mask}"
-    passive_peerip  = "${var.passiveport4}"
-    mgmt_gateway_ip = "${var.port1gateway}"
-    defaultgwy      = "${var.port2gateway}"
-    tenant          = "${var.tenant_id}"
-    subscription    = "${var.subscription_id}"
-    clientid        = "${var.client_id}"
-    clientsecret    = "${var.client_secret}"
-    adminsport      = "${var.adminsport}"
+    type            = var.license_type
+    license_file    = var.license
+    port1_ip        = var.activeport1
+    port1_mask      = var.activeport1mask
+    port2_ip        = var.activeport2
+    port2_mask      = var.activeport2mask
+    port3_ip        = var.activeport3
+    port3_mask      = var.activeport3mask
+    port4_ip        = var.activeport4
+    port4_mask      = var.activeport4mask
+    passive_peerip  = var.passiveport4
+    mgmt_gateway_ip = var.port1gateway
+    defaultgwy      = var.port2gateway
+    tenant          = var.tenant_id
+    subscription    = var.subscription_id
+    clientid        = var.client_id
+    clientsecret    = var.client_secret
+    adminsport      = var.adminsport
     rsg             = azurerm_resource_group.myterraformgroup.name
     clusterip       = azurerm_public_ip.ClusterPublicIP.name
     routename       = azurerm_route_table.internal.name
