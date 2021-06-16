@@ -6,7 +6,7 @@ variable tenant_id {}
 
 variable "size" {
   type    = string
-  default = "Standard_F4"
+  default = "Standard_D2"
 }
 
 // To use custom image
@@ -34,7 +34,7 @@ variable "custom_image_resource_group_name" {
 // License Type to create FortiGate-VM
 // Provide the license type for FortiGate-VM Instances, either byol or payg.
 variable "license_type" {
-  default     = "byol"
+  default     = "payg"
 }
 
 variable "publisher" {
