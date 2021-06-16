@@ -7,7 +7,7 @@ variable tenant_id {}
 
 variable "size" {
   type    = string
-  default = "Standard_F4"
+  default = "Standard_D2"
 }
 
 variable "publisher" {
@@ -27,7 +27,7 @@ variable "fgtsku" {
 
 variable "fgtversion" {
   type    = string
-  default = "6.2.3"
+  default = "6.2.4"
 }
 
 
