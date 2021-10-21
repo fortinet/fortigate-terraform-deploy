@@ -6,9 +6,9 @@ The Transit Gateway is meant to supersede the more complex and expensive Transit
 
 
 ## Requirements
-* [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 0.12.0
-* Terraform Provider AWS 2.59.0
-* Terraform Provider Template 2.1.2
+* [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 1.0.0
+* Terraform Provider AWS 3.63.0
+* Terraform Provider Template 2.2.0
 
 ## Deployment Overview
 A Transit Gateway relies on Route Tables. By default, a new Route Table is created in the Transit Gateway, which populates with the routing info toward every VPC attached to the gateway (the full mesh scenario)

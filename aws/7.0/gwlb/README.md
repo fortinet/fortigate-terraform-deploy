@@ -3,8 +3,8 @@
 A Terraform script to deploy a FortiGate-VM on AWS with Gateway Load Balancer intergration.
 
 ## Requirements
-* [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 0.13.5
-* Terraform Provider AWS >= 3.22.0
+* [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 1.0.0
+* Terraform Provider AWS >= 3.63.0
 * Terraform Provider Template >= 2.2.0
 * FOS Version >= 6.4.4
 
