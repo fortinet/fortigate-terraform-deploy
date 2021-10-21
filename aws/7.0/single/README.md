@@ -3,9 +3,9 @@
 A Terraform script to deploy a FortiGate-VM on AWS
 
 ## Requirements
-* [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 0.12.0
-* Terraform Provider AWS >= 2.59.0
-* Terraform Provider Template >= 2.1.2
+* [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 1.0.0
+* Terraform Provider AWS >= 3.63.0
+* Terraform Provider Template >= 2.2.0
 
 
 ## Deployment overview
