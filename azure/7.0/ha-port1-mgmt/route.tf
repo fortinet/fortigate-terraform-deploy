@@ -11,7 +11,7 @@ resource "azurerm_route" "default" {
   route_table_name       = azurerm_route_table.internal.name
   address_prefix         = "0.0.0.0/0"
   next_hop_type          = "VirtualAppliance"
-  next_hop_in_ip_address = var.activeport2
+  next_hop_in_ip_address = var.activeport3
 }
 
 resource "azurerm_subnet_route_table_association" "internalassociate" {
