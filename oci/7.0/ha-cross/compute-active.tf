@@ -122,7 +122,7 @@ resource "oci_core_vnic_attachment" "vnic_attach_hasync" {
 
 // Use for bootstrapping cloud-init
 data "template_file" "userdata_lic" {
-  template = "${file("${var.bootstrap-active}")}"
+  template = file("${var.bootstrap-active}")
 
   vars = {
     license_file        = "${file("${var.license}")}"

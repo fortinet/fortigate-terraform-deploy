@@ -196,7 +196,7 @@ resource "oci_core_instance" "vm" {
 
 // For bootstrapping cloud-init
 data "template_file" "userdata_lic" {
-  template = "${file("${var.bootstrap}")}"
+  template = file("${var.bootstrap}")
 
   vars = {
     license_file = "${file("${var.license}")}"

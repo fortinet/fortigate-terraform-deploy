@@ -87,7 +87,7 @@ resource "oci_core_vnic_attachment" "vnic_attach_hasync_passive" {
 
 // Use for bootstrapping cloud-init
 data "template_file" "userdata_lic_passive" {
-  template = "${file("${var.bootstrap-passive}")}"
+  template = file("${var.bootstrap-passive}")
 
   vars = {
     license_file        = "${file("${var.license2}")}"

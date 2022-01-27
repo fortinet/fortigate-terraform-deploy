@@ -6,9 +6,9 @@ data "oci_identity_availability_domains" "ads" {
 # Gets the boot volume attachments for each instance
 data "oci_core_boot_volume_attachments" "block_attach" {
   depends_on          = [oci_core_instance.activevm]
-  availability_domain = "${oci_core_instance.activevm.availability_domain}"
-  compartment_id      = "${var.compartment_ocid}"
-  instance_id         = "${oci_core_instance.activevm.id}"
+  availability_domain = oci_core_instance.activevm.availability_domain
+  compartment_id      = var.compartment_ocid
+  instance_id         = oci_core_instance.activevm.id
 }
 
 # Gets the boot volume attachments for each instance
