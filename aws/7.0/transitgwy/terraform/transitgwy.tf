@@ -13,7 +13,7 @@ resource "aws_ec2_transit_gateway" "TGW-XAZ" {
 
 # Route Tables
 resource "aws_ec2_transit_gateway_route_table" "TGW-spoke-rt" {
-  depends_on = [aws_ec2_transit_gateway.TGW-XAZ]
+  depends_on         = [aws_ec2_transit_gateway.TGW-XAZ]
   transit_gateway_id = aws_ec2_transit_gateway.TGW-XAZ.id
   tags = {
     Name     = "TGW-SPOKES-RT"
@@ -22,7 +22,7 @@ resource "aws_ec2_transit_gateway_route_table" "TGW-spoke-rt" {
 }
 
 resource "aws_ec2_transit_gateway_route_table" "TGW-VPC-SEC-rt" {
-  depends_on = [aws_ec2_transit_gateway.TGW-XAZ]
+  depends_on         = [aws_ec2_transit_gateway.TGW-XAZ]
   transit_gateway_id = aws_ec2_transit_gateway.TGW-XAZ.id
   tags = {
     Name     = "TGW-VPC-SEC-RT"
@@ -31,7 +31,7 @@ resource "aws_ec2_transit_gateway_route_table" "TGW-VPC-SEC-rt" {
 }
 
 resource "aws_ec2_transit_gateway_route_table" "TGW-VPC-MGMT-rt" {
-  depends_on = [aws_ec2_transit_gateway.TGW-XAZ]
+  depends_on         = [aws_ec2_transit_gateway.TGW-XAZ]
   transit_gateway_id = aws_ec2_transit_gateway.TGW-XAZ.id
   tags = {
     Name     = "TGW-VPC-MGMT-RT"
