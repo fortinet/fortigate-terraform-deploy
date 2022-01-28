@@ -168,7 +168,7 @@ resource "google_compute_firewall" "allow-mgmt" {
 
 # active userdata pre-configuration
 data "template_file" "setup-active" {
-  template = "${file("${path.module}/active")}"
+  template = file("${path.module}/active")
   vars = {
     active_port1_ip   = var.active_port1_ip
     active_port1_mask = var.active_port1_mask
@@ -189,7 +189,7 @@ data "template_file" "setup-active" {
 
 # passive userdata pre-configuration
 data "template_file" "setup-passive" {
-  template = "${file("${path.module}/passive")}"
+  template = file("${path.module}/passive")
   vars = {
     passive_port1_ip   = var.passive_port1_ip
     passive_port1_mask = var.passive_port1_mask
@@ -333,13 +333,13 @@ resource "google_compute_instance" "default2" {
 
 # Output
 output "FortiGate-HA-Cluster-IP" {
-  value = "${google_compute_instance.default.network_interface.0.access_config.*.nat_ip}"
+  value = google_compute_instance.default.network_interface.0.access_config.*.nat_ip
 }
 output "FortiGate-HA-Master-MGMT-IP" {
-  value = "${google_compute_instance.default.network_interface.3.access_config.0.nat_ip}"
+  value = google_compute_instance.default.network_interface.3.access_config.0.nat_ip
 }
 output "FortiGate-HA-Slave-MGMT-IP" {
-  value = "${google_compute_instance.default2.network_interface.3.access_config.0.nat_ip}"
+  value = google_compute_instance.default2.network_interface.3.access_config.0.nat_ip
 }
 
 output "FortiGate-Username" {
