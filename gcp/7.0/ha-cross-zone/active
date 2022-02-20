@@ -69,4 +69,4 @@ config system vdom-exception
     edit 1
         set object system.interface
     next
-nd
+end
