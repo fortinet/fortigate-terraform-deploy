@@ -108,16 +108,6 @@ variable "active_port3_mask" {
   type    = string
   default = "32"
 }
-# active hamgmt
-variable "active_port4_ip" {
-  type    = string
-  default = "172.16.3.2"
-}
-variable "active_port4_mask" {
-  type    = string
-  default = "24"
-}
-
 
 # passive sync interface ip assignments
 #passive ext
@@ -150,16 +140,3 @@ variable "passive_port3_mask" {
   type    = string
   default = "32"
 }
-
-
-# passive hamgmt
-variable "passive_port4_ip" {
-  type    = string
-  default = "172.16.3.3"
-}
-variable "passive_port4_mask" {
-  type    = string
-  default = "24"
-}
-
-

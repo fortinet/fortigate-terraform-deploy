@@ -20,12 +20,6 @@ config system interface
         set allowaccess ping https ssh http fgfm
         set description "sync"
     next
-    edit port4
-        set mode static
-        set ip ${active_port4_ip}/${active_port4_mask}
-        set allowaccess ping https ssh http fgfm
-        set description "hamgmt"
-    next
 end
 config system ha
     set group-name "group1"

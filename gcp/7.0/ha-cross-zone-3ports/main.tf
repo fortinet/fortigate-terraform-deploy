@@ -149,8 +149,6 @@ data "template_file" "setup-active" {
     active_port2_mask = var.active_port2_mask
     active_port3_ip   = var.active_port3_ip
     active_port3_mask = var.active_port3_mask
-    active_port4_ip   = var.active_port4_ip
-    active_port4_mask = var.active_port4_mask
     hamgmt_gateway_ip = var.mgmt_gateway     //  hamgmt gateway ip
     passive_hb_ip     = var.passive_port3_ip // passive hb ip
     hb_netmask        = var.mgmt_mask        // mgmt netmask
@@ -172,8 +170,6 @@ data "template_file" "setup-passive" {
     passive_port2_mask = var.passive_port2_mask
     passive_port3_ip   = var.passive_port3_ip
     passive_port3_mask = var.passive_port3_mask
-    passive_port4_ip   = var.passive_port4_ip
-    passive_port4_mask = var.passive_port4_mask
     hamgmt_gateway_ip  = var.mgmt_gateway    //  hamgmt gateway ip
     active_hb_ip       = var.active_port3_ip // active hb ip
     hb_netmask         = var.mgmt_mask       // mgmt netmask
