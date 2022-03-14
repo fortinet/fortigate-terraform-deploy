@@ -15,7 +15,7 @@ variable "zone2" {
 # GCP project name
 variable "project" {
   type    = string
-  default = "dev-project-001-166400"
+  default = "<gcp project id>"
 }
 # GCP oauth access token
 variable "token" {
