@@ -15,7 +15,7 @@ Terraform deploys the following components:
    - A Virtual Private Cloud (VPC) with one public subnet
    - A VPC with two private subnets
    - Two FortiGate-VM instances with three NICs in different zones
-   - Four firewall rules: one for external, one for internal, and one for sync/hamgmt.
+   - Three firewall rules: one for external, one for internal, and one for sync/hamgmt.
    - 4 public static address.  1 for cluster ip, 1 for active hamgmt, 1 for passive hamgmt, and 1 for forwarding rule.
    - One internal route associate to the private subnet
    - One forwarding rule with two different target groups.  Each target group points to the FortiGates in each AZ.
