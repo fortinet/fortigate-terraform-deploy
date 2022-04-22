@@ -64,9 +64,7 @@ resource "alicloud_route_table_attachment" "rtattach" {
 // Egress Route to Fortigate
 resource "alicloud_route_entry" "egress" {
   depends_on = [alicloud_route_table.intrt]
-  // The Default Route
   route_table_id = alicloud_route_table.intrt.id
-  //route_table_id        = alicloud_vpc.vpc.route_table_id
   destination_cidrblock = var.default_egress_route
   nexthop_type          = "NetworkInterface"
   nexthop_id            = alicloud_ecs_network_interface.FortiGateInterface.id
