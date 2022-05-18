@@ -1,4 +1,4 @@
-# Deployment of a FortiGate-VM (BYOL/PAYG) on the AWS with GWLB integration with multiple VPC in multiple tenants setup
+# Deployment of a FortiGate-VM (BYOL) on the AWS with GWLB integration with multiple VPC in multiple tenants setup
 ## Introduction
 A Terraform script to deploy a FortiGate-VM on AWS with Gateway Load Balancer intergration with multiple VPC with multiple tenants setup.
 Each VPC's traffic will be separate into its own VDOM. 
