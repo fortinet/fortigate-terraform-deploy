@@ -38,7 +38,8 @@ To enable such a scenario, three Transit Gateway Route Tables are created.  One 
 ## Deployment
 * Clone the repository.
 * Change ACCESS_KEY and SECRET_KEY values in terraform.tfvars.example.  And rename `terraform.tfvars.example` to `terraform.tfvars`.
-* Change parameters in the variables.tf. 
+* Change parameters in the variables.tf.
+* If using SSO, uncomment the token variable in variables.tf and providers.tf
 * Initialize the providers and modules:
   ```sh
   $ terraform init
