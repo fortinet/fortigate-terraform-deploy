@@ -9,6 +9,9 @@
 variable "access_key" {}
 variable "secret_key" {}
 
+# Uncomment if using AWS SSO:
+# variable "token"      {}
+
 # Prefix for all resources created for this deployment in AWS
 variable "tag_name_prefix" {
   description = "Provide a common tag prefix value that will be used in the name tag for all resources"
