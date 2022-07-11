@@ -44,8 +44,8 @@ To deploy the FortiGate-VM to GCP:
 Output will include the information necessary to log in to the FortiGate-VM instances:
 ```sh
 External-Load-Balancer-Public-IP-Address = "XXX.XXX.XXX.XXX"
-FortiGate-HA-Master-MGMT-IP = "XXX.XXX.XXX.XXX"
-FortiGate-HA-Slave-MGMT-IP = "XXX.XXX.XXX.XXX"
+FortiGate-HA-Active-MGMT-IP = "XXX.XXX.XXX.XXX"
+FortiGate-HA-Passive-MGMT-IP = "XXX.XXX.XXX.XXX"
 FortiGate-Password = "<Password Here>"
 FortiGate-Username = "admin"
 Internal-Load-Balancer-Public-IP-Address = "XXX.XXX.XXX.XXX"
