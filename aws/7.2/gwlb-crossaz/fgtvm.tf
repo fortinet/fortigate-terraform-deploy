@@ -108,7 +108,15 @@ resource "aws_instance" "fgtvm" {
   instance_type     = var.size
   availability_zone = var.az1
   key_name          = var.keyname
-  user_data         = data.template_file.FortiGate.rendered
+  user_data = templatefile("${var.bootstrap-fgtvm}", {
+    type         = "${var.license_type}"
+    license_file = "${var.license}"
+    adminsport   = "${var.adminsport}"
+    dst          = var.privatecidraz2
+    gateway      = cidrhost(var.privatecidraz1, 1)
+    endpointip   = "${data.aws_network_interface.vpcendpointip.private_ip}"
+    endpointip2  = "${data.aws_network_interface.vpcendpointipaz2.private_ip}"
+  })
 
   root_block_device {
     volume_type = "standard"
@@ -142,7 +150,15 @@ resource "aws_instance" "fgtvm2" {
   instance_type     = var.size
   availability_zone = var.az2
   key_name          = var.keyname
-  user_data         = data.template_file.FortiGate2.rendered
+  user_data = templatefile("${var.bootstrap-fgtvm}", {
+    type         = "${var.license_type}"
+    license_file = "${var.license2}"
+    adminsport   = "${var.adminsport}"
+    dst          = var.privatecidraz1
+    gateway      = cidrhost(var.privatecidraz2, 1)
+    endpointip   = "${data.aws_network_interface.vpcendpointip.private_ip}"
+    endpointip2  = "${data.aws_network_interface.vpcendpointipaz2.private_ip}"
+  })
 
   root_block_device {
     volume_type = "standard"
@@ -167,31 +183,5 @@ resource "aws_instance" "fgtvm2" {
 
   tags = {
     Name = "FortiGateVM-az2"
-  }
-}
-
-data "template_file" "FortiGate" {
-  template = file("${var.bootstrap-fgtvm}")
-  vars = {
-    type         = "${var.license_type}"
-    license_file = "${var.license}"
-    adminsport   = "${var.adminsport}"
-    dst          = var.privatecidraz2
-    gateway      = cidrhost(var.privatecidraz1, 1)
-    endpointip   = "${data.aws_network_interface.vpcendpointip.private_ip}"
-    endpointip2  = "${data.aws_network_interface.vpcendpointipaz2.private_ip}"
-  }
-}
-
-data "template_file" "FortiGate2" {
-  template = file("${var.bootstrap-fgtvm}")
-  vars = {
-    type         = "${var.license_type}"
-    license_file = "${var.license2}"
-    adminsport   = "${var.adminsport}"
-    dst          = var.privatecidraz1
-    gateway      = cidrhost(var.privatecidraz2, 1)
-    endpointip   = "${data.aws_network_interface.vpcendpointip.private_ip}"
-    endpointip2  = "${data.aws_network_interface.vpcendpointipaz2.private_ip}"
   }
 }
