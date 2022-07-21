@@ -47,7 +47,14 @@ resource "aws_instance" "fgtvm" {
   instance_type     = var.size
   availability_zone = var.az1
   key_name          = var.keyname
-  user_data         = data.template_file.FortiGate.rendered
+  user_data = templatefile("${var.bootstrap-fgtvm}", {
+    type         = "${var.license_type}"
+    license_file = "${var.license}"
+    adminsport   = "${var.adminsport}"
+    endpointip   = "${data.aws_network_interface.vpcendpointip.private_ip}"
+    endpointid1  = trimprefix("${aws_vpc_endpoint.gwlbendpoint.id}", "vpce-")
+    endpointid2  = trimprefix("${aws_vpc_endpoint.gwlbendpoint2.id}", "vpce-")
+  })
 
   root_block_device {
     volume_type = "standard"
@@ -72,17 +79,5 @@ resource "aws_instance" "fgtvm" {
 
   tags = {
     Name = "FortiGateVM-GWLB"
-  }
-}
-
-data "template_file" "FortiGate" {
-  template = file("${var.bootstrap-fgtvm}")
-  vars = {
-    type         = "${var.license_type}"
-    license_file = "${var.license}"
-    adminsport   = "${var.adminsport}"
-    endpointip   = "${data.aws_network_interface.vpcendpointip.private_ip}"
-    endpointid1  = trimprefix("${aws_vpc_endpoint.gwlbendpoint.id}", "vpce-")
-    endpointid2  = trimprefix("${aws_vpc_endpoint.gwlbendpoint2.id}", "vpce-")
   }
 }
