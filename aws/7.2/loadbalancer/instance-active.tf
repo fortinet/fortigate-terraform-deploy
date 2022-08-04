@@ -27,11 +27,22 @@ resource "aws_network_interface_sg_attachment" "internalattachment" {
 }
 
 resource "aws_instance" "fgtactive" {
-  ami                  = var.license_type == "byol" ? var.fgtvmbyolami[var.region] : var.fgtvmami[var.region]
-  instance_type        = var.size
-  availability_zone    = var.az
-  key_name             = var.keyname
-  user_data            = data.template_file.activeFortiGate.rendered
+  ami               = var.license_type == "byol" ? var.fgtvmbyolami[var.region] : var.fgtvmami[var.region]
+  instance_type     = var.size
+  availability_zone = var.az
+  key_name          = var.keyname
+  user_data = templatefile("${var.bootstrap-active}", {
+    type           = "${var.license_type}"
+    license_file   = "${var.license}"
+    port1_ip       = "${var.activeport1}"
+    port1_mask     = "${var.activeport1mask}"
+    port2_ip       = "${var.activeport2}"
+    port2_mask     = "${var.activeport2mask}"
+    passive_peerip = "${var.passiveport1}"
+    defaultgwy     = "${var.activeport1gateway}"
+    adminsport     = "${var.adminsport}"
+    presharekey    = "${var.presharekey}"
+  })
   iam_instance_profile = var.iam
 
   root_block_device {
@@ -59,21 +70,3 @@ resource "aws_instance" "fgtactive" {
     Name = "FortiGateVM Active"
   }
 }
-
-
-data "template_file" "activeFortiGate" {
-  template = "${file("${var.bootstrap-active}")}"
-  vars = {
-    type           = "${var.license_type}"
-    license_file   = "${var.license}"
-    port1_ip       = "${var.activeport1}"
-    port1_mask     = "${var.activeport1mask}"
-    port2_ip       = "${var.activeport2}"
-    port2_mask     = "${var.activeport2mask}"
-    passive_peerip = "${var.passiveport1}"
-    defaultgwy     = "${var.activeport1gateway}"
-    adminsport     = "${var.adminsport}"
-    presharekey    = "${var.presharekey}"
-  }
-}
-
