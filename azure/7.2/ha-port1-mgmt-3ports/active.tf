@@ -44,7 +44,27 @@ resource "azurerm_virtual_machine" "customactivefgtvm" {
     computer_name  = "customactivefgt"
     admin_username = var.adminusername
     admin_password = var.adminpassword
-    custom_data    = data.template_file.activeFortiGate.rendered
+    custom_data = templatefile("${var.bootstrap-active}", {
+      type            = var.license_type
+      license_file    = var.license
+      port1_ip        = var.activeport1
+      port1_mask      = var.activeport1mask
+      port2_ip        = var.activeport2
+      port2_mask      = var.activeport2mask
+      port3_ip        = var.activeport3
+      port3_mask      = var.activeport3mask
+      passive_peerip  = var.passiveport1
+      mgmt_gateway_ip = var.port1gateway
+      defaultgwy      = var.port2gateway
+      tenant          = var.tenant_id
+      subscription    = var.subscription_id
+      clientid        = var.client_id
+      clientsecret    = var.client_secret
+      adminsport      = var.adminsport
+      rsg             = azurerm_resource_group.myterraformgroup.name
+      clusterip       = azurerm_public_ip.ClusterPublicIP.name
+      routename       = azurerm_route_table.internal.name
+    })
   }
 
   os_profile_linux_config {
@@ -107,7 +127,27 @@ resource "azurerm_virtual_machine" "activefgtvm" {
     computer_name  = "activefgt"
     admin_username = var.adminusername
     admin_password = var.adminpassword
-    custom_data    = data.template_file.activeFortiGate.rendered
+    custom_data = templatefile("${var.bootstrap-active}", {
+      type            = var.license_type
+      license_file    = var.license
+      port1_ip        = var.activeport1
+      port1_mask      = var.activeport1mask
+      port2_ip        = var.activeport2
+      port2_mask      = var.activeport2mask
+      port3_ip        = var.activeport3
+      port3_mask      = var.activeport3mask
+      passive_peerip  = var.passiveport1
+      mgmt_gateway_ip = var.port1gateway
+      defaultgwy      = var.port2gateway
+      tenant          = var.tenant_id
+      subscription    = var.subscription_id
+      clientid        = var.client_id
+      clientsecret    = var.client_secret
+      adminsport      = var.adminsport
+      rsg             = azurerm_resource_group.myterraformgroup.name
+      clusterip       = azurerm_public_ip.ClusterPublicIP.name
+      routename       = azurerm_route_table.internal.name
+    })
   }
 
   os_profile_linux_config {
@@ -121,30 +161,5 @@ resource "azurerm_virtual_machine" "activefgtvm" {
 
   tags = {
     environment = "Terraform Demo"
-  }
-}
-
-data "template_file" "activeFortiGate" {
-  template = file(var.bootstrap-active)
-  vars = {
-    type            = var.license_type
-    license_file    = var.license
-    port1_ip        = var.activeport1
-    port1_mask      = var.activeport1mask
-    port2_ip        = var.activeport2
-    port2_mask      = var.activeport2mask
-    port3_ip        = var.activeport3
-    port3_mask      = var.activeport3mask
-    passive_peerip  = var.passiveport1
-    mgmt_gateway_ip = var.port1gateway
-    defaultgwy      = var.port2gateway
-    tenant          = var.tenant_id
-    subscription    = var.subscription_id
-    clientid        = var.client_id
-    clientsecret    = var.client_secret
-    adminsport      = var.adminsport
-    rsg             = azurerm_resource_group.myterraformgroup.name
-    clusterip       = azurerm_public_ip.ClusterPublicIP.name
-    routename       = azurerm_route_table.internal.name
   }
 }
