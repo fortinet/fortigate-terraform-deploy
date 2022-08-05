@@ -45,7 +45,10 @@ resource "azurerm_virtual_machine" "customfgtvm" {
     computer_name  = "fgtvm"
     admin_username = var.adminusername
     admin_password = var.adminpassword
-    custom_data    = data.template_file.fgtvm.rendered
+    custom_data = templatefile("${var.bootstrap-fgtvm}", {
+      type         = var.license_type
+      license_file = var.license
+    })
   }
 
   os_profile_linux_config {
@@ -64,6 +67,7 @@ resource "azurerm_virtual_machine" "customfgtvm" {
 
 
 resource "azurerm_virtual_machine" "fgtvm" {
+  zones                        = [1]
   count                        = var.custom ? 0 : 1
   name                         = "fgtvm"
   location                     = var.location
@@ -104,7 +108,11 @@ resource "azurerm_virtual_machine" "fgtvm" {
     computer_name  = "fgtvm"
     admin_username = var.adminusername
     admin_password = var.adminpassword
-    custom_data    = data.template_file.fgtvm.rendered
+    custom_data = templatefile("${var.bootstrap-fgtvm}", {
+      type         = var.license_type
+      license_file = var.license
+    })
+
   }
 
   os_profile_linux_config {
@@ -118,13 +126,5 @@ resource "azurerm_virtual_machine" "fgtvm" {
 
   tags = {
     environment = "Terraform Demo"
-  }
-}
-
-data "template_file" "fgtvm" {
-  template = file(var.bootstrap-fgtvm)
-  vars = {
-    type         = var.license_type
-    license_file = var.license
   }
 }
