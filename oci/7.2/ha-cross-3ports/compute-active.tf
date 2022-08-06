@@ -30,7 +30,26 @@ resource "oci_core_instance" "activevm" {
   // Required for bootstrap
   // Commnet out the following if you use the feature.
   metadata = {
-    user_data = base64encode(data.template_file.userdata_lic.rendered)
+    user_data = base64encode(templatefile("${var.bootstrap-active}", {
+      license_file        = "${file("${var.license}")}"
+      port1_ip            = var.mgmt_private_ip_active
+      port1_mask          = var.mgmt_private_mask
+      port2_ip            = var.public_private_ip_active
+      port2_mask          = var.public_private_mask
+      port3_ip            = var.trust_private_ip_active
+      port3_mask          = var.trust_private_mask
+      passive_peerip      = var.mgmt_private_ip_passive
+      mgmt_gateway_ip     = oci_core_subnet.mgmt_subnet.virtual_router_ip
+      public_gateway_ip   = oci_core_subnet.public_subnet.virtual_router_ip
+      vcn_cidr            = var.vcn_cidr
+      internal_gateway_ip = oci_core_subnet.trust_subnet.virtual_router_ip
+      tenantid            = var.tenancy_ocid
+      userid              = var.user_ocid
+      compartid           = var.compartment_ocid
+      cert                = var.cert
+      region              = var.region
+      })
+    )
   }
 
   timeouts {
@@ -104,29 +123,3 @@ resource "oci_core_route_table" "trust_routetable" {
     network_entity_id = lookup(data.oci_core_private_ips.fw_private_ip.private_ips[0], "id")
   }
 }
-
-// Use for bootstrapping cloud-init
-data "template_file" "userdata_lic" {
-  template = file("${var.bootstrap-active}")
-
-  vars = {
-    license_file        = "${file("${var.license}")}"
-    port1_ip            = var.mgmt_private_ip_active
-    port1_mask          = var.mgmt_private_mask
-    port2_ip            = var.public_private_ip_active
-    port2_mask          = var.public_private_mask
-    port3_ip            = var.trust_private_ip_active
-    port3_mask          = var.trust_private_mask
-    passive_peerip      = var.mgmt_private_ip_passive
-    mgmt_gateway_ip     = oci_core_subnet.mgmt_subnet.virtual_router_ip
-    public_gateway_ip   = oci_core_subnet.public_subnet.virtual_router_ip
-    vcn_cidr            = var.vcn_cidr
-    internal_gateway_ip = oci_core_subnet.trust_subnet.virtual_router_ip
-    tenantid            = var.tenancy_ocid
-    userid              = var.user_ocid
-    compartid           = var.compartment_ocid
-    cert                = var.cert
-    region              = var.region
-  }
-}
-
