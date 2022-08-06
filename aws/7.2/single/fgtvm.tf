@@ -30,7 +30,11 @@ resource "aws_instance" "fgtvm" {
   instance_type     = var.size
   availability_zone = var.az1
   key_name          = var.keyname
-  user_data         = data.template_file.FortiGate.rendered
+  user_data = templatefile("${var.bootstrap-fgtvm}", {
+    type         = "${var.license_type}"
+    license_file = "${var.license}"
+    adminsport   = "${var.adminsport}"
+  })
 
   root_block_device {
     volume_type = "standard"
@@ -57,14 +61,3 @@ resource "aws_instance" "fgtvm" {
     Name = "FortiGateVM"
   }
 }
-
-
-data "template_file" "FortiGate" {
-  template = "${file("${var.bootstrap-fgtvm}")}"
-  vars = {
-    type         = "${var.license_type}"
-    license_file = "${var.license}"
-    adminsport   = "${var.adminsport}"
-  }
-}
-
