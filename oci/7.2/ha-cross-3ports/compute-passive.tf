@@ -32,7 +32,26 @@ resource "oci_core_instance" "passivevm" {
   // Required for bootstrap
   // Commnet out the following if you use the feature.
   metadata = {
-    user_data = "${base64encode(data.template_file.userdata_lic_passive.rendered)}"
+    user_data = base64encode(templatefile("${var.bootstrap-passive}", {
+      license_file        = "${file("${var.license2}")}"
+      port1_ip            = var.mgmt_private_ip_passive
+      port1_mask          = var.mgmt_private_mask
+      port2_ip            = var.public_private_ip_passive
+      port2_mask          = var.public_private_mask
+      port3_ip            = var.trust_private_ip_passive
+      port3_mask          = var.trust_private_mask
+      passive_peerip      = var.mgmt_private_ip_active
+      mgmt_gateway_ip     = oci_core_subnet.mgmt_subnet_ad2.virtual_router_ip
+      public_gateway_ip   = oci_core_subnet.public_subnet_ad2.virtual_router_ip
+      vcn_cidr            = var.vcn_cidr
+      internal_gateway_ip = oci_core_subnet.trust_subnet_ad2.virtual_router_ip
+      tenantid            = var.tenancy_ocid
+      userid              = var.user_ocid
+      compartid           = var.compartment_ocid
+      cert                = var.cert
+      region              = var.region
+      })
+    )
   }
 
   timeouts {
@@ -67,31 +86,6 @@ resource "oci_core_vnic_attachment" "vnic_attach_trust_passive" {
     assign_public_ip       = false
     skip_source_dest_check = true
     private_ip             = var.trust_private_ip_passive
-  }
-}
-
-// Use for bootstrapping cloud-init
-data "template_file" "userdata_lic_passive" {
-  template = file("${var.bootstrap-passive}")
-
-  vars = {
-    license_file        = "${file("${var.license2}")}"
-    port1_ip            = var.mgmt_private_ip_passive
-    port1_mask          = var.mgmt_private_mask
-    port2_ip            = var.public_private_ip_passive
-    port2_mask          = var.public_private_mask
-    port3_ip            = var.trust_private_ip_passive
-    port3_mask          = var.trust_private_mask
-    passive_peerip      = var.mgmt_private_ip_active
-    mgmt_gateway_ip     = oci_core_subnet.mgmt_subnet_ad2.virtual_router_ip
-    public_gateway_ip   = oci_core_subnet.public_subnet_ad2.virtual_router_ip
-    vcn_cidr            = var.vcn_cidr
-    internal_gateway_ip = oci_core_subnet.trust_subnet_ad2.virtual_router_ip
-    tenantid            = var.tenancy_ocid
-    userid              = var.user_ocid
-    compartid           = var.compartment_ocid
-    cert                = var.cert
-    region              = var.region
   }
 }
 

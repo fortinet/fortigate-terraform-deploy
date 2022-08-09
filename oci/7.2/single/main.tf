@@ -187,23 +187,15 @@ resource "oci_core_instance" "vm" {
   // Required for bootstrapp
   // Commnet out the following if you use the feature.
   metadata = {
-    user_data = "${base64encode(data.template_file.userdata_lic.rendered)}"
+    user_data = base64encode(templatefile("${var.bootstrap}", {
+      license_file = "${file("${var.license}")}"
+      port2_ip     = var.trust_private_ip_primary
+      port2_mask   = var.trust_private_mask
+      })
+    )
   }
 
   timeouts {
     create = "60m"
   }
 }
-
-// For bootstrapping cloud-init
-data "template_file" "userdata_lic" {
-  template = file("${var.bootstrap}")
-
-  vars = {
-    license_file = "${file("${var.license}")}"
-    port2_ip     = var.trust_private_ip_primary
-    port2_mask   = var.trust_private_mask
-  }
-}
-
-
