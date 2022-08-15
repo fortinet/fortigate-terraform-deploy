@@ -7,7 +7,7 @@ resource "azurerm_virtual_network" "fgtvnetwork" {
   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform Single FortiGate"
   }
 }
 
@@ -32,9 +32,10 @@ resource "azurerm_public_ip" "FGTPublicIp" {
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
   allocation_method   = "Static"
+  sku                 = "Standard"
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform Single FortiGate"
   }
 }
 
@@ -57,7 +58,7 @@ resource "azurerm_network_security_group" "publicnetworknsg" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform Single FortiGate"
   }
 }
 
@@ -79,7 +80,7 @@ resource "azurerm_network_security_group" "privatenetworknsg" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform Single FortiGate"
   }
 }
 
@@ -126,7 +127,7 @@ resource "azurerm_network_interface" "fgtport1" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform Single FortiGate"
   }
 }
 
@@ -143,7 +144,7 @@ resource "azurerm_network_interface" "fgtport2" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform Single FortiGate"
   }
 }
 # Connect the security group to the network interfaces

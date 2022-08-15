@@ -12,7 +12,7 @@ resource "azurerm_network_interface" "clientinternal" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - 3 Ports"
   }
 }
 
