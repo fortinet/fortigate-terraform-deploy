@@ -3,8 +3,7 @@ output "ResourceGroup" {
 }
 
 output "FGTPublicIP" {
-  value = azurerm_public_ip.FGTPublicIp.ip_address
-
+  value = format("https://%s", azurerm_public_ip.FGTPublicIp.ip_address)
 }
 
 output "Username" {

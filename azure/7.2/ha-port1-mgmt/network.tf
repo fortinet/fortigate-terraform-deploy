@@ -7,7 +7,7 @@ resource "azurerm_virtual_network" "fgtvnetwork" {
   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -48,7 +48,7 @@ resource "azurerm_public_ip" "ClusterPublicIP" {
   allocation_method   = "Static"
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -59,7 +59,7 @@ resource "azurerm_public_ip" "ActiveMGMTIP" {
   allocation_method   = "Static"
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -70,7 +70,7 @@ resource "azurerm_public_ip" "PassiveMGMTIP" {
   allocation_method   = "Static"
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -93,7 +93,7 @@ resource "azurerm_network_security_group" "publicnetworknsg" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -115,7 +115,7 @@ resource "azurerm_network_security_group" "privatenetworknsg" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -164,7 +164,7 @@ resource "azurerm_network_interface" "activeport1" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -183,7 +183,7 @@ resource "azurerm_network_interface" "activeport2" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -201,7 +201,7 @@ resource "azurerm_network_interface" "activeport3" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -218,7 +218,7 @@ resource "azurerm_network_interface" "activeport4" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -263,7 +263,7 @@ resource "azurerm_network_interface" "passiveport1" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -281,7 +281,7 @@ resource "azurerm_network_interface" "passiveport2" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -299,7 +299,7 @@ resource "azurerm_network_interface" "passiveport3" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -316,7 +316,7 @@ resource "azurerm_network_interface" "passiveport4" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 

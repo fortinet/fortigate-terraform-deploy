@@ -7,12 +7,11 @@ output "ClusterPublicIP" {
 }
 
 output "ActiveMGMTPublicIP" {
-  value = azurerm_public_ip.ActiveMGMTIP.ip_address
+  value = format("https://%s:%s", azurerm_public_ip.ActiveMGMTIP.ip_address, var.adminsport)
 }
 
-
 output "PassiveMGMTPublicIP" {
-  value = azurerm_public_ip.PassiveMGMTIP.ip_address
+  value = format("https://%s:%s", azurerm_public_ip.PassiveMGMTIP.ip_address, var.adminsport)
 }
 
 output "Username" {
@@ -22,4 +21,3 @@ output "Username" {
 output "Password" {
   value = var.adminpassword
 }
-

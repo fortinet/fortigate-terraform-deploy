@@ -1,10 +1,10 @@
 // Resource Group
 
 resource "azurerm_resource_group" "myterraformgroup" {
-  name     = "Terraformdemo"
+  name     = "terraform-ha-ap-fgt-crosszone"
   location = var.location
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Crosszone"
   }
 }
