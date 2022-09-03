@@ -104,7 +104,8 @@ resource "aws_network_interface_sg_attachment" "internalattachment2" {
 
 
 resource "aws_instance" "fgtvm" {
-  ami               = var.license_type == "byol" ? var.fgtvmbyolami[var.region] : var.fgtvmami[var.region]
+  //it will use region, architect, and license type to decide which ami to use for deployment
+  ami               = var.fgtami[var.region][var.arch][var.license_type]
   instance_type     = var.size
   availability_zone = var.az1
   key_name          = var.keyname
@@ -146,7 +147,8 @@ resource "aws_instance" "fgtvm" {
 
 
 resource "aws_instance" "fgtvm2" {
-  ami               = var.license_type == "byol" ? var.fgtvmbyolami[var.region] : var.fgtvmami[var.region]
+  //it will use region, architect, and license type to decide which ami to use for deployment
+  ami               = var.fgtami[var.region][var.arch][var.license_type]
   instance_type     = var.size
   availability_zone = var.az2
   key_name          = var.keyname

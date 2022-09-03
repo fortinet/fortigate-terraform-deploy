@@ -43,18 +43,18 @@ resource "aws_network_interface_sg_attachment" "internalattachment" {
 }
 
 resource "aws_instance" "fgtvm" {
-  ami               = var.fgtvmbyolami[var.region]
+  ami               = var.fgtami[var.region][var.arch][var.license_type]
   instance_type     = var.size
   availability_zone = var.az1
   key_name          = var.keyname
-  user_data = templatefile("${var.bootstrap-fgtvm}", {
+  user_data = chomp(templatefile("${var.bootstrap-fgtvm}", {
     type         = "${var.license_type}"
     license_file = "${var.license}"
     adminsport   = "${var.adminsport}"
     endpointip   = "${data.aws_network_interface.vpcendpointip.private_ip}"
     endpointid1  = trimprefix("${aws_vpc_endpoint.gwlbendpoint.id}", "vpce-")
     endpointid2  = trimprefix("${aws_vpc_endpoint.gwlbendpoint2.id}", "vpce-")
-  })
+  }))
 
   root_block_device {
     volume_type = "standard"

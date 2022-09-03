@@ -57,11 +57,12 @@ resource "aws_network_interface_sg_attachment" "passivehasyncattachment" {
 
 resource "aws_instance" "fgtpassive" {
   depends_on        = [aws_instance.fgtactive]
-  ami               = var.license_type == "byol" ? var.fgtvmbyolami[var.region] : var.fgtvmami[var.region]
+  //it will use region, architect, and license type to decide which ami to use for deployment
+  ami               = var.fgtami[var.region][var.arch][var.license_type]
   instance_type     = var.size
   availability_zone = var.az2
   key_name          = var.keyname
-  user_data = templatefile("${var.bootstrap-passive}", {
+  user_data = chomp(templatefile("${var.bootstrap-passive}", {
     type            = "${var.license_type}"
     license_file    = "${var.license2}"
     port1_ip        = "${var.passiveport1}"
@@ -79,7 +80,7 @@ resource "aws_instance" "fgtpassive" {
     vpc_ip          = cidrhost(var.vpccidr, 0)
     vpc_mask        = cidrnetmask(var.vpccidr)
     adminsport      = "${var.adminsport}"
-  })
+  }))
   iam_instance_profile = var.iam
 
   root_block_device {
