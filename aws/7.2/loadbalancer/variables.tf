@@ -1,6 +1,6 @@
 //AWS Configuration
-variable access_key {}
-variable secret_key {}
+variable "access_key" {}
+variable "secret_key" {}
 
 variable "region" {
   default = "eu-west-1"
@@ -54,66 +54,156 @@ variable "license_type" {
   default = "byol"
 }
 
-// AMIs are for FGTVM-AWS(PAYG) - 7.2.0
-variable "fgtvmami" {
-  type = map
-  default = {
-    us-east-1      = "ami-035a7ca1d22b2ac60"
-    us-east-2      = "ami-0c89751940e00028a"
-    us-west-1      = "ami-027023effe0d0cbcb"
-    us-west-2      = "ami-0e18da7f57b1455de"
-    af-south-1     = "ami-0020b49aee42aac43"
-    ap-east-1      = "ami-040df30827808387e"
-    ap-southeast-3 = "ami-08b193fa0e26053bc"
-    ap-south-1     = "ami-03ce0208e1bf0a4c2"
-    ap-northeast-3 = "ami-0dba0e863219fbd2c"
-    ap-northeast-2 = "ami-01966ce84e55ce9af"
-    ap-southeast-1 = "ami-0abcebf6fa84ec1c9"
-    ap-southeast-2 = "ami-0d4a09cac89f2cb2b"
-    ap-northeast-1 = "ami-08e9a008d439bd92d"
-    ca-central-1   = "ami-0f575e9fe174cc613"
-    eu-central-1   = "ami-09b319a3f356c62a3"
-    eu-west-1      = "ami-0295b18e7c5c68440"
-    eu-west-2      = "ami-0e0cf6ee5949311d3"
-    eu-south-1     = "ami-00c0fd80460334680"
-    eu-west-3      = "ami-0a2f70eeaccb4f756"
-    eu-north-1     = "ami-0980a6c5462eb20c7"
-    me-south-1     = "ami-0e971c7104d9ab577"
-    sa-east-1      = "ami-0f857d7ef57d996d7"
-  }
+// instance architect
+// x86 for now
+variable "arch" {
+  default = "x86"
 }
 
-// AMIs are for FGTVM AWS(BYOL) - 7.2.0
-variable "fgtvmbyolami" {
-  type = map
-  default = {
-    us-east-1      = "ami-08a9244de2d3b3cfa"
-    us-east-2      = "ami-0b07d15df1781b3d8"
-    us-west-1      = "ami-02dc2d7ea094493d6"
-    us-west-2      = "ami-0c0dcf7b73b82c9b1"
-    af-south-1     = "ami-0d74ee5597e3ef661"
-    ap-east-1      = "ami-0a0c5c6454847d23a"
-    ap-southeast-3 = "ami-028cc9519f272bcb6"
-    ap-south-1     = "ami-085942a3a94223f47"
-    ap-northeast-3 = "ami-09b93acca6bd3596c"
-    ap-northeast-2 = "ami-0cf302c5443f1ebb0"
-    ap-southeast-1 = "ami-0a766a36e6c0b330e"
-    ap-southeast-2 = "ami-0b658e3ca1fc97423"
-    ap-northeast-1 = "ami-0daa2ffa06df3702f"
-    ca-central-1   = "ami-07f812bb597b8c317"
-    eu-central-1   = "ami-0d049e761ea8dbffc"
-    eu-west-1      = "ami-0caa0716272a43357"
-    eu-west-2      = "ami-09dc1af4df14fd469"
-    eu-south-1     = "ami-0767c696d9d0d5f9f"
-    eu-west-3      = "ami-0820c09066de0e77e"
-    eu-north-1     = "ami-06828be5bef414e7d"
-    me-south-1     = "ami-054c0c3be39202670"
-    sa-east-1      = "ami-07fe117d69adc5f80"
-  }
-}
-
+// instance type needs to match the architect
+// c5n.xlarge is x86_64
+// For detail, refer to https://aws.amazon.com/ec2/instance-types/
 variable "size" {
   default = "c5n.xlarge"
+}
+
+// AMIs for FGTVM-7.2.1
+variable "fgtami" {
+  type = map(any)
+  default = {
+    us-east-1 = {
+      x86 = {
+        payg = "ami-088a648de0cf2a8d0"
+        byol = "ami-04a997b43f50bd2e8"
+      }
+    },
+    us-east-2 = {
+      x86 = {
+        payg = "ami-081522f5e5c6464ac"
+        byol = "ami-044408b80d602fd14"
+      }
+    },
+    us-west-1 = {
+      x86 = {
+        payg = "ami-002828408925ee484"
+        byol = "ami-084283cfda81157b5"
+      }
+    },
+    us-west-2 = {
+      x86 = {
+        payg = "ami-0e9f40ac7253a4689"
+        byol = "ami-0f323f6cddf382b3c"
+      }
+    },
+    af-south-1 = {
+      x86 = {
+        payg = "ami-02a335d85bbacb1ee"
+        byol = "ami-0708eb366fe788d48"
+      }
+    },
+    ap-east-1 = {
+      x86 = {
+        payg = "ami-0dc8de840415f3336"
+        byol = "ami-033d430c9c34b9568"
+      }
+    },
+    ap-southeast-3 = {
+      x86 = {
+        payg = "ami-0a2d1535fdc0f67ad"
+        byol = "ami-0dd9467e480184f48"
+      }
+    },
+    ap-south-1 = {
+      x86 = {
+        payg = "ami-0549369768f687d54"
+        byol = "ami-0482181325cfb5fc5"
+      }
+    },
+    ap-northeast-3 = {
+      x86 = {
+        payg = "ami-00344c85607641e14"
+        byol = "ami-0e3a167f16247b5de"
+      }
+    },
+    ap-northeast-2 = {
+      x86 = {
+        payg = "ami-0bdea1802f93b4ee8"
+        byol = "ami-09986d3a2221c3d7f"
+      }
+    },
+    ap-southeast-1 = {
+      x86 = {
+        payg = "ami-052f4d53266eb4aef"
+        byol = "ami-076f7b6b3a597d1b4"
+      }
+    },
+    ap-southeast-2 = {
+      x86 = {
+        payg = "ami-0345b2e4ad338d622"
+        byol = "ami-0b3e0e0a0e65ac32c"
+      }
+    },
+    ap-northeast-1 = {
+      x86 = {
+        payg = "ami-007f505b0a7bcad76"
+        byol = "ami-06bc1ba12b6f3676a"
+      }
+    },
+    ca-central-1 = {
+      x86 = {
+        payg = "ami-05c0fd18673a4d06b"
+        byol = "ami-0adb50cbbca913d5d"
+      }
+    },
+    eu-central-1 = {
+      x86 = {
+        payg = "ami-004186c2ec8a32998"
+        byol = "ami-031da2ed752eb2481"
+      }
+    },
+    eu-west-1 = {
+      x86 = {
+        payg = "ami-0230d7f3a27a4b312"
+        byol = "ami-0b4e1809774cb7b1d"
+      }
+    },
+    eu-west-2 = {
+      x86 = {
+        payg = "ami-07b71197286f82ce2"
+        byol = "ami-0182a6e569579d1a0"
+      }
+    },
+    eu-south-1 = {
+      x86 = {
+        payg = "ami-03de21f74b767d59f"
+        byol = "ami-01a43fc8a276d2343"
+      }
+    },
+    eu-west-3 = {
+      x86 = {
+        payg = "ami-0fb094f83a92ee77d"
+        byol = "ami-0a2a273a1afce11a6"
+      }
+    },
+    eu-north-1 = {
+      x86 = {
+        payg = "ami-083f055f53e54a627"
+        byol = "ami-0f4157d75891a3d2e"
+      }
+    },
+    me-south-1 = {
+      x86 = {
+        payg = "ami-066d505430ad345a0"
+        byol = "ami-017380833397261cf"
+      }
+    },
+    sa-east-1 = {
+      x86 = {
+        payg = "ami-078010c2bb8331dac"
+        byol = "ami-0f5062c1f266f9c30"
+      }
+    }
+  }
 }
 
 //  Existing SSH Key on the AWS 
