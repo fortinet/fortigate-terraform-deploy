@@ -69,10 +69,10 @@ For other questions related to this project, contact [github@fortinet.com](mailt
 [License](https://github.com/fortinet/fortigate-terraform-deploy/blob/master/LICENSE) © Fortinet Technologies. All rights reserved.
 
 Marketplace Catalog for mp_listing_id in variables.tf
-BYOL 7.2.0: ocid1.image.oc1..aaaaaaaapxqi6j4dq2tl3yz4h7tqz7oqaqzcvr5renzczzeiptvk3slhcmba
+BYOL 7.2.1: ocid1.image.oc1..aaaaaaaajnr54tko6kxnxc3q2u6rwfeu2rdfbyitbxecsqfih75j4jrdpxhq
 
 Marketplace Image for mp_listing_resource_id in variables.tf
-PAGY 7.2.0 2ocpu: ocid1.image.oc1..aaaaaaaa3haefpqg7myrwrc6ixslki62b4iu6nsejbxaqfum4f5cmtv2obwq
-PAYG 7.2.0 4ocup: ocid1.image.oc1..aaaaaaaagf4ivombrtebdq76lykd7mfk2grh5kckrquqi7v7pyfden3ftloq
-PAYG 7.2.0 8ocup: ocid1.image.oc1..aaaaaaaarweyb4lbe3kntrn5dgg5xrklua4jwqgom66iyt46wppfwakkzjta
-PAYG 7.2.0 24ocup: ocid1.image.oc1..aaaaaaaariewc5zd6lkasnz4qwc6wslhfsb5wzo56r7d6w4vzztbzkajrowq
+PAGY 7.2.1 2ocpu: ocid1.image.oc1..aaaaaaaajo5vcbgfaea6m244qfx7eptxhcxjlr2ypnzycqxjhwdviipk3ula
+PAYG 7.2.1 4ocup: ocid1.image.oc1..aaaaaaaapxf2xbu55v5wus2fopkpjkh2zlunyzao6nnvuqni6l7va44acnza
+PAYG 7.2.1 8ocup: ocid1.image.oc1..aaaaaaaaxqtgkltyonzin6emksvbodejf5f7wc3ddyy6zkfyl2jof5mwl6ta
+PAYG 7.2.1 24ocup: ocid1.image.oc1..aaaaaaaamsj62krq74djb3b43p6jcluhpva5owvo2inotmbyba25zwwrhkva
