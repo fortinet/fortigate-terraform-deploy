@@ -1,6 +1,14 @@
+# Randomize string to avoid duplication
+resource "random_string" "random_name_post" {
+  length           = 3
+  special          = true
+  override_special = ""
+  min_lower        = 3
+}
+
 resource "ibm_is_image" "vnf_custom_image" {
   href             = var.image
-  name             = "terraform-image"
+  name             = "terraform-image-${random_string.random_name_post.result}"
   operating_system = "ubuntu-18-04-amd64"
 
   timeouts {
@@ -10,7 +18,7 @@ resource "ibm_is_image" "vnf_custom_image" {
 }
 
 resource "ibm_is_ssh_key" "sshkey" {
-  name       = "ssh1"
+  name       = "ssh-${random_string.random_name_post.result}"
   public_key = file(var.ssh_public_key)
 }
 
@@ -21,14 +29,13 @@ resource "ibm_is_volume" "testacc_volume" {
 }
 
 resource "ibm_is_floating_ip" "publicip" {
-  name   = "publicip"
+  name   = "publicip-${random_string.random_name_post.result}"
   target = ibm_is_instance.fgt1.primary_network_interface[0].id
 }
 
 resource "ibm_is_instance" "fgt1" {
-  name  = "fgt1"
-  image = ibm_is_image.vnf_custom_image.id
-  //image   = var.image
+  name    = "fgt1-${random_string.random_name_post.result}"
+  image   = ibm_is_image.vnf_custom_image.id
   profile = var.profile
 
   primary_network_interface {
@@ -45,20 +52,10 @@ resource "ibm_is_instance" "fgt1" {
 
   volumes = [ibm_is_volume.testacc_volume.id]
 
-  vpc       = ibm_is_vpc.vpc1.id
-  zone      = var.zone1
-  user_data = data.template_file.userdata.rendered
-  keys      = [ibm_is_ssh_key.sshkey.id]
-}
-
-
-// Use for bootstrapping cloud-init
-data "template_file" "userdata" {
-  template = file("${var.bootstrap}")
-
-  vars = {
+  vpc  = ibm_is_vpc.vpc1.id
+  zone = var.zone1
+  user_data = templatefile("${var.bootstrap}", {
     license_file = "${file("${var.license}")}"
-  }
-
+  })
+  keys = [ibm_is_ssh_key.sshkey.id]
 }
-

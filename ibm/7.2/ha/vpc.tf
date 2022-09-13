@@ -1,5 +1,5 @@
 resource "ibm_is_vpc" "vpc1" {
-  name                      = "terraform-vpc1"
+  name                      = "terraform-vpc1-${random_string.random_name_post.result}"
   address_prefix_management = "manual"
 }
 
@@ -12,7 +12,7 @@ resource "ibm_is_vpc_address_prefix" "vpc" {
 
 resource "ibm_is_subnet" "subnet1" {
   depends_on      = [ibm_is_vpc_address_prefix.vpc]
-  name            = "terraform-vpc1-subnet1"
+  name            = "terraform-vpc1-subnet1-${random_string.random_name_post.result}"
   ipv4_cidr_block = var.subnet1prefix
   vpc             = ibm_is_vpc.vpc1.id
   zone            = var.zone1
@@ -21,7 +21,7 @@ resource "ibm_is_subnet" "subnet1" {
 
 resource "ibm_is_subnet" "subnet2" {
   depends_on      = [ibm_is_vpc_address_prefix.vpc]
-  name            = "terraform-vpc1-subnet2"
+  name            = "terraform-vpc1-subnet2-${random_string.random_name_post.result}"
   vpc             = ibm_is_vpc.vpc1.id
   ipv4_cidr_block = var.subnet2prefix
   zone            = var.zone1
@@ -30,7 +30,7 @@ resource "ibm_is_subnet" "subnet2" {
 
 resource "ibm_is_subnet" "subnet3" {
   depends_on      = [ibm_is_vpc_address_prefix.vpc]
-  name            = "terraform-vpc1-subnet3"
+  name            = "terraform-vpc1-subnet3-${random_string.random_name_post.result}"
   vpc             = ibm_is_vpc.vpc1.id
   ipv4_cidr_block = var.subnet3prefix
   zone            = var.zone1
@@ -38,7 +38,7 @@ resource "ibm_is_subnet" "subnet3" {
 
 resource "ibm_is_subnet" "subnet4" {
   depends_on      = [ibm_is_vpc_address_prefix.vpc]
-  name            = "terraform-vpc1-subnet4"
+  name            = "terraform-vpc1-subnet4-${random_string.random_name_post.result}"
   vpc             = ibm_is_vpc.vpc1.id
   ipv4_cidr_block = var.subnet4prefix
   zone            = var.zone1
@@ -46,7 +46,7 @@ resource "ibm_is_subnet" "subnet4" {
 
 resource "ibm_is_public_gateway" "publicgateway" {
   depends_on = [ibm_is_vpc.vpc1]
-  name       = "public-gateway"
+  name       = "public-gateway-${random_string.random_name_post.result}"
   vpc        = ibm_is_vpc.vpc1.id
   zone       = var.zone1
 
@@ -75,7 +75,7 @@ resource "ibm_is_security_group_rule" "fgt_security_group_rule_outbound_all" {
 
 resource "ibm_is_vpc_routing_table" "terraform_routing_table" {
   vpc                           = ibm_is_vpc.vpc1.id
-  name                          = "terraform-rt"
+  name                          = "terraform-rt-${random_string.random_name_post.result}"
   route_direct_link_ingress     = false
   route_transit_gateway_ingress = false
   route_vpc_zone_ingress        = false
@@ -85,7 +85,7 @@ resource "ibm_is_vpc_routing_table_route" "terraform_routing_table_route" {
   vpc           = ibm_is_vpc.vpc1.id
   routing_table = ibm_is_vpc_routing_table.terraform_routing_table.routing_table
   zone          = var.zone1
-  name          = "egress-route"
+  name          = "egress-route-${random_string.random_name_post.result}"
   destination   = "0.0.0.0/0"
   action        = "deliver"
   next_hop      = var.fgtaport2
