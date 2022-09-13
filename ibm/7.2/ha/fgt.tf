@@ -1,6 +1,14 @@
+# Randomize string to avoid duplication
+resource "random_string" "random_name_post" {
+  length           = 3
+  special          = true
+  override_special = ""
+  min_lower        = 3
+}
+
 resource "ibm_is_image" "vnf_custom_image" {
   href             = var.image
-  name             = "terraform-image"
+  name             = "terraform-image-${random_string.random_name_post.result}"
   operating_system = "ubuntu-18-04-amd64"
 
   timeouts {
@@ -10,49 +18,49 @@ resource "ibm_is_image" "vnf_custom_image" {
 }
 
 resource "ibm_is_ssh_key" "sshkey" {
-  name       = "ssh1"
+  name       = "ssh-${random_string.random_name_post.result}"
   public_key = file(var.ssh_public_key)
 }
 
 resource "ibm_is_volume" "testacc_volume" {
-  name    = "logdisk"
+  name    = "logdisk-${random_string.random_name_post.result}"
   profile = "10iops-tier"
   zone    = var.zone1
 }
 
 resource "ibm_is_volume" "testacc_volume2" {
-  name    = "logdisk2"
+  name    = "logdisk2-${random_string.random_name_post.result}"
   profile = "10iops-tier"
   zone    = var.zone1
 }
 
 
 resource "ibm_is_floating_ip" "publicip" {
-  name   = "publicip"
+  name   = "publicip-${random_string.random_name_post.result}"
   target = ibm_is_instance.fgt1.primary_network_interface[0].id
 }
 
 resource "ibm_is_instance" "fgt1" {
-  name    = "fgt1"
+  name    = "fgt1-${random_string.random_name_post.result}"
   image   = ibm_is_image.vnf_custom_image.id
   profile = var.profile
 
   primary_network_interface {
-    name                 = "port1"
+    name                 = "fgtaport1"
     subnet               = ibm_is_subnet.subnet1.id
     security_groups      = [ibm_is_security_group.fgt_security_group.id]
     primary_ipv4_address = var.fgtaport1
   }
 
   network_interfaces {
-    name                 = "port2"
+    name                 = "fgtaport2"
     subnet               = ibm_is_subnet.subnet2.id
     security_groups      = [ibm_is_security_group.fgt_security_group.id]
     primary_ipv4_address = var.fgtaport2
   }
 
   network_interfaces {
-    name                 = "port3"
+    name                 = "fgtaport3"
     subnet               = ibm_is_subnet.subnet3.id
     security_groups      = [ibm_is_security_group.fgt_security_group.id]
     primary_ipv4_address = var.fgtaport3
@@ -62,13 +70,29 @@ resource "ibm_is_instance" "fgt1" {
 
   vpc       = ibm_is_vpc.vpc1.id
   zone      = var.zone1
-  user_data = data.template_file.userdata.rendered
+  user_data = chomp(templatefile("${var.bootstrap}", { 
+    license_file = "${file("${var.license}")}"
+    hostname     = "fgta"
+    hapriority   = "255"
+    apikey       = "${var.ibmcloud_api_key}"
+    port1_ip     = "${var.fgtaport1}"
+    port1_mask   = "${var.fgtaport1mask}"
+    port2_ip     = "${var.fgtaport2}"
+    port2_mask   = "${var.fgtaport2mask}"
+    port3_ip     = "${var.fgtaport3}"
+    port3_mask   = "${var.fgtaport3mask}"
+    region          = var.ibmregion[var.region]
+    passive_peerip  = "${var.fgtbport3}"
+    mgmt_gateway_ip = "${var.fgtaport4gateway}"
+    defaultgwy      = "${var.fgtaport1gateway}"
+    privategwy      = "${var.fgtaport2gateway}"
+  }))
   keys      = [ibm_is_ssh_key.sshkey.id]
 }
 
 
 resource "ibm_is_instance" "fgt2" {
-  name    = "fgt2"
+  name    = "fgt2-${random_string.random_name_post.result}"
   image   = ibm_is_image.vnf_custom_image.id
   profile = var.profile
 
@@ -97,38 +121,9 @@ resource "ibm_is_instance" "fgt2" {
 
   vpc       = ibm_is_vpc.vpc1.id
   zone      = var.zone1
-  user_data = data.template_file.userdata2.rendered
-  keys      = [ibm_is_ssh_key.sshkey.id]
-}
-
-// Use for bootstrapping cloud-init
-data "template_file" "userdata" {
-  template = file("${var.bootstrap}")
-
-  vars = {
-    license_file = "${file("${var.license}")}"
-    hapriority   = "255"
-    apikey       = "${var.ibmcloud_api_key}"
-    port1_ip     = "${var.fgtaport1}"
-    port1_mask   = "${var.fgtaport1mask}"
-    port2_ip     = "${var.fgtaport2}"
-    port2_mask   = "${var.fgtaport2mask}"
-    port3_ip     = "${var.fgtaport3}"
-    port3_mask   = "${var.fgtaport3mask}"
-    region          = var.ibmregion[var.region]
-    passive_peerip  = "${var.fgtbport3}"
-    mgmt_gateway_ip = "${var.fgtaport4gateway}"
-    defaultgwy      = "${var.fgtaport1gateway}"
-    privategwy      = "${var.fgtaport2gateway}"
-  }
-}
-
-// Use for bootstrapping cloud-init
-data "template_file" "userdata2" {
-  template = file("${var.bootstrap}")
-
-  vars = {
+  user_data = chomp(templatefile("${var.bootstrap}", {
     license_file = "${file("${var.license2}")}"
+    hostname     = "fgtb"
     hapriority   = "1"
     apikey       = "${var.ibmcloud_api_key}"
     port1_ip     = "${var.fgtbport1}"
@@ -142,5 +137,7 @@ data "template_file" "userdata2" {
     mgmt_gateway_ip = "${var.fgtbport4gateway}"
     defaultgwy      = "${var.fgtbport1gateway}"
     privategwy      = "${var.fgtbport2gateway}"
-  }
+  }))
+
+  keys      = [ibm_is_ssh_key.sshkey.id]
 }
