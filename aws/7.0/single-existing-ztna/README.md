@@ -1,4 +1,5 @@
 # Deployment of a FortiGate-VM (BYOL/PAYG)  on the AWS
+## -- DRAFT --
 ## Introduction
 A Terraform script to deploy a FortiGate-VM with ZTNA configuration on AWS into existing VPC
 
