@@ -11,12 +11,12 @@ variable "mp_listing_id" {
 }
 
 variable "mp_listing_resource_id" {
-  default = "ocid1.image.oc1..aaaaaaaajnr54tko6kxnxc3q2u6rwfeu2rdfbyitbxecsqfih75j4jrdpxhq"
+  default = "ocid1.image.oc1..aaaaaaaai5vfuixe3ackarky6g2k5eoin2kkj23oz5berr7qwmtwhrsnxhdq"
 }
 
 // Version
 variable "mp_listing_resource_version" {
-  default = "7.2.1_SR-IOV_Paravirtualized_Mode"
+  default = "7.2.2_SR-IOV_Paravirtualized_Mode"
 }
 
 // Environment configuration
