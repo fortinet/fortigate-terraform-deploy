@@ -67,10 +67,10 @@ For other questions related to this project, contact [github@fortinet.com](mailt
 
 ## Application Catalog/Image ID for deployment
 Marketplace Catalog for mp_listing_id in variables.tf
-BYOL 7.2.1: ocid1.image.oc1..aaaaaaaajnr54tko6kxnxc3q2u6rwfeu2rdfbyitbxecsqfih75j4jrdpxhq
+BYOL 7.2.2: ocid1.image.oc1..aaaaaaaai5vfuixe3ackarky6g2k5eoin2kkj23oz5berr7qwmtwhrsnxhdq
 
 Marketplace Image for mp_listing_resource_id in variables.tf
-PAGY 7.2.1 2ocpu: ocid1.image.oc1..aaaaaaaajo5vcbgfaea6m244qfx7eptxhcxjlr2ypnzycqxjhwdviipk3ula
-PAYG 7.2.1 4ocup: ocid1.image.oc1..aaaaaaaapxf2xbu55v5wus2fopkpjkh2zlunyzao6nnvuqni6l7va44acnza
-PAYG 7.2.1 8ocup: ocid1.image.oc1..aaaaaaaaxqtgkltyonzin6emksvbodejf5f7wc3ddyy6zkfyl2jof5mwl6ta
-PAYG 7.2.1 24ocup: ocid1.image.oc1..aaaaaaaamsj62krq74djb3b43p6jcluhpva5owvo2inotmbyba25zwwrhkva
+PAGY 7.2.2 2ocpu: ocid1.image.oc1..aaaaaaaakvoizu4xendrru627p6nfqqk6uwa5xncei7pfyzoael722a5gqga
+PAYG 7.2.2 4ocup: ocid1.image.oc1..aaaaaaaaolqmovbvzb225d5dtcbi3z6kxsccu6laer3becgp4l37wh32ct6q
+PAYG 7.2.2 8ocup: ocid1.image.oc1..aaaaaaaa2skg3wwtvbdsmcwh6ldqiodvzbmhfokz6467j3lc5ksgfoccgbja
+PAYG 7.2.2 24ocup: ocid1.image.oc1..aaaaaaaanafjd3mobaeh23auqte5xwi3sh4egmp2zsrk746pcd3hfrtglv4a
