@@ -10,18 +10,13 @@ variable "mp_listing_id" {
   default = "ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q" //byol
 }
 
-//BYOL 7.0.5: ocid1.image.oc1..aaaaaaaasqn4zerim4l4mmmilnmcj5npl7mam7abpzekiwsyoc5b7plevula 
-//PAYG 7.0.5 2ocpu: ocid1.image.oc1..aaaaaaaawgn5temqec6xugvkkjq2jkfajize4xfqhuqjdqas5f7xoos4uaeq
-//PAYG 7.0.5 4ocup: ocid1.image.oc1..aaaaaaaa6o5ei4jk33visyihcdpetxkxis5qzslgdememby3zpj4z4zrt5fq
-//PAYG 7.0.5 8ocup: ocid1.image.oc1..aaaaaaaa6s77gb5kffqac7i6imixpbdi7p2w3oay6nkwx26e75a6dr6ccqwq
-//PAYG 7.0.5 24ocup: ocid1.image.oc1..aaaaaaaaaaeldzv7bqtfbxkxmf6tvoh5ex7memrvjbenuposqu5d4jliu2xq
 variable "mp_listing_resource_id" {
-  default = "ocid1.image.oc1..aaaaaaaa6o5ei4jk33visyihcdpetxkxis5qzslgdememby3zpj4z4zrt5fq"
+  default = "ocid1.image.oc1..aaaaaaaad34fwffetlsr4k7nwwvi23xg2v7ztkgirmurub3zz6t24ndg7xjq"
 }
 
 // Version
 variable "mp_listing_resource_version" {
-  default = "7.0.5_SR-IOV_Paravirtualized_Mode"
+  default = "7.0.8_SR-IOV_Paravirtualized_Mode"
 }
 // Cert use for SDN Connector setting
 variable "cert" {
