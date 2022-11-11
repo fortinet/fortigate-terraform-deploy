@@ -153,12 +153,12 @@ variable "license2" {
 // FortiGate Image.  Default is payg.
 // Options are either payg or byol
 variable "license_type" {
-  default = "payg"
+  default = "byol"
 }
 
 // FortiOS Version
 variable "fosversion" {
-  default = "7.0.5"
+  default = "7.0.8"
 }
 
 data "alicloud_images" "ecs_image" {
