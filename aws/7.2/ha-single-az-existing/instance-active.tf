@@ -1,31 +1,35 @@
 // FGTVM active instance
 
 resource "aws_network_interface" "eth0" {
-  description = "active-port1"
-  subnet_id   = var.publiccidrid
-  private_ips = [var.activeport1, var.activeport1float]
+  description             = "active-port1"
+  subnet_id               = var.publiccidrid
+  private_ip_list_enabled = true
+  private_ip_list         = [var.activeport1, var.activeport1float]
 }
 
 resource "aws_network_interface" "eth1" {
-  description = "active-port2"
-  subnet_id         = var.privatecidrid
-  private_ips       = [var.activeport2, var.activeport2float]
-  source_dest_check = false
+  description             = "active-port2"
+  subnet_id               = var.privatecidrid
+  private_ip_list_enabled = true
+  private_ip_list         = [var.activeport2, var.activeport2float]
+  source_dest_check       = false
 }
 
 
 resource "aws_network_interface" "eth2" {
-  description = "active-port3"
-  subnet_id         = var.hasynccidrid
-  private_ips       = [var.activeport3]
-  source_dest_check = false
+  description             = "active-port3"
+  subnet_id               = var.hasynccidrid
+  private_ip_list_enabled = true
+  private_ip_list         = [var.activeport3]
+  source_dest_check       = false
 }
 
 
 resource "aws_network_interface" "eth3" {
-  description = "active-port4"
-  subnet_id   = var.hamgmtcidrid
-  private_ips = [var.activeport4]
+  description             = "active-port4"
+  subnet_id               = var.hamgmtcidrid
+  private_ip_list_enabled = true
+  private_ip_list         = [var.activeport4]
 }
 
 
@@ -56,6 +60,7 @@ resource "aws_network_interface_sg_attachment" "hasyncattachment" {
 
 
 resource "aws_instance" "fgtactive" {
+  //it will use region, architect, and license type to decide which ami to use for deployment
   ami               = var.fgtami[var.region][var.arch][var.license_type]
   instance_type     = var.size
   availability_zone = var.az
