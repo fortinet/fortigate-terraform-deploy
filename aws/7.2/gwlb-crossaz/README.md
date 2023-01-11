@@ -29,17 +29,16 @@ Terraform deploys the following components:
 
 ## Topology overview
 Customer VPC (20.1.0.0/16)  
-       public-az1   (20.1.0.0/24)
-       private-az1  (20.1.1.0/24)
-       public-az2   (20.1.2.0/24)
-       private-az2  (20.1.3.0/24)
+   * public-az1   (20.1.0.0/24)
+   * private-az1  (20.1.1.0/24)
+   * public-az2   (20.1.2.0/24)
+   * private-az2  (20.1.3.0/24)
+   
 Security VPC (10.1.0.0/16)
-       public-az1   (10.1.0.0/24)
-       private-az1  (10.1.1.0/24)
-       public-az2   (10.1.2.0/24)
-       private-az2  (10.1.3.0/24)
-
-
+   * public-az1   (10.1.0.0/24)
+   * private-az1  (10.1.1.0/24)
+   * public-az2   (10.1.2.0/24)
+   * private-az2  (10.1.3.0/24)
 
 FortiGate VMs are deployed in Security VPC on both public and private subnet
 One FortiGate VM is deployed in AZ 1, while another one is deployed in AZ 2. 
