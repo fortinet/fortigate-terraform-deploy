@@ -10,7 +10,7 @@ A Terraform script to deploy two FortiGate-VMs in two different AZs on AWS with 
 
 ## Deployment overview
 Terraform deploys the following components:
-   - 2 AWS VPCs
+   * 2 AWS VPCs
         - Customer VPC with 2 public subnets and 2 private subnets split two different AZs
            - 1 Internet Gateway
            - 1 Route table with edge association with Internet Gateway, and 2 internal route with target to Gateway Load Balancer Endpoint.
@@ -20,11 +20,12 @@ Terraform deploys the following components:
            - 1 Internet Gateway
            - 2 Route table with private subnets association for each AZ, and default route with target to each AZ's FortiGate private port.
            - 1 Route table with public subnets association, and default route with target to Internet Gateway. 
-   - Two FortiGate-VM each instance with 2 NICs : port1 on public subnet and port2 on private subnet in different AZ.
-           - port2 will be in its own FG-traffic vdom.
-           - A geneve interface will be created base on port2 during bootstrap and this will be the interface where traffic will received from the Gateway Load Balancer.
-   - Two Network Security Group rules: one for external, one for internal.
-   - One Gateway Load Balancer with two targets to two FortiGates.
+   * Two FortiGate-VM each instance with 2 NICs
+     - port1 on public subnet and port2 on private subnet in different AZ.
+     - port2 will be in its own FG-traffic vdom.
+     - A geneve interface will be created base on port2 during bootstrap and this will be the interface where traffic will received from the Gateway Load Balancer.
+   * Two Network Security Group rules: one for external, one for internal.
+   * One Gateway Load Balancer with two targets to two FortiGates.
         
 
 ## Topology overview
@@ -46,6 +47,8 @@ Server(s) are deployed in the private subnet in the Customer VPC in different AZ
 
 Ingress traffic to the Server(s) located in the private subnet in Customer VPC will be routed to GWLB, redirect to FortiGate-VM's geneve interface and send back out to GWLB endpoint.
 Egress traffic from the Server(s) located in the private subnet in Customer VPC will be routed to GWLB and redirect to FortiGate-VM's geneve interface and send back out to GWLB endpoint. 
+
+![gwlb-az-architecture](./aws-gwlb-crossaz.png?raw=true "GWLB Architecture")
 
 ## Deployment
 To deploy the FortiGate-VMs to AWS:
