@@ -10,38 +10,40 @@ A Terraform script to deploy a FortiGate-VM on AWS with Gateway Load Balancer in
 
 ## Deployment overview
 Terraform deploys the following components:
-   - 2 AWS VPCs
-        - Customer VPC with 2 public subnets and 2 private subnets split two different AZs
-           - 1 Internet Gateway
-           - 1 Route table with edge association with Internet Gateway, and 2 internal route with target to Gateway Load Balancer Endpoint.
-           - 1 Route table with private subnet association, and default route with target to Gateway Load Balancer Endpoint.
-           - 1 Route table with public subnet association, and default route with target to Internet Gateway.
-        - FGT VPC with 1 public and 1 private subnet in one AZ. 
-           - 1 Internet Gateway
-           - 1 Route table with private subnet association, and default route with target to FortiGate private port.
-           - 1 Route table with public subnet association, and default route with target to Internet Gateway. 
+* 2 AWS VPCs
+  - Customer VPC with 2 public subnets and 2 private subnets split two different AZs
+    - 1 Internet Gateway
+    - 1 Route table with edge association with Internet Gateway, and 2 internal route with target to Gateway Load Balancer Endpoint.
+    - 1 Route table with private subnet association, and default route with target to Gateway Load Balancer Endpoint.
+    - 1 Route table with public subnet association, and default route with target to Internet Gateway.
+    - FGT VPC with 1 public and 1 private subnet in one AZ. 
+    - 1 Internet Gateway
+    - 1 Route table with private subnet association, and default route with target to FortiGate private port.
+    - 1 Route table with public subnet association, and default route with target to Internet Gateway. 
    - One FortiGate-VM instance with 2 NICs : port1 on public subnet and port2 on private subnet
-           - port2 will be in its own FG-traffic vdom.
-           - A geneve interface will be created base on port2 during bootstrap and this will be the interface where traffic will received from the Gateway Load Balancer.
+     - port2 will be in its own FG-traffic vdom.
+     - A geneve interface will be created base on port2 during bootstrap and this will be the interface where traffic will received from the Gateway Load Balancer.
    - Two Network Security Group rules: one for external, one for internal.
    - One Gateway Load Balancer with single target to one FortiGate.
         
 
 ## Topology overview
-Customer VPC (20.1.0.0/16)  
-       public-az1   (20.1.0.0/24)
-       private-az1  (20.1.1.0/24)
-       public-az2   (20.1.2.0/24)
-       private-az2  (20.1.3.0/24)
-Security VPC (10.1.0.0/16)
-       public       (10.1.0.0/24)
-       private      (10.1.1.0/24)
+* Customer VPC (20.1.0.0/16)  
+  - public-az1   (20.1.0.0/24)
+  - private-az1  (20.1.1.0/24)
+  - public-az2   (20.1.2.0/24)
+  - private-az2  (20.1.3.0/24)
+* Security VPC (10.1.0.0/16)
+  - public       (10.1.0.0/24)
+  - private      (10.1.1.0/24)
 
 FortiGate VM is deployed in Security VPC on both public and private subnet
 Server(s) are deployed in the private subnet in the Customer VPC in different AZ.
 
 Ingress traffic to the Server(s) located in the private subnet in Customer VPC will be routed to GWLB, redirect to FortiGate-VM's geneve interface and send back out to GWLB endpoint.
 Egress traffic from the Server(s) located in the private subnet in Customer VPC will be routed to GWLB and redirect to FortiGate-VM's geneve interface and send back out to GWLB endpoint. 
+
+![gwlb-architecture](./aws-gwlb.png?raw=true "GWLB Architecture")
 
 ## Deployment
 To deploy the FortiGate-VM to AWS:
