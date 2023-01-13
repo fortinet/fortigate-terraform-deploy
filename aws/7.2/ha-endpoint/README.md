@@ -16,6 +16,9 @@ Terraform deploys the following components:
    - Private EC2 endpoint in hamgmt subnet
    - FortiGate-VM will use the private dns server provided by the VPC.
 
+![aws-ha-architecture](./aws-ha-private-endpoint.png?raw=true "HA Architecture")
+
+
 ## Deployment
 To deploy the FortiGate-VM to AWS:
 1. Clone the repository.
