@@ -18,6 +18,9 @@ Terraform deploys the following components:
    - External Load Balancer: Network Load balancer has default rules for port 80 and 443 which will forward traffic to the two FortiGate units. 
    - Internal Load Balancer: Network Load balancer has default rules for port 80 and 443.   User will need to add the target groups for the internal load balancer's target group. 
 
+![loadbalancer-architecture](./loadbalancer.png?raw=true "GWLB Architecture")
+
+
 ## Deployment
 To deploy the FortiGate-VM to AWS:
 1. Clone the repository.
