@@ -15,6 +15,9 @@ Terraform deploys the following components:
    - Two Network Security Group rules: one for external, one for internal.
    - Two Route tables: one for internal subnet and one for external subnet.
 
+![HA-Single-AZ-architecture](./aws-ha-single-az.png?raw=true "HA Single AZ Architecture")
+
+
 ## Deployment
 To deploy the FortiGate-VM to AWS:
 1. Clone the repository.
