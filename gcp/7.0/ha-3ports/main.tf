@@ -218,7 +218,7 @@ resource "google_compute_instance" "default" {
     scopes = ["userinfo-email", "compute-rw", "storage-ro", "cloud-platform"]
   }
   scheduling {
-    preemptible       = true
+    preemptible       = false
     automatic_restart = false
   }
 }
@@ -278,7 +278,7 @@ resource "google_compute_instance" "default2" {
     scopes = ["userinfo-email", "compute-rw", "storage-ro", "cloud-platform"]
   }
   scheduling {
-    preemptible       = true
+    preemptible       = false
     automatic_restart = false
   }
 }

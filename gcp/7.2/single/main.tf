@@ -130,7 +130,7 @@ resource "google_compute_instance" "default" {
     scopes = ["userinfo-email", "compute-ro", "storage-ro"]
   }
   scheduling {
-    preemptible       = true
+    preemptible       = false
     automatic_restart = false
   }
 }
