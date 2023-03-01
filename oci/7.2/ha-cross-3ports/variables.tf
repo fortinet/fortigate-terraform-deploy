@@ -17,12 +17,12 @@ variable "mp_listing_id" {
 }
 
 variable "mp_listing_resource_id" {
-  default = "ocid1.image.oc1..aaaaaaaatgr6fgvzztpmmb2tuka55uasrviedqfnksbbwscj3nvhhcxiglba"
+  default = "ocid1.image.oc1..aaaaaaaa5m67jbvb33hoxpefr7fhfhf7gaeie4xjg7p4heixg25osr5warcq"
 }
 
 // Version
 variable "mp_listing_resource_version" {
-  default = "7.2.3_(_X64_)"
+  default = "7.2.4_(_X64_)"
 }
 
 // Cert use for SDN Connector setting
