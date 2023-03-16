@@ -19,6 +19,18 @@ provider "google-beta" {
   access_token = var.token
 }
 
+resource "google_compute_image" "fgtvmgvnic" {
+  count = var.nictype == "GVNIC" ? 1 : 0
+  name  = "fgtvmgvnic-image"
+
+  source_image = var.ftntsrcimage
+  project      = var.ftntproject
+
+  guest_os_features {
+    type = var.nictype
+  }
+}
+
 # Randomize string to avoid duplication
 resource "random_string" "random_name_post" {
   length           = 3
@@ -106,7 +118,7 @@ resource "google_compute_instance" "default" {
 
   boot_disk {
     initialize_params {
-      image = var.image
+      image = var.nictype == "GVNIC" ? google_compute_image.fgtvmgvnic[0].self_link : var.image
     }
   }
   attached_disk {
@@ -114,11 +126,13 @@ resource "google_compute_instance" "default" {
   }
   network_interface {
     subnetwork = google_compute_subnetwork.public_subnet.name
+    nic_type   = var.nictype
     access_config {
     }
   }
   network_interface {
     subnetwork = google_compute_subnetwork.private_subnet.name
+    nic_type   = var.nictype
   }
   metadata = {
     #user-data = "${file(var.user_data)}"

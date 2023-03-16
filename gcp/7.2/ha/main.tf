@@ -19,6 +19,18 @@ provider "google-beta" {
   access_token = var.token
 }
 
+resource "google_compute_image" "fgtvmgvnic" {
+  count = var.nictype == "GVNIC" ? 1 : 0
+  name  = "fgtvmgvnic-image"
+
+  source_image = var.ftntsrcimage
+  project      = var.ftntproject
+
+  guest_os_features {
+    type = var.nictype
+  }
+}
+
 # Randomize string to avoid duplication
 resource "random_string" "random_name_post" {
   length           = 3
@@ -190,7 +202,7 @@ resource "google_compute_instance" "default" {
 
   boot_disk {
     initialize_params {
-      image = var.image
+      image = var.nictype == "GVNIC" ? google_compute_image.fgtvmgvnic[0].self_link : var.image
     }
   }
   attached_disk {
@@ -198,6 +210,7 @@ resource "google_compute_instance" "default" {
   }
   network_interface {
     subnetwork = google_compute_subnetwork.public_subnet.name
+    nic_type   = var.nictype
     network_ip = var.active_port1_ip
     access_config {
       nat_ip = google_compute_address.static.address
@@ -205,16 +218,19 @@ resource "google_compute_instance" "default" {
   }
   network_interface {
     subnetwork = google_compute_subnetwork.private_subnet.name
+    nic_type   = var.nictype
     network_ip = var.active_port2_ip
   }
 
   network_interface {
     subnetwork = google_compute_subnetwork.ha_subnet.name
+    nic_type   = var.nictype
     network_ip = var.active_port3_ip
   }
 
   network_interface {
     subnetwork = google_compute_subnetwork.mgmt_subnet.name
+    nic_type   = var.nictype
     network_ip = var.active_port4_ip
     access_config {
       nat_ip = google_compute_address.static2.address
@@ -260,7 +276,7 @@ resource "google_compute_instance" "default2" {
 
   boot_disk {
     initialize_params {
-      image = var.image
+      image = var.nictype == "GVNIC" ? google_compute_image.fgtvmgvnic[0].self_link : var.image
     }
   }
   attached_disk {
@@ -268,18 +284,22 @@ resource "google_compute_instance" "default2" {
   }
   network_interface {
     subnetwork = google_compute_subnetwork.public_subnet.name
+    nic_type   = var.nictype
     network_ip = var.passive_port1_ip
   }
   network_interface {
     subnetwork = google_compute_subnetwork.private_subnet.name
+    nic_type   = var.nictype
     network_ip = var.passive_port2_ip
   }
   network_interface {
     subnetwork = google_compute_subnetwork.ha_subnet.name
+    nic_type   = var.nictype
     network_ip = var.passive_port3_ip
   }
   network_interface {
     subnetwork = google_compute_subnetwork.mgmt_subnet.name
+    nic_type   = var.nictype
     network_ip = var.passive_port4_ip
     access_config {
       nat_ip = google_compute_address.static3.address

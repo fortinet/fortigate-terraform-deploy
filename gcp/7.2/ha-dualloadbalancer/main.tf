@@ -8,8 +8,8 @@ terraform {
 }
 provider "google" {
   project      = var.project
-  region       = "us-central1"
-  zone         = "us-central1-c"
+  region       = var.region
+  zone         = var.zone
   access_token = var.token
 }
 provider "google-beta" {
@@ -64,8 +64,6 @@ resource "google_compute_network" "vpc_network4" {
   name                    = "vpc4-${random_string.random_name_post.result}"
   auto_create_subnetworks = false
 }
-
-
 
 ### Public Subnet ###
 resource "google_compute_subnetwork" "public_subnet" {
