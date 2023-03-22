@@ -22,8 +22,7 @@ variable "subnetipv4count" {
 // FortiOS Custom Image ID
 // https://docs.fortinet.com/vm/ibm/fortigate/6.4/ibm-cloud-cookbook/6.4.2/992669/deploying-fortigate-vm-on-ibm-cloud
 variable "image" {
-  default = "cos://us-geo/fortinet/fortigate_byol_708_b0418_GA.qcow2"
-  //default = "r006-4a3919d2-3cb8-4039-92fc-9660e838ba71"
+  default = "cos://us-geo/fortinet/fortigate_byol_711_b0489_GA.qcow2"
 }
 
 // IBM Cloud instance profile
