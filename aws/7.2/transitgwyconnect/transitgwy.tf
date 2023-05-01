@@ -24,7 +24,7 @@ resource "aws_ec2_transit_gateway_route_table" "tgwy-vpc-route" {
 # VPC attachment - FGT VPC
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-att-vpc-fgt" {
   appliance_mode_support                          = "enable"
-  subnet_ids                                      = [aws_subnet.transitsubnetaz1.id]
+  subnet_ids                                      = [aws_subnet.transitsubnetaz1.id, aws_subnet.transitsubnetaz2.id]
   transit_gateway_id                              = aws_ec2_transit_gateway.terraform-tgwy.id
   vpc_id                                          = aws_vpc.fgtvm-vpc.id
   transit_gateway_default_route_table_association = false
@@ -70,12 +70,22 @@ resource "aws_ec2_transit_gateway_connect" "attachment" {
   transit_gateway_default_route_table_propagation = false
 }
 
-# Transit Gateway connect peer
+# transit gateway connect peer
 resource "aws_ec2_transit_gateway_connect_peer" "example" {
-  peer_address                  = "10.0.0.21"
+  peer_address = var.fgtport2ip[0]
+  #peer_address                  = "10.0.0.21"
   bgp_asn                       = "7115"
   transit_gateway_address       = "1.0.0.68"
   inside_cidr_blocks            = ["169.254.120.0/29"]
+  transit_gateway_attachment_id = aws_ec2_transit_gateway_connect.attachment.id
+}
+
+# transit gateway connect peer to secondary
+resource "aws_ec2_transit_gateway_connect_peer" "example2" {
+  peer_address                  = var.fgt2port2ip[0]
+  bgp_asn                       = "7116"
+  transit_gateway_address       = "1.0.0.69"
+  inside_cidr_blocks            = ["169.254.102.0/29"]
   transit_gateway_attachment_id = aws_ec2_transit_gateway_connect.attachment.id
 }
 
@@ -97,7 +107,6 @@ resource "aws_ec2_transit_gateway_route_table_association" "tgw-rt-vpc-connect-a
   transit_gateway_route_table_id = aws_ec2_transit_gateway.terraform-tgwy.association_default_route_table_id
   #transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgwy-fgt-route.id
 }
-
 
 # Route Tables Propagations - FGT VPC Route
 # FGT VPC route propagation on default route table

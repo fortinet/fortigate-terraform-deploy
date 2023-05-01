@@ -15,6 +15,12 @@ variable "az2" {
   default = "eu-west-1b"
 }
 
+// IAM role that has proper permission for HA
+// Refer to https://docs.fortinet.com/vm/aws/fortigate/6.2/aws-cookbook/6.2.0/229470/deploying-fortigate-vm-active-passive-ha-aws-between-multiple-zones
+variable "iam" {
+  default = "dchaoiam"
+}
+
 // VPC for FortiGate Security VPC
 variable "vpccidr" {
   default = "10.0.0.0/24"
@@ -32,12 +38,48 @@ variable "attachcidraz1" {
   default = "10.0.0.32/28"
 }
 
+variable "hasynccidraz1" {
+  default = "10.0.0.48/28"
+}
+
+variable "publiccidraz2" {
+  default = "10.0.0.64/28"
+}
+
+variable "privatecidraz2" {
+  default = "10.0.0.80/28"
+}
+
+variable "attachcidraz2" {
+  default = "10.0.0.96/28"
+}
+
+variable "hasynccidraz2" {
+  default = "10.0.0.112/28"
+}
+
 variable "fgtport1ip" {
   default = ["10.0.0.5"]
 }
 
 variable "fgtport2ip" {
   default = ["10.0.0.21"]
+}
+
+variable "fgtport3ip" {
+  default = ["10.0.0.54"]
+}
+
+variable "fgt2port1ip" {
+  default = ["10.0.0.70"]
+}
+
+variable "fgt2port2ip" {
+  default = ["10.0.0.86"]
+}
+
+variable "fgt2port3ip" {
+  default = ["10.0.0.118"]
 }
 
 // VPC for Customer VPC
@@ -71,7 +113,6 @@ variable "arch" {
 variable "size" {
   default = "c5n.xlarge"
 }
-
 
 // License Type to create FortiGate-VM
 // Provide the license type for FortiGate-VM Instances, either byol or payg.
@@ -313,7 +354,7 @@ variable "keyname" {
 
 //  Admin HTTPS access port
 variable "adminsport" {
-  default = "443"
+  default = "8443"
 }
 
 variable "bootstrap-fgtvm" {
@@ -322,10 +363,15 @@ variable "bootstrap-fgtvm" {
   default = "fgtvm.conf"
 }
 
+variable "bootstrap-fgtvm2" {
+  // Change to your own path
+  type    = string
+  default = "fgtvm2.conf"
+}
+
 // license file for the fgt
 variable "license" {
   // Change to your own byol license file, license.lic
   type    = string
   default = "license.lic"
 }
-

@@ -1,11 +1,10 @@
-# Deployment of FortiGate-VM (BYOL/PAYG) on the AWS with AWS Transit Gateway Connect integration
+# Deployment of a HA (a-p) FortiGate-VMs (BYOL/PAYG) on the AWS with AWS Transit Gateway Connect integration
 ## Introduction
-A Terraform script to deploy a FortiGate-VM on AWS with Transit Gateway Connect.  It will create GRE tunnel with the Transit Gateway Connect attachment.
+A Terraform script to deploy a HA (a-p) FortiGate-VMs on AWS with Transit Gateway Connect.  It will create GRE tunnel with the Transit Gateway Connect attachment.
 
 ## Requirements
 * [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 1.0.0
-* Terraform Provider AWS >= 3.63.0
-* Terraform Provider Template >= 2.2.0
+* Terraform Provider AWS >= 4.65.0
 * FOS Version >= 7.0
 
 ## Deployment overview
@@ -22,12 +21,13 @@ Terraform deploys the following components:
            - 1 Route table with private subnet association.
            - 1 Route table with public subnet association, 1 default route with target to Internet Gateway.
            - 1 Route table with transit gateway subnet association.
-   - One FortiGate-VM instance with 2 NICs : port1 on public subnet and port2 on private subnet in one AZ.
-           - A GRE interface will be created to connect with the Transit Gateway connect.
+   - Two FortiGate-VM instances with 3 NICs : port1 on public subnet, port2 on private subnet, and port3 on hasync/hamgmt subnet.  Each FortiGate in each AZ.
+           - A GRE interface will be created to connect with the Transit Gateway connect.  Each FortiGate will be connect as peers in the Transit Gateway Connect.
+           - Two FortiGate-VM instances will be forming a-p HA.
    - Two Network Security Group rules: one for external, one for internal.
    - One Transit Gateway 
            - Connect attachment to FGT VPC.
-           - VPC attachment to FGT VPC(fgt transit subnet az1).
+           - VPC attachment to FGT VPC(fgt transit subnet az1, az2).
            - VPC attachment to Customer VPC(cs app subnet az1).
            - VPC attachment to Customer2 VPC(cs2 app subnet az1).
 
@@ -40,8 +40,15 @@ FortiGate Security VPC (10.0.0.0/24)
        fgt public subnet az1   (10.0.0.0/28)
        fgt private subnet az1  (10.0.0.16/28)
        fgt transit subnet az1  (10.0.0.32/28)
+       fgt haysnc/hamgmt subnet az1  (10.0.0.48/28)
 
-FortiGate VM is deployed in Security VPC.
+       fgt public subnet az2   (10.0.0.64/28)
+       fgt private subnet az2  (10.0.0.80/28)
+       fgt transit subnet az2  (10.0.0.96/28)
+       fgt haysnc/hamgmt subnet az2  (10.0.0.112/28)
+
+
+Two FortiGate VM instances are deployed in Security VPC.
 Server(s) deployed in the app subnet in the Customer VPC and Customer 2 VPC.
 
 Ingress traffic to the Server(s) located in the App subnet in Customer VPC/Customer 2 VPC will be routed to FGT in the security VPC. 
@@ -49,7 +56,7 @@ Egress traffic(North/South) from the Server(s) located in the App subnet in Cust
 East/West traffic between each Customer VPC will be routed to the transit gateway, and then through Connect.  Then redirected to FortiGate-VM's GRE interface, and then back out the GRE interface, then to the destinated VPC.
 
 ## Deployment
-To deploy the FortiGate-VM to AWS:
+To deploy the FortiGate-VM instances to AWS:
 1. Clone the repository.
 2. Customize variables in the `terraform.tfvars.example` and `variables.tf` file as needed.  And rename `terraform.tfvars.example` to `terraform.tfvars`.
 3. Initialize the providers and modules:
@@ -75,7 +82,10 @@ Outputs:
 Customer2VPC = "<Customer 2 VPC>"
 CustomerVPC = "<Customer 1 VPC>"
 FGT-Password = "<FGT Password>"
-FGTPublicIP = "<FGT Public IP>"
+FGTClusterPublicFQDN = "<FGT Cluster FQDN>"
+FGTPrimaryIP = "<FGT Primary Public IP>"
+FGTPublicIP = "<FGT Cluster Public IP>"
+FGTSecondaryIP = "<FGT Secondary Public IP>"
 FGTVPC = "<FGT Security VPC>"
 TransitGwy = "<Transit Gateway ID>"
 Username = "<FGT Username>"

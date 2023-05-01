@@ -1,6 +1,18 @@
 
+output "FGTClusterPublicFQDN" {
+  value = join("", tolist(["https://", "${aws_eip.FGTPublicIP.public_dns}", ":", "${var.adminsport}"]))
+}
+
 output "FGTPublicIP" {
   value = aws_eip.FGTPublicIP.public_ip
+}
+
+output "FGTPrimaryIP" {
+  value = aws_eip.FGTPrimaryIP.public_ip
+}
+
+output "FGTSecondaryIP" {
+  value = aws_eip.FGTSecondaryIP.public_ip
 }
 
 output "Username" {

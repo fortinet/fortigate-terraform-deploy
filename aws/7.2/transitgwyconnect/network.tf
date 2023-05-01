@@ -54,14 +54,6 @@ resource "aws_route" "externalroute" {
   gateway_id             = aws_internet_gateway.fgtvmigw.id
 }
 
-// Comment this out for now
-//resource "aws_route" "internalroute" {
-//  depends_on             = [aws_instance.fgtvm]
-//  route_table_id         = aws_route_table.fgtvmprivatert.id
-//  destination_cidr_block = "0.0.0.0/0"
-//  network_interface_id   = aws_network_interface.eth1.id
-//}
-
 resource "aws_route" "internalroutegre" {
   depends_on             = [aws_instance.fgtvm]
   route_table_id         = aws_route_table.fgtvmprivatert.id
@@ -80,8 +72,28 @@ resource "aws_route_table_association" "fgtpublicassociateaz1" {
   route_table_id = aws_route_table.fgtvmpublicrt.id
 }
 
+resource "aws_route_table_association" "fgtpublicassociateaz2" {
+  subnet_id      = aws_subnet.publicsubnetaz2.id
+  route_table_id = aws_route_table.fgtvmpublicrt.id
+}
+
+resource "aws_route_table_association" "fgthasyncassociateaz1" {
+  subnet_id      = aws_subnet.hasyncsubnetaz1.id
+  route_table_id = aws_route_table.fgtvmpublicrt.id
+}
+
+resource "aws_route_table_association" "fgthasyncassociateaz2" {
+  subnet_id      = aws_subnet.hasyncsubnetaz2.id
+  route_table_id = aws_route_table.fgtvmpublicrt.id
+}
+
 resource "aws_route_table_association" "fgtprivateassociateaz1" {
   subnet_id      = aws_subnet.privatesubnetaz1.id
+  route_table_id = aws_route_table.fgtvmprivatert.id
+}
+
+resource "aws_route_table_association" "fgtprivateassociateaz2" {
+  subnet_id      = aws_subnet.privatesubnetaz2.id
   route_table_id = aws_route_table.fgtvmprivatert.id
 }
 
@@ -136,11 +148,20 @@ resource "aws_eip" "FGTPublicIP" {
   network_interface = aws_network_interface.eth0.id
 }
 
+resource "aws_eip" "FGTPrimaryIP" {
+  depends_on        = [aws_instance.fgtvm]
+  vpc               = true
+  network_interface = aws_network_interface.eth2.id
+}
+
+resource "aws_eip" "FGTSecondaryIP" {
+  depends_on        = [aws_instance.fgtvm2]
+  vpc               = true
+  network_interface = aws_network_interface.eth2-2.id
+}
+
 # CS 2 Route association
-
-
 // Security Group
-
 resource "aws_security_group" "public_allow" {
   name        = "Public Allow"
   description = "Public Allow traffic"
@@ -200,6 +221,6 @@ resource "aws_security_group" "allow_all" {
   }
 
   tags = {
-    Name = "Public Allow"
+    Name = "Public Allow All"
   }
 }
