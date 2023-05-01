@@ -13,6 +13,7 @@ resource "aws_lb" "internal-lb" {
   name               = "${var.prefix2}lb"
   load_balancer_type = "network"
 
+  internal = true
 
   subnet_mapping {
     subnet_id = var.subnet2_id
