@@ -32,28 +32,27 @@ Terraform deploys the following components:
            - VPC attachment to Customer2 VPC(cs2 app subnet az1).
 
 ## Topology overview
-Customer VPC (192.168.50.0/24)
-       cs app subnet az1  (192.168.50.128/25)
-Customer 2 VPC (192.168.100.0/24)
-       cs2 app subnet az1  (192.168.100.128/25)
-FortiGate Security VPC (10.0.0.0/24)
-       fgt public subnet az1   (10.0.0.0/28)
-       fgt private subnet az1  (10.0.0.16/28)
-       fgt transit subnet az1  (10.0.0.32/28)
-       fgt haysnc/hamgmt subnet az1  (10.0.0.48/28)
-
-       fgt public subnet az2   (10.0.0.64/28)
-       fgt private subnet az2  (10.0.0.80/28)
-       fgt transit subnet az2  (10.0.0.96/28)
-       fgt haysnc/hamgmt subnet az2  (10.0.0.112/28)
+* Customer VPC (192.168.50.0/24)
+  - cs app subnet az1  (192.168.50.128/25)
+* Customer 2 VPC (192.168.100.0/24)
+  - cs2 app subnet az1  (192.168.100.128/25)
+* FortiGate Security VPC (10.0.0.0/24)
+  - fgt public subnet az1   (10.0.0.0/28)
+  - fgt private subnet az1  (10.0.0.16/28)
+  - fgt transit subnet az1  (10.0.0.32/28)
+  - fgt haysnc/hamgmt subnet az1  (10.0.0.48/28)
+  - fgt public subnet az2   (10.0.0.64/28)
+  - fgt private subnet az2  (10.0.0.80/28)
+  - fgt transit subnet az2  (10.0.0.96/28)
+  - fgt haysnc/hamgmt subnet az2  (10.0.0.112/28)
 
 
 Two FortiGate VM instances are deployed in Security VPC.
 Server(s) deployed in the app subnet in the Customer VPC and Customer 2 VPC.
 
-Ingress traffic to the Server(s) located in the App subnet in Customer VPC/Customer 2 VPC will be routed to FGT in the security VPC. 
-Egress traffic(North/South) from the Server(s) located in the App subnet in Customer VPC/Customer 2 VPC will be routed to Transit Gateway, then through Connect, and redirect to FortiGate-VM's gre interface and send back out to port1.
-East/West traffic between each Customer VPC will be routed to the transit gateway, and then through Connect.  Then redirected to FortiGate-VM's GRE interface, and then back out the GRE interface, then to the destinated VPC.
+* Ingress traffic to the Server(s) located in the App subnet in Customer VPC/Customer 2 VPC will be routed to FGT in the security VPC. 
+* Egress traffic(North/South) from the Server(s) located in the App subnet in Customer VPC/Customer 2 VPC will be routed to Transit Gateway, then through Connect, and redirect to FortiGate-VM's gre interface and send back out to port1.
+* East/West traffic between each Customer VPC will be routed to the transit gateway, and then through Connect.  Then redirected to FortiGate-VM's GRE interface, and then back out the GRE interface, then to the destinated VPC.
 
 ## Deployment
 To deploy the FortiGate-VM instances to AWS:
