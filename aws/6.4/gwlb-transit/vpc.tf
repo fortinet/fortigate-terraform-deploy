@@ -3,7 +3,6 @@ resource "aws_vpc" "fgtvm-vpc" {
   cidr_block           = var.vpccidr
   enable_dns_support   = true
   enable_dns_hostnames = true
-  enable_classiclink   = false
   instance_tenancy     = "default"
   tags = {
     Name = "terraform fgt demo"
@@ -86,7 +85,6 @@ resource "aws_vpc" "customer-vpc" {
   cidr_block           = var.csvpccidr
   enable_dns_support   = true
   enable_dns_hostnames = true
-  enable_classiclink   = false
   instance_tenancy     = "default"
   tags = {
     Name = "terraform customer demo"
@@ -136,7 +134,6 @@ resource "aws_vpc" "customer2-vpc" {
   cidr_block           = var.cs2vpccidr
   enable_dns_support   = true
   enable_dns_hostnames = true
-  enable_classiclink   = false
   instance_tenancy     = "default"
   tags = {
     Name = "terraform customer2 demo"
