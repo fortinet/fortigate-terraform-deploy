@@ -54,6 +54,9 @@ Server(s) deployed in the app subnet in the Customer VPC and Customer 2 VPC.
 * Egress traffic(North/South) from the Server(s) located in the App subnet in Customer VPC/Customer 2 VPC will be routed to Transit Gateway, then through Connect, and redirect to FortiGate-VM's gre interface and send back out to port1.
 * East/West traffic between each Customer VPC will be routed to the transit gateway, and then through Connect.  Then redirected to FortiGate-VM's GRE interface, and then back out the GRE interface, then to the destinated VPC.
 
+![transit-gateway-connect-architecture](./transitgwyconnect.jpg?raw=true "Transit Gateway Connect Architecture")
+
+
 ## Deployment
 To deploy the FortiGate-VM instances to AWS:
 1. Clone the repository.
