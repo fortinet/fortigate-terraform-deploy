@@ -22,13 +22,6 @@ variable "ftntproject" {
   type    = string
   default = "fortigcp-project-001"
 }
-# 7.2.4 payg is fortinet-fgtondemand-724-20230201-001-w-license
-# 7.2.4 byol is fortinet-fgt-724-20230201-001-w-license
-# GCP Fortinet source image
-variable "ftntsrcimage" {
-  type    = string
-  default = "fortinet-fgtondemand-724-20230201-001-w-license"
-}
 # GCP oauth access token
 variable "token" {
   type    = string
