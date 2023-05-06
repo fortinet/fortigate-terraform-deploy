@@ -23,8 +23,7 @@ resource "google_compute_image" "fgtvmgvnic" {
   count = var.nictype == "GVNIC" ? 1 : 0
   name  = "fgtvmgvnic-image"
 
-  source_image = var.ftntsrcimage
-  project      = var.ftntproject
+  source_image = var.image
 
   guest_os_features {
     type = var.nictype
