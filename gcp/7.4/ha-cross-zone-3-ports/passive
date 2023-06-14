@@ -50,6 +50,24 @@ config router static
        set device port1
        set gateway ${port1_gateway}
     next
+    edit 2
+       set device port1
+       set dst ${public_subnet}
+       set gateway ${port1_gateway}
+    next
+    edit 3
+       set device port1
+       set dst ${port1_gateway} 255.255.255.255
+    next
+    edit 4
+       set device port2
+       set dst ${protected_subnet}
+       set gateway ${protected_gateway_ip}
+    next
+    edit 5
+       set device port2
+       set dst ${protected_gateway_ip} 255.255.255.255
+    next
 end
 config system sdn-connector
     edit "gcp"
