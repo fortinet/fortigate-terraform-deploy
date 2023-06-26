@@ -49,12 +49,12 @@ resource "google_compute_disk" "logdisk" {
 
 ### VPC ###
 resource "google_compute_network" "vpc_network" {
-  name                    = "vpc-${random_string.random_name_post.result}"
+  name                    = "vpc-public-${random_string.random_name_post.result}"
   auto_create_subnetworks = false
 }
 
 resource "google_compute_network" "vpc_network2" {
-  name                    = "vpc2-${random_string.random_name_post.result}"
+  name                    = "vpc2-private-${random_string.random_name_post.result}"
   auto_create_subnetworks = false
 }
 
@@ -134,10 +134,8 @@ resource "google_compute_instance" "default" {
     nic_type   = var.nictype
   }
   metadata = {
-    #user-data = "${file(var.user_data)}"
     user-data = fileexists("${path.module}/${var.user_data}") ? "${file(var.user_data)}" : null
-    #license   = "${file(var.license_file)}" #this is where to put the license file if using BYOL image
-    license = fileexists("${path.module}/${var.license_file}") ? "${file(var.license_file)}" : null
+    license   = fileexists("${path.module}/${var.license_file}") ? "${file(var.license_file)}" : null
   }
   service_account {
     scopes = ["userinfo-email", "compute-ro", "storage-ro"]
@@ -148,18 +146,17 @@ resource "google_compute_instance" "default" {
   }
 }
 
+data "google_compute_instance" "default" {
+  depends_on = [google_compute_instance.default]
+  name       = "fgtnat-${random_string.random_name_post.result}"
+}
 
-# Output
-output "FortiGate-NATIP" {
-  value = google_compute_instance.default.network_interface.0.access_config.0.nat_ip
-}
-output "FortiGate-InstanceName" {
-  value = google_compute_instance.default.name
-}
-output "FortiGate-Username" {
-  value = "admin"
-}
-output "FortiGate-Password" {
-  value = google_compute_instance.default.instance_id
+resource "google_compute_route" "internal" {
+  name        = "internal-route-${random_string.random_name_post.result}"
+  dest_range  = "0.0.0.0/0"
+  network     = google_compute_network.vpc_network2.name
+  next_hop_ip = data.google_compute_instance.default.network_interface.1.network_ip
+  priority    = 100
+  depends_on  = [google_compute_instance.default]
 }
 
