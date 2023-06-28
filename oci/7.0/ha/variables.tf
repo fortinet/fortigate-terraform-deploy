@@ -10,14 +10,14 @@ variable "mp_listing_id" {
   default = "ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q" //byol
 }
 
-// 7.0.5 ocid1.image.oc1..aaaaaaaasqn4zerim4l4mmmilnmcj5npl7mam7abpzekiwsyoc5b7plevula
+// 7.0.11 ocid1.image.oc1..aaaaaaaajvkggybrfj2h2s22fgjyhnsuh4emtrseajftf2btu2mpjwafcn6a
 variable "mp_listing_resource_id" {
-  default = "ocid1.image.oc1..aaaaaaaasqn4zerim4l4mmmilnmcj5npl7mam7abpzekiwsyoc5b7plevula"
+  default = "ocid1.image.oc1..aaaaaaaajvkggybrfj2h2s22fgjyhnsuh4emtrseajftf2btu2mpjwafcn6a"
 }
 
 // Version
 variable "mp_listing_resource_version" {
-  default = "7.0.5_SR-IOV_Paravirtualized_Mode"
+  default = "7.0.11_(_X64_)"
 }
 // Cert use for SDN Connector setting
 variable "cert" {

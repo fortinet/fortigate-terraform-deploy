@@ -20,6 +20,9 @@ resource "azurerm_virtual_machine" "customactivefgtvm" {
   primary_network_interface_id = azurerm_network_interface.activeport1.id
   vm_size                      = var.size
 
+  delete_os_disk_on_termination    = true
+  delete_data_disks_on_termination = true
+
   storage_image_reference {
     id = var.custom ? element(azurerm_image.custom.*.id, 0) : null
   }
@@ -80,7 +83,7 @@ resource "azurerm_virtual_machine" "customactivefgtvm" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }
 
@@ -94,6 +97,9 @@ resource "azurerm_virtual_machine" "activefgtvm" {
   network_interface_ids        = [azurerm_network_interface.activeport1.id, azurerm_network_interface.activeport2.id, azurerm_network_interface.activeport3.id, azurerm_network_interface.activeport4.id]
   primary_network_interface_id = azurerm_network_interface.activeport1.id
   vm_size                      = var.size
+
+  delete_os_disk_on_termination    = true
+  delete_data_disks_on_termination = true
 
   storage_image_reference {
     publisher = var.custom ? null : var.publisher
@@ -165,6 +171,6 @@ resource "azurerm_virtual_machine" "activefgtvm" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Port1 Mgmt"
   }
 }

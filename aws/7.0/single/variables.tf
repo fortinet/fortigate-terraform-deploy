@@ -1,6 +1,6 @@
 //AWS Configuration
-variable access_key {}
-variable secret_key {}
+variable "access_key" {}
+variable "secret_key" {}
 
 variable "region" {
   default = "eu-west-1"
@@ -23,73 +23,263 @@ variable "privatecidraz1" {
   default = "10.1.1.0/24"
 }
 
-
 // License Type to create FortiGate-VM
 // Provide the license type for FortiGate-VM Instances, either byol or payg.
 variable "license_type" {
-  default     = "byol"
+  default = "payg"
 }
 
-// AMIs are for FGTVM-AWS(PAYG) - 7.0.5
-variable "fgtvmami" {
-  type = map(any)
-  default = {
-    us-east-1      = "ami-03e7e7d91a52ca5a8"
-    us-east-2      = "ami-0e113c50f06a97400"
-    us-west-1      = "ami-082652dab4c2b2b08"
-    us-west-2      = "ami-07088d7493c5a0800"
-    af-south-1     = "ami-0295c5080b9805520"
-    ap-east-1      = "ami-02be0ef8447edb43e"
-    ap-southeast-3 = "ami-068ba85d1fa328916"
-    ap-south-1     = "ami-05ba002f63a1766d3"
-    ap-northeast-3 = "ami-07174a037bf829c0c"
-    ap-northeast-2 = "ami-0e12f8836f40e8b3e"
-    ap-southeast-1 = "ami-06dee2ed266b9cf09"
-    ap-southeast-2 = "ami-0ea305a185f601084"
-    ap-northeast-1 = "ami-0f507a2fdcdacd65d"
-    ca-central-1   = "ami-0023a316c322bddae"
-    eu-central-1   = "ami-0c2627a529b12b091"
-    eu-west-1      = "ami-0788ecffa9d575080"
-    eu-west-2      = "ami-09310a84e790cc655"
-    eu-south-1     = "ami-0a52973d2d3c48130"
-    eu-west-3      = "ami-04f09fc1ddc84c818"
-    eu-north-1     = "ami-01a6be2c952f7ac23"
-    me-south-1     = "ami-0f2d1a2615e27b2e7"
-    sa-east-1      = "ami-008d212dd6df8933c"
-  }
+// instance architect
+// Either arm or x86
+// Note: 7.0.12 doesn't have ARM AMI.  Only x86.
+variable "arch" {
+  default = "x86"
 }
 
-// AMIs are for FGTVM AWS(BYOL) - 7.0.5
-variable "fgtvmbyolami" {
-  type = map(any)
-  default = {
-    us-east-1      = "ami-032243089115c1b41"
-    us-east-2      = "ami-0cdd1e37a58060fb2"
-    us-west-1      = "ami-0c186535bfe65e6a9"
-    us-west-2      = "ami-00f2435b18a726cb3"
-    af-south-1     = "ami-0b5e8f16375316cb4"
-    ap-east-1      = "ami-0dc7049dd8a89b636"
-    ap-southeast-3 = "ami-02ff5d3364918898f"
-    ap-south-1     = "ami-03b839ccc4c60c4a8"
-    ap-northeast-3 = "ami-0f8b2411b91fafcb5"
-    ap-northeast-2 = "ami-057b40cc79c1578ca"
-    ap-southeast-1 = "ami-05327079c9dffad9a"
-    ap-southeast-2 = "ami-0e5fa71b70b18b75e"
-    ap-northeast-1 = "ami-0658131c7742f44df"
-    ca-central-1   = "ami-01ebba0e8198224e3"
-    eu-central-1   = "ami-0f44d2b3c1fb0bfd1"
-    eu-west-1      = "ami-0c2293c1c0708af3d"
-    eu-west-2      = "ami-006c8985b117c010f"
-    eu-south-1     = "ami-0ceca56dd744d9a15"
-    eu-west-3      = "ami-0312f6fac3eb9ac02"
-    eu-north-1     = "ami-0f447d0d4bf789557"
-    me-south-1     = "ami-0e306d1aa0d47cb0d"
-    sa-east-1      = "ami-0b2633f80602f6e0d"
-  }
-}
-
+// instance type needs to match the architect
+// c5n.xlarge is x86_64
+// c6g.xlarge is arm
+// For detail, refer to https://aws.amazon.com/ec2/instance-types/
 variable "size" {
   default = "c5n.xlarge"
+}
+
+// For 7.0.12, there is no AMI for the ARM platform
+// AMIs for FGTVM-7.0.12
+variable "fgtami" {
+  type = map(any)
+  default = {
+    us-east-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-08ddbd2155132317b"
+        byol = "ami-0ac6fa050c788d801"
+      }
+    },
+    us-east-2 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-01817f6f93e76ad2a"
+        byol = "ami-09321dcf8bb1fa0b6"
+      }
+    },
+    us-west-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-0ed78d7029954819d"
+        byol = "ami-090ac5f1b82e51bf9"
+      }
+    },
+    us-west-2 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-066d72b2d87de88fa"
+        byol = "ami-0696a6c4d799074bb"
+      }
+    },
+    af-south-1 = {
+     arm = {
+        payg = ""
+        byol = ""
+     },
+     x86 = {
+        payg = "ami-03330f74d11751a6d"
+        byol = "ami-0c179219bfaabdace"
+     }
+    },
+    ap-east-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-05148635f70a86df8"
+        byol = "ami-03176e7744042594b"
+      }
+    },
+    ap-southeast-3 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-0bfed2a7d1e68949a"
+        byol = "ami-00ffa267f368640c0"
+      }
+    },
+    ap-south-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-097079b4f31d18394"
+        byol = "ami-0a692a2d630e762f6"
+      }
+    },
+    ap-northeast-3 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-0a86f59680c0f33d0"
+        byol = "ami-075638c64edd29eb2"
+      }
+    },
+    ap-northeast-2 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-0ad93f15c983581c6"
+        byol = "ami-06e461f119feb2799"
+      }
+    },
+    ap-southeast-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-05af12f32906bfc49"
+        byol = "ami-0c0a996565d9fecdf"
+      }
+    },
+    ap-southeast-2 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-0b9c231097025128c"
+        byol = "ami-029606d980a551721"
+      }
+    },
+    ap-northeast-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-0d10006c63e2055f9"
+        byol = "ami-08c9b1b69f7d4b995"
+      }
+    },
+    ca-central-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-02ca02182aa40c490"
+        byol = "ami-0c0b7a8b039e8bdcf"
+      }
+    },
+    eu-central-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-019e76ee8a02a3226"
+        byol = "ami-09f7b3f5ac2313e57"
+      }
+    },
+    eu-west-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-00a65f06615fc77ac"
+        byol = "ami-04ec9ddb79754a393"
+      }
+    },
+    eu-west-2 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-070e8c502bfa98d12"
+        byol = "ami-089778e7a76387976"
+      }
+    },
+    eu-south-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-0f5d9628169846585"
+        byol = "ami-02b5db61c8c0e7917"
+      }
+    },
+    eu-west-3 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-0f5d9628169846585"
+        byol = "ami-02b5db61c8c0e7917"
+      }
+    },
+    eu-north-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-0d65275f41a617820"
+        byol = "ami-07cc4c668064909d7"
+      }
+    },
+    me-south-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-0b4108b3d16e8539b"
+        byol = "ami-0b6bb03f34629461e"
+      }
+    },
+    me-central-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-00d8342144b773b21"
+        byol = "ami-071bd251c584b1516"
+      }
+    },
+    sa-east-1 = {
+      arm = {
+        payg = ""
+        byol = ""
+      },
+      x86 = {
+        payg = "ami-00eb40920085e089b"
+        byol = "ami-01ce2e9971a787830"
+      }
+    }
+  }
 }
 
 //  Existing SSH Key on the AWS 

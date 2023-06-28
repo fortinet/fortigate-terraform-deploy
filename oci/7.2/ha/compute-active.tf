@@ -22,16 +22,36 @@ resource "oci_core_instance" "activevm" {
   }
 
   source_details {
-    source_type = "image"
-    source_id   = local.mp_listing_resource_id // marketplace listing
-    //source_id = "ocid1.image.oc1.phx.aaaaaaaalvrzh6j2edqh6s42rabhbhclwgnk4owdpjhqu5qsgtur7pc4lqaa"     // private image
+    source_type             = "image"
+    source_id               = local.mp_listing_resource_id // marketplace listing
     boot_volume_size_in_gbs = "50"
   }
 
   // Required for bootstrap
   // Commnet out the following if not using the feature.
   metadata = {
-    user_data = base64encode(data.template_file.userdata_lic.rendered)
+    user_data = base64encode(templatefile("${var.bootstrap-active}", {
+      license_file        = "${file("${var.license}")}"
+      port1_ip            = var.mgmt_private_ip_active
+      port1_mask          = var.mgmt_private_mask
+      port2_ip            = var.public_private_ip_floating
+      port2_mask          = var.public_private_mask
+      port3_ip            = var.trust_private_ip_floating
+      port3_mask          = var.trust_private_mask
+      port4_ip            = var.hasync_private_ip_active
+      port4_mask          = var.hasync_private_mask
+      passive_peerip      = var.hasync_private_ip_passive
+      mgmt_gateway_ip     = oci_core_subnet.mgmt_subnet.virtual_router_ip
+      public_gateway_ip   = oci_core_subnet.public_subnet.virtual_router_ip
+      vcn_cidr            = var.vcn_cidr
+      internal_gateway_ip = oci_core_subnet.trust_subnet.virtual_router_ip
+      tenantid            = var.tenancy_ocid
+      userid              = var.user_ocid
+      compartid           = var.compartment_ocid
+      cert                = var.cert
+      region              = var.region
+      })
+    )
   }
 
   timeouts {
@@ -115,31 +135,3 @@ resource "oci_core_vnic_attachment" "vnic_attach_hasync" {
     private_ip             = var.hasync_private_ip_active
   }
 }
-
-// Use for bootstrapping cloud-init
-data "template_file" "userdata_lic" {
-  template = file("${var.bootstrap-active}")
-
-  vars = {
-    license_file        = "${file("${var.license}")}"
-    port1_ip            = var.mgmt_private_ip_active
-    port1_mask          = var.mgmt_private_mask
-    port2_ip            = var.public_private_ip_floating
-    port2_mask          = var.public_private_mask
-    port3_ip            = var.trust_private_ip_floating
-    port3_mask          = var.trust_private_mask
-    port4_ip            = var.hasync_private_ip_active
-    port4_mask          = var.hasync_private_mask
-    passive_peerip      = var.hasync_private_ip_passive
-    mgmt_gateway_ip     = oci_core_subnet.mgmt_subnet.virtual_router_ip
-    public_gateway_ip   = oci_core_subnet.public_subnet.virtual_router_ip
-    vcn_cidr            = var.vcn_cidr
-    internal_gateway_ip = oci_core_subnet.trust_subnet.virtual_router_ip
-    tenantid            = var.tenancy_ocid
-    userid              = var.user_ocid
-    compartid           = var.compartment_ocid
-    cert                = var.cert
-    region              = var.region
-  }
-}
-

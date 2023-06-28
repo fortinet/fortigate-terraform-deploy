@@ -56,11 +56,31 @@ resource "aws_network_interface_sg_attachment" "hasyncattachment" {
 
 
 resource "aws_instance" "fgtactive" {
-  ami                  = var.license_type == "byol" ? var.fgtvmbyolami[var.region] : var.fgtvmami[var.region]
-  instance_type        = var.size
-  availability_zone    = var.az1
-  key_name             = var.keyname
-  user_data            = data.template_file.activeFortiGate.rendered
+  //it will use region, architect, and license type to decide which ami to use for deployment
+  ami               = var.fgtami[var.region][var.arch][var.license_type]
+  instance_type     = var.size
+  availability_zone = var.az1
+  key_name          = var.keyname
+  user_data = templatefile("${var.bootstrap-active}", {
+    type            = "${var.license_type}"
+    license_file    = "${var.license}"
+    port1_ip        = "${var.activeport1}"
+    port1_mask      = "${var.activeport1mask}"
+    port2_ip        = "${var.activeport2}"
+    port2_mask      = "${var.activeport2mask}"
+    port3_ip        = "${var.activeport3}"
+    port3_mask      = "${var.activeport3mask}"
+    port4_ip        = "${var.activeport4}"
+    port4_mask      = "${var.activeport4mask}"
+    passive_peerip  = "${var.passiveport3}"
+    mgmt_gateway_ip = "${var.activeport4gateway}"
+    defaultgwy      = "${var.activeport1gateway}"
+    privategwy      = "${var.activeport2gateway}"
+    vpc_ip          = cidrhost(var.vpccidr, 0)
+    dns_ip          = cidrhost(var.vpccidr, 2)
+    vpc_mask        = cidrnetmask(var.vpccidr)
+    adminsport      = "${var.adminsport}"
+  })
   iam_instance_profile = var.iam
 
   root_block_device {
@@ -99,29 +119,3 @@ resource "aws_instance" "fgtactive" {
     Name = "FortiGateVM Active"
   }
 }
-
-
-data "template_file" "activeFortiGate" {
-  template = file("${var.bootstrap-active}")
-  vars = {
-    type            = "${var.license_type}"
-    license_file    = "${var.license}"
-    port1_ip        = "${var.activeport1}"
-    port1_mask      = "${var.activeport1mask}"
-    port2_ip        = "${var.activeport2}"
-    port2_mask      = "${var.activeport2mask}"
-    port3_ip        = "${var.activeport3}"
-    port3_mask      = "${var.activeport3mask}"
-    port4_ip        = "${var.activeport4}"
-    port4_mask      = "${var.activeport4mask}"
-    passive_peerip  = "${var.passiveport3}"
-    mgmt_gateway_ip = "${var.activeport4gateway}"
-    defaultgwy      = "${var.activeport1gateway}"
-    privategwy      = "${var.activeport2gateway}"
-    vpc_ip          = cidrhost(var.vpccidr, 0)
-    dns_ip          = cidrhost(var.vpccidr, 2)
-    vpc_mask        = cidrnetmask(var.vpccidr)
-    adminsport      = "${var.adminsport}"
-  }
-}
-

@@ -168,43 +168,49 @@ resource "google_compute_firewall" "allow-mgmt" {
 
 # active userdata pre-configuration
 data "template_file" "setup-active" {
-  template = "${file("${path.module}/active")}"
+  template = file("${path.module}/active")
   vars = {
-    active_port1_ip   = var.active_port1_ip
-    active_port1_mask = var.active_port1_mask
-    active_port2_ip   = var.active_port2_ip
-    active_port2_mask = var.active_port2_mask
-    active_port3_ip   = var.active_port3_ip
-    active_port3_mask = var.active_port3_mask
-    active_port4_ip   = var.active_port4_ip
-    active_port4_mask = var.active_port4_mask
-    hamgmt_gateway_ip = var.mgmt_gateway     //  hamgmt gateway ip
-    passive_hb_ip     = var.passive_port3_ip // passive hb ip
-    hb_netmask        = var.mgmt_mask        // mgmt netmask
-    port1_gateway     = google_compute_subnetwork.public_subnet.gateway_address
-    clusterip         = "cluster-ip-${random_string.random_name_post.result}"
-    internalroute     = "internal-route-${random_string.random_name_post.result}"
+    active_port1_ip      = var.active_port1_ip
+    active_port1_mask    = var.active_port1_mask
+    active_port2_ip      = var.active_port2_ip
+    active_port2_mask    = var.active_port2_mask
+    active_port3_ip      = var.active_port3_ip
+    active_port3_mask    = var.active_port3_mask
+    active_port4_ip      = var.active_port4_ip
+    active_port4_mask    = var.active_port4_mask
+    hamgmt_gateway_ip    = var.mgmt_gateway //  hamgmt gateway ip
+    protected_subnet     = var.protected_subnet
+    protected_gateway_ip = google_compute_subnetwork.private_subnet.gateway_address
+    public_subnet        = var.public_subnet
+    passive_hb_ip        = var.passive_port3_ip // passive hb ip
+    hb_netmask           = var.mgmt_mask        // mgmt netmask
+    port1_gateway        = google_compute_subnetwork.public_subnet.gateway_address
+    clusterip            = "cluster-ip-${random_string.random_name_post.result}"
+    internalroute        = "internal-route-${random_string.random_name_post.result}"
   }
 }
 
 # passive userdata pre-configuration
 data "template_file" "setup-passive" {
-  template = "${file("${path.module}/passive")}"
+  template = file("${path.module}/passive")
   vars = {
-    passive_port1_ip   = var.passive_port1_ip
-    passive_port1_mask = var.passive_port1_mask
-    passive_port2_ip   = var.passive_port2_ip
-    passive_port2_mask = var.passive_port2_mask
-    passive_port3_ip   = var.passive_port3_ip
-    passive_port3_mask = var.passive_port3_mask
-    passive_port4_ip   = var.passive_port4_ip
-    passive_port4_mask = var.passive_port4_mask
-    hamgmt_gateway_ip  = var.mgmt_gateway    //  hamgmt gateway ip
-    active_hb_ip       = var.active_port3_ip // active hb ip
-    hb_netmask         = var.mgmt_mask       // mgmt netmask
-    port1_gateway      = google_compute_subnetwork.public_subnet.gateway_address
-    clusterip          = "cluster-ip-${random_string.random_name_post.result}"
-    internalroute      = "internal-route-${random_string.random_name_post.result}"
+    passive_port1_ip     = var.passive_port1_ip
+    passive_port1_mask   = var.passive_port1_mask
+    passive_port2_ip     = var.passive_port2_ip
+    passive_port2_mask   = var.passive_port2_mask
+    passive_port3_ip     = var.passive_port3_ip
+    passive_port3_mask   = var.passive_port3_mask
+    passive_port4_ip     = var.passive_port4_ip
+    passive_port4_mask   = var.passive_port4_mask
+    hamgmt_gateway_ip    = var.mgmt_gateway //  hamgmt gateway ip
+    protected_gateway_ip = google_compute_subnetwork.private_subnet.gateway_address
+    public_subnet        = var.public_subnet
+    protected_subnet     = var.protected_subnet
+    active_hb_ip         = var.active_port3_ip // active hb ip
+    hb_netmask           = var.mgmt_mask       // mgmt netmask
+    port1_gateway        = google_compute_subnetwork.public_subnet.gateway_address
+    clusterip            = "cluster-ip-${random_string.random_name_post.result}"
+    internalroute        = "internal-route-${random_string.random_name_post.result}"
   }
 }
 
@@ -273,7 +279,7 @@ resource "google_compute_instance" "default" {
     scopes = ["userinfo-email", "compute-rw", "storage-ro", "cloud-platform"]
   }
   scheduling {
-    preemptible       = true
+    preemptible       = false
     automatic_restart = false
   }
 }
@@ -322,7 +328,7 @@ resource "google_compute_instance" "default2" {
     scopes = ["userinfo-email", "compute-rw", "storage-ro", "cloud-platform"]
   }
   scheduling {
-    preemptible       = true
+    preemptible       = false
     automatic_restart = false
   }
 }
@@ -333,13 +339,13 @@ resource "google_compute_instance" "default2" {
 
 # Output
 output "FortiGate-HA-Cluster-IP" {
-  value = "${google_compute_instance.default.network_interface.0.access_config.*.nat_ip}"
+  value = google_compute_instance.default.network_interface.0.access_config.*.nat_ip
 }
 output "FortiGate-HA-Master-MGMT-IP" {
-  value = "${google_compute_instance.default.network_interface.3.access_config.0.nat_ip}"
+  value = google_compute_instance.default.network_interface.3.access_config.0.nat_ip
 }
 output "FortiGate-HA-Slave-MGMT-IP" {
-  value = "${google_compute_instance.default2.network_interface.3.access_config.0.nat_ip}"
+  value = google_compute_instance.default2.network_interface.3.access_config.0.nat_ip
 }
 
 output "FortiGate-Username" {

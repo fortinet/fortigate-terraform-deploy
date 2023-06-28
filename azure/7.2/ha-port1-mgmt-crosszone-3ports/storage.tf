@@ -14,6 +14,6 @@ resource "azurerm_storage_account" "fgtstorageaccount" {
   account_tier             = "Standard"
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Crosszone 3 Ports"
   }
 }

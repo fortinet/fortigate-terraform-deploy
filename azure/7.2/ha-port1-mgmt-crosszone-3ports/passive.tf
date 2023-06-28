@@ -9,6 +9,9 @@ resource "azurerm_virtual_machine" "custompassivefgtvm" {
   vm_size                      = var.size
   zones                        = [var.zone2]
 
+  delete_os_disk_on_termination    = true
+  delete_data_disks_on_termination = true
+
   storage_image_reference {
     id = var.custom ? element(azurerm_image.custom.*.id, 0) : null
   }
@@ -66,7 +69,7 @@ resource "azurerm_virtual_machine" "custompassivefgtvm" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Crosszone 3 Ports"
   }
 }
 
@@ -81,6 +84,9 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
   primary_network_interface_id = azurerm_network_interface.passiveport1.id
   vm_size                      = var.size
   zones                        = [var.zone2]
+
+  delete_os_disk_on_termination    = true
+  delete_data_disks_on_termination = true
 
   storage_image_reference {
     publisher = var.custom ? null : var.publisher
@@ -149,6 +155,6 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
   }
 
   tags = {
-    environment = "Terraform Demo"
+    environment = "Terraform HA AP SDN FortiGates - Crosszone 3 Ports"
   }
 }

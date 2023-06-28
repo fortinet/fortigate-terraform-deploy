@@ -223,20 +223,23 @@ resource "google_compute_instance" "default" {
 
   metadata = {
     user-data = templatefile("${path.module}/active", {
-      active_port1_ip   = var.active_port1_ip
-      active_port1_mask = var.active_port1_mask
-      active_port2_ip   = var.active_port2_ip
-      active_port2_mask = var.active_port2_mask
-      active_port3_ip   = var.active_port3_ip
-      active_port3_mask = var.active_port3_mask
-      active_port4_ip   = var.active_port4_ip
-      active_port4_mask = var.active_port4_mask
-      hamgmt_gateway_ip = var.mgmt_gateway     //  hamgmt gateway ip
-      passive_hb_ip     = var.passive_port3_ip // passive hb ip
-      hb_netmask        = var.mgmt_mask        // mgmt netmask
-      port1_gateway     = google_compute_subnetwork.public_subnet.gateway_address
-      clusterip         = "cluster-ip-${random_string.random_name_post.result}"
-      internalroute     = "internal-route-${random_string.random_name_post.result}"
+      active_port1_ip      = var.active_port1_ip
+      active_port1_mask    = var.active_port1_mask
+      active_port2_ip      = var.active_port2_ip
+      active_port2_mask    = var.active_port2_mask
+      active_port3_ip      = var.active_port3_ip
+      active_port3_mask    = var.active_port3_mask
+      active_port4_ip      = var.active_port4_ip
+      active_port4_mask    = var.active_port4_mask
+      hamgmt_gateway_ip    = var.mgmt_gateway //  hamgmt gateway ip
+      protected_subnet     = var.protected_subnet
+      protected_gateway_ip = google_compute_subnetwork.private_subnet.gateway_address
+      public_subnet        = var.public_subnet
+      passive_hb_ip        = var.passive_port3_ip // passive hb ip
+      hb_netmask           = var.mgmt_mask        // mgmt netmask
+      port1_gateway        = google_compute_subnetwork.public_subnet.gateway_address
+      clusterip            = "cluster-ip-${random_string.random_name_post.result}"
+      internalroute        = "internal-route-${random_string.random_name_post.result}"
     })
     license = fileexists("${path.module}/${var.licenseFile}") ? "${file(var.licenseFile)}" : null
   }
@@ -244,7 +247,7 @@ resource "google_compute_instance" "default" {
     scopes = ["userinfo-email", "compute-rw", "storage-ro", "cloud-platform"]
   }
   scheduling {
-    preemptible       = true
+    preemptible       = false
     automatic_restart = false
   }
 }
@@ -287,20 +290,23 @@ resource "google_compute_instance" "default2" {
   }
   metadata = {
     user-data = templatefile("${path.module}/passive", {
-      passive_port1_ip   = var.passive_port1_ip
-      passive_port1_mask = var.passive_port1_mask
-      passive_port2_ip   = var.passive_port2_ip
-      passive_port2_mask = var.passive_port2_mask
-      passive_port3_ip   = var.passive_port3_ip
-      passive_port3_mask = var.passive_port3_mask
-      passive_port4_ip   = var.passive_port4_ip
-      passive_port4_mask = var.passive_port4_mask
-      hamgmt_gateway_ip  = var.mgmt_gateway    //  hamgmt gateway ip
-      active_hb_ip       = var.active_port3_ip // active hb ip
-      hb_netmask         = var.mgmt_mask       // mgmt netmask
-      port1_gateway      = google_compute_subnetwork.public_subnet.gateway_address
-      clusterip          = "cluster-ip-${random_string.random_name_post.result}"
-      internalroute      = "internal-route-${random_string.random_name_post.result}"
+      passive_port1_ip     = var.passive_port1_ip
+      passive_port1_mask   = var.passive_port1_mask
+      passive_port2_ip     = var.passive_port2_ip
+      passive_port2_mask   = var.passive_port2_mask
+      passive_port3_ip     = var.passive_port3_ip
+      passive_port3_mask   = var.passive_port3_mask
+      passive_port4_ip     = var.passive_port4_ip
+      passive_port4_mask   = var.passive_port4_mask
+      hamgmt_gateway_ip    = var.mgmt_gateway //  hamgmt gateway ip
+      protected_gateway_ip = google_compute_subnetwork.private_subnet.gateway_address
+      public_subnet        = var.public_subnet
+      protected_subnet     = var.protected_subnet
+      active_hb_ip         = var.active_port3_ip // active hb ip
+      hb_netmask           = var.mgmt_mask       // mgmt netmask
+      port1_gateway        = google_compute_subnetwork.public_subnet.gateway_address
+      clusterip            = "cluster-ip-${random_string.random_name_post.result}"
+      internalroute        = "internal-route-${random_string.random_name_post.result}"
     })
     license = fileexists("${path.module}/${var.licenseFile2}") ? "${file(var.licenseFile2)}" : null
   }
@@ -308,7 +314,7 @@ resource "google_compute_instance" "default2" {
     scopes = ["userinfo-email", "compute-rw", "storage-ro", "cloud-platform"]
   }
   scheduling {
-    preemptible       = true
+    preemptible       = false
     automatic_restart = false
   }
 }

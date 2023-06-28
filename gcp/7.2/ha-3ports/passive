@@ -1,0 +1,89 @@
+config sys glo
+set hostname passive
+end
+config system interface
+    edit port1
+        set mode static
+        set ip ${passive_port1_ip}/${passive_port1_mask}
+        set allowaccess ping https ssh http fgfm
+        set description "ext"
+    next
+    edit port2
+        set mode static
+        set ip ${passive_port2_ip}/${passive_port2_mask}
+        set allowaccess ping https ssh http fgfm
+        set description "int"
+    next
+    edit port3
+        set mode static
+        set ip ${passive_port3_ip}/${passive_port3_mask}
+        set allowaccess ping https ssh http fgfm
+        set description "sync-hamgmt"
+    next
+end
+config system ha
+    set group-name "group1"
+    set mode a-p
+    set hbdev "port3" 50
+    set session-pickup enable
+    set ha-mgmt-status enable
+    config ha-mgmt-interfaces
+        edit 1
+            set interface "port3"
+            set gateway ${hamgmt_gateway_ip}
+        next
+    end
+    set override enable
+    set priority 100
+    set unicast-hb enable
+    set unicast-hb-peerip ${active_hb_ip}
+    set unicast-hb-netmask ${hb_netmask}
+end
+config router static
+    edit 1
+       set device port1
+       set gateway ${port1_gateway}
+    next
+    edit 2
+       set device port1
+       set dst ${public_subnet}
+       set gateway ${port1_gateway}
+    next
+    edit 3
+       set device port1
+       set dst ${port1_gateway} 255.255.255.255
+    next
+    edit 4
+       set device port2
+       set dst ${protected_subnet}
+       set gateway ${protected_gateway_ip}
+    next
+    edit 5
+       set device port2
+       set dst ${protected_gateway_ip} 255.255.255.255
+    next
+end
+config system sdn-connector
+    edit "gcp"
+        set type gcp
+        set ha-status enable
+        config external-ip
+            edit ${clusterip}
+            next
+        end
+        config route
+            edit ${internalroute}
+            next
+        end
+        config forwarding-rule
+            edit ${forwardrule}
+                set target ${forwardtarget}
+            next
+        end
+    next
+end
+config system vdom-exception
+    edit 1
+        set object system.interface
+    next
+end

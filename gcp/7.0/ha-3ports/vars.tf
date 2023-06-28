@@ -19,11 +19,11 @@ variable "token" {
   default = "<gcp oauth access token>"
 }
 # FortiGate Image name
-# 7.0.5 payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-705-20220211-001-w-license
-# 7.0.5 byol is projects/fortigcp-project-001/global/images/fortinet-fgt-705-20220211-001-w-license
+# 7.0.12 payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-7012-20230613-001-w-license
+# 7.0.12 byol is projects/fortigcp-project-001/global/images/fortinet-fgt-7012-20230613-001-w-license
 variable "image" {
   type    = string
-  default = "projects/fortigcp-project-001/global/images/fortinet-fgtondemand-705-20220211-001-w-license"
+  default = "projects/fortigcp-project-001/global/images/fortinet-fgtondemand-7012-20230613-001-w-license"
 }
 # GCP instance machine type
 variable "machine" {
@@ -84,7 +84,7 @@ variable "active_port1_ip" {
 }
 variable "active_port1_mask" {
   type    = string
-  default = "24"
+  default = "32"
 }
 # active int
 variable "active_port2_ip" {
@@ -93,7 +93,7 @@ variable "active_port2_ip" {
 }
 variable "active_port2_mask" {
   type    = string
-  default = "24"
+  default = "32"
 }
 # active sync
 variable "active_port3_ip" {
@@ -113,7 +113,7 @@ variable "passive_port1_ip" {
 }
 variable "passive_port1_mask" {
   type    = string
-  default = "24"
+  default = "32"
 }
 
 # passive int
@@ -123,7 +123,7 @@ variable "passive_port2_ip" {
 }
 variable "passive_port2_mask" {
   type    = string
-  default = "24"
+  default = "32"
 }
 
 

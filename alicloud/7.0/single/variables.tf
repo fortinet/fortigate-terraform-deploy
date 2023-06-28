@@ -52,10 +52,10 @@ variable "adminsport" {
 
 //Define the instance family to be used.
 //Different regions will contain various instance families
-//default family : ecs.sn2ne
+//default family : ecs.sn1ne
 variable "instance" {
   type    = string
-  default = "ecs.c5"
+  default = "ecs.sn1ne"
 }
 
 data "alicloud_account" "current" {
@@ -79,12 +79,12 @@ variable "license" {
 // FortiGate Image.  Default is payg.
 // Options are either payg or byol
 variable "license_type" {
-  default = "payg"
+  default = "byol"
 }
 
 // FortiOS Version
 variable "fosversion" {
-  default = "7.0.5"
+  default = "7.0.8"
 }
 
 

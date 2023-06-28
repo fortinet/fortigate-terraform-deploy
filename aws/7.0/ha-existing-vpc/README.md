@@ -14,6 +14,9 @@ Terraform deploys the following components:
    - Two FortiGate-VM (PAYG) instances with four NICs.
    - Two Network Security Group rules: one for external, one for internal.
 
+![ha-architecture](./aws-topology-ha.png?raw=true "HA Architecture")
+
+
 ## Deployment
 To deploy the FortiGate-VM to AWS:
 1. Clone the repository.
