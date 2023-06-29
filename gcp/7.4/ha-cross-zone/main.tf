@@ -8,8 +8,8 @@ terraform {
 }
 provider "google" {
   project      = var.project
-  region       = "us-central1"
-  zone         = "us-central1-c"
+  region       = var.region
+  zone         = var.zone
   access_token = var.token
 }
 provider "google-beta" {
