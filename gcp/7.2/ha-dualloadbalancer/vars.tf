@@ -6,7 +6,7 @@ variable "region" {
 # GCP zone
 variable "zone" {
   type    = string
-  default = "us-central1-c" #Default Zone
+  default = "us-central1-a" #Default Zone
 }
 # GCP project name
 variable "project" {
@@ -24,27 +24,27 @@ variable "token" {
   default = "<gcp oauth access token>"
 }
 # FortiGate Image name
-# 7.2.5 payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-725-20230613-001-w-license
-# 7.2.5 byol is projects/fortigcp-project-001/global/images/fortinet-fgt-725-20230613-001-w-license
+# 7.2.5 x86 payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-725-20230613-001-w-license
+# 7.2.5 x86 byol is projects/fortigcp-project-001/global/images/fortinet-fgt-725-20230613-001-w-license
+# 7.2.5 arm payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-arm64-725-20230613-001-w-license
+# 7.2.5 arm byol is projects/fortigcp-project-001/global/images/fortinet-fgt-arm64-725-20230613-001-w-license
 variable "image" {
   type    = string
   default = "projects/fortigcp-project-001/global/images/fortinet-fgtondemand-725-20230613-001-w-license"
 }
 # GCP VNIC type
 # either GVNIC or VIRTIO_NET
+# ARM must use GVNIC
 variable "nictype" {
   type    = string
   default = "GVNIC"
 }
 # GCP instance machine type
+# ARM platform needs to use t2a-standard-4
+# x86 can uses n1-standard-4
 variable "machine" {
   type    = string
   default = "n1-standard-4"
-}
-# VPC CIDR
-variable "vpc_cidr" {
-  type    = string
-  default = "172.16.0.0/16"
 }
 # Public Subnet CIDR
 variable "public_subnet" {
