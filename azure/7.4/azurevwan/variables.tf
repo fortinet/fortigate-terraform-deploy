@@ -119,7 +119,7 @@ variable "bgppeerip" {
 
 variable "publicip" {
   description = "Premise Public IP"
-  default     = "52.154.202.24"
+  default     = "X.X.X.X"
 }
 
 variable "vpncidr" {
