@@ -178,13 +178,13 @@ resource "aws_route_table_association" "csexternalassociateaz2" {
 
 resource "aws_eip" "FGTPublicIP" {
   depends_on        = [aws_instance.fgtvm]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eth0.id
 }
 
 resource "aws_eip" "FGTPublicIP2" {
   depends_on        = [aws_instance.fgtvm2]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eth0-1.id
 }
 
