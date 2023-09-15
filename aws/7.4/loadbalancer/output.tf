@@ -3,7 +3,7 @@ output "FGTActivePublicIP" {
 }
 
 output "FGTLBPublicFQDN" {
-  value = "${join("", tolist(["https://", "${aws_eip.LBPublicIP.public_dns}"]))}"
+  value = join("", tolist(["https://", "${aws_eip.LBPublicIP.public_dns}"]))
 }
 
 output "FGTLBPublicIP" {

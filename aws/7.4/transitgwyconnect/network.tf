@@ -144,19 +144,19 @@ resource "aws_route_table_association" "cs2externalassociateaz1" {
 
 resource "aws_eip" "FGTPublicIP" {
   depends_on        = [aws_instance.fgtvm]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eth0.id
 }
 
 resource "aws_eip" "FGTPrimaryIP" {
   depends_on        = [aws_instance.fgtvm]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eth2.id
 }
 
 resource "aws_eip" "FGTSecondaryIP" {
   depends_on        = [aws_instance.fgtvm2]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eth2-2.id
 }
 

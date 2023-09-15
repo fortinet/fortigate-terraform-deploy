@@ -285,7 +285,7 @@ resource "aws_network_interface" "eni-fgt2-mgmt" {
 # Create and attach the eip to the units
 resource "aws_eip" "eip-mgmt1" {
   depends_on        = [aws_instance.fgt1]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eni-fgt1-mgmt.id
   tags = {
     Name = "${var.tag_name_prefix}-fgt1-eip-mgmt"
@@ -294,7 +294,7 @@ resource "aws_eip" "eip-mgmt1" {
 
 resource "aws_eip" "eip-mgmt2" {
   depends_on        = [aws_instance.fgt2]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eni-fgt2-mgmt.id
   tags = {
     Name = "${var.tag_name_prefix}-fgt2-eip-mgmt"
@@ -303,7 +303,7 @@ resource "aws_eip" "eip-mgmt2" {
 
 resource "aws_eip" "eip-shared" {
   depends_on        = [aws_instance.fgt1]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eni-fgt1-data.id
   tags = {
     Name = "${var.tag_name_prefix}-eip-cluster"
