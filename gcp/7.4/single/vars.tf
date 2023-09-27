@@ -62,7 +62,7 @@ variable "protected_subnet" {
 # user data for bootstrap fgt configuration
 variable "user_data" {
   type    = string
-  default = "config.txt"
+  default = "bootstrap.conf"
 }
 
 # user data for bootstrap fgt license file
