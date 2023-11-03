@@ -28,7 +28,7 @@ Terraform deploys the following components:
 * Azure Virtual Network with 4 subnets
 * Two FortiGate-VM (BYOL/PAYG) instances with four NICs.  Each FortiGate-VM reside in different zones.
 * Two firewall rules.
-*A Ubuntu Client instance.
+* A Ubuntu Client instance.
 
 ## Deployment
 
@@ -78,6 +78,15 @@ To destroy the instance, use the command:
 
 ```sh
 terraform destroy
+```
+
+## Requirements and limitations
+
+The terms for the FortiGate PAYG or BYOL image in the Azure Marketplace needs to be accepted once before usage. This is done automatically during deployment via the Azure Portal. For the Azure CLI the commands below need to be run before the first deployment in a subscription.
+
+```sh
+BYOL az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm
+PAYG az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm_payg_2023
 ```
 
 ## Support
