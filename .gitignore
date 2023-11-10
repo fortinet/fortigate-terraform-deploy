@@ -19,3 +19,5 @@ terraform.tfstate*
 
 # ignore linter reports
 megalinter-reports/
+site/
+.cache
