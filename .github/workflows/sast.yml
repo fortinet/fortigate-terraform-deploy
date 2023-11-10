@@ -1,0 +1,44 @@
+---
+name: "FortiDevSec SAST"
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  init:
+    name: init
+    runs-on: ubuntu-latest
+    outputs:
+      action: ${{ steps.init.outputs.action }}
+    steps:
+      - id: init
+        name: "init"
+        shell: bash
+        run: |
+          if [[ -n "${{ secrets.FORTIDASTORGID }}" && -n "${{ secrets.FORTIDASTAPPID }}" ]]
+          then
+              echo 'action=true' >> "${GITHUB_OUTPUT}"
+          else
+            echo 'action=false' >> "${GITHUB_OUTPUT}"
+          fi
+  FortiDevSec:
+    needs: [init]
+    if: needs.init.outputs.action == 'true'
+    name: https://fortidevsec.forticloud.com/
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Scan
+        run: |
+          env | grep -E "GITHUB_ACTIONS|GITHUB_RUN_NUMBER|GITHUB_REF_NAME|GITHUB_SHA" > /tmp/env
+          docker pull registry.fortidevsec.forticloud.com/fdevsec_sast:latest
+          docker run --rm --env-file /tmp/env --mount type=bind,source="$PWD",target=/scan registry.fortidevsec.forticloud.com/fdevsec_sast:latest main s --org-id ${{ secrets.FORTIDASTORGID }} --app-id ${{ secrets.FORTIDASTAPPID }}
