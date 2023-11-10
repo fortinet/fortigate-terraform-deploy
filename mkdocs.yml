@@ -9,7 +9,8 @@ repo_name: "robinmordasiewicz/fortigate-terraform-deploy"
 extra:
   generator: false
 
-theme: material
+theme:
+  name: material
   logo: fortinet.svg
   favicon: fortinet.svg
   custom_dir: docs/overrides
