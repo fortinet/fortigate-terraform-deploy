@@ -1,0 +1,9 @@
+material
+mkdocs-git-authors-plugin
+mkdocs-git-committers-plugin-2
+mkdocs-git-revision-date-localized-plugin
+mkdocs-glightbox
+mkdocs-material
+mkdocs-material[imaging]
+mkdocs-with-pdf
+mkdocs-git-authors-plugin
