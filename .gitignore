@@ -16,3 +16,6 @@ terraform.tfstate*
 
 # ignore the pem file
 *.pem
+
+# ignore linter reports
+megalinter-reports/
