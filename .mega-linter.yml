@@ -1,0 +1,32 @@
+ACTION_ACTIONLINT_ARGUMENTS:
+  - -shellcheck=
+APPLY_FIXES: all
+CLEAR_REPORT_FOLDER: true
+DISABLE:
+  - SPELL
+FILEIO_REPORTER: false
+FLAVOR_SUGGESTIONS: false
+SHOW_ELAPSED_TIME: true
+TERRAFORM_TFLINT_UNSECURED_ENV_VARIABLES:
+  - GITHUB_TOKEN
+TERRAFORM_TERRASCAN_UNSECURED_ENV_VARIABLES:
+  - GITHUB_TOKEN
+TERRAFORM_TERRASCAN_ARGUMENTS:
+  [
+    "scan",
+    "--iac-type",
+    "terraform",
+    "--non-recursive",
+    "--policy-type",
+    "azure",
+  ]
+REPOSITORY_GRYPE_ARGUMENTS: ["--add-cpes-if-none"]
+REPOSITORY_TRUFFLEHOG_UNSECURED_ENV_VARIABLES:
+  - GITHUB_TOKEN
+REPOSITORY_TRUFFLEHOG_ARGUMENTS:
+  ["--exclude_paths", ".git/config"]
+  #PRE_COMMANDS:
+  #- command: "go install github.com/terraform-docs/terraform-docs@v0.16.0"
+  #  cwd: root
+  #- command: "terraform-docs markdown table --output-file README.md ./"
+  #  cwd: workspace
