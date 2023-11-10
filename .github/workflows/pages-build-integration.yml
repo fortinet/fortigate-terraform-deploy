@@ -1,0 +1,57 @@
+---
+---
+name: "pages-build-integration"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "requirements.txt"
+      - "README.md"
+      - ".github/workflows/pages-build-integration.yml"
+
+concurrency:
+  group: "pages-build-integration"
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  pages-build-integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        with:
+          fetch-depth: 0
+
+      #  - name: Configure GitHub Pages
+      #  uses: actions/configure-pages@f156874f8191504dae5b037505266ed5dda6c382
+
+      - uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236
+        with:
+          python-version: 3.x
+
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+
+      - run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build Docs
+        env:
+          MKDOCS_GIT_COMMITTERS_APIKEY: ${{ secrets.PAT }}
+        run: mkdocs gh-deploy --force
