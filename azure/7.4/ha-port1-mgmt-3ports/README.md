@@ -1,4 +1,4 @@
-# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on the Azure with 3 ports
+# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on Azure with 3 ports
 
 ## Introduction
 

@@ -1,4 +1,4 @@
-# Deployment of a FortiGate-VM  on the Azure
+# Deployment of a FortiGate-VM  on Azure
 ## Introduction
 A Terraform script to deploy a FortiGate-VM on Azure
 
