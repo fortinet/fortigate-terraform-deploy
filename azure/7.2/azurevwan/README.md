@@ -1,4 +1,4 @@
-# Deployment of a Azure VWAN on the Azure
+# Deployment of a Azure VWAN on Azure
 ## Introduction
 A Terraform script to deploy a Azure VWan and VPN connection with on-premise FortiGate.
 
