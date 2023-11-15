@@ -112,7 +112,7 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
 }
 
 data "template_file" "passiveFortiGate" {
-  template = "${file("${var.bootstrap-passive}")}"
+  template = file("${var.bootstrap-passive}")
 
   vars = {
     port1_ip        = "${var.passiveport1}"

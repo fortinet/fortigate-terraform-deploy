@@ -55,7 +55,7 @@ variable "arch" {
 // For detail, refer to https://aws.amazon.com/ec2/instance-types/
 variable "instance_type" {
   description = "Provide the instance type for the FortiGate instances"
-  default = "c5.xlarge"
+  default     = "c5.xlarge"
 }
 
 #############################################################################################################

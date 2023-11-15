@@ -4,11 +4,11 @@ output "Default_Username" {
 }
 
 output "Default_Password" {
-  value = "${oci_core_instance.vm.*.id}"
+  value = oci_core_instance.vm.*.id
 }
 
 output "PublicIP" {
-  value = "${oci_core_instance.vm.*.public_ip}"
+  value = oci_core_instance.vm.*.public_ip
 }
 
 

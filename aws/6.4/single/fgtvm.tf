@@ -60,7 +60,7 @@ resource "aws_instance" "fgtvm" {
 
 
 data "template_file" "FortiGate" {
-  template = "${file("${var.bootstrap-fgtvm}")}"
+  template = file("${var.bootstrap-fgtvm}")
   vars = {
     type         = "${var.license_type}"
     license_file = "${var.license}"

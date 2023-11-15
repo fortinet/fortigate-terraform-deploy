@@ -125,7 +125,7 @@ resource "azurerm_virtual_machine" "activefgtvm" {
 }
 
 data "template_file" "activeFortiGate" {
-  template = "${file("${var.bootstrap-active}")}"
+  template = file("${var.bootstrap-active}")
   vars = {
     type            = "${var.license_type}"
     license_file    = "${var.license}"

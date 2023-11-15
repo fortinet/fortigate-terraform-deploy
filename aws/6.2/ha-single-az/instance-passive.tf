@@ -103,7 +103,7 @@ resource "aws_instance" "fgtpassive" {
 
 
 data "template_file" "passiveFortiGate" {
-  template = "${file("${var.bootstrap-passive}")}"
+  template = file("${var.bootstrap-passive}")
   vars = {
     port1_ip        = "${var.passiveport1}"
     port1_mask      = "${var.passiveport1mask}"

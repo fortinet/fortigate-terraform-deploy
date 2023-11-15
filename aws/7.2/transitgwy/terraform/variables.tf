@@ -55,7 +55,7 @@ variable "arch" {
 // For detail, refer to https://aws.amazon.com/ec2/instance-types/
 variable "instance_type" {
   description = "Provide the instance type for the FortiGate instances"
-  default = "c5n.xlarge"
+  default     = "c5n.xlarge"
 }
 
 #############################################################################################################
@@ -125,7 +125,7 @@ variable "fgtami" {
         byol = "ami-00592fb0a3ef66225"
       }
     },
-     ap-south-2 = {
+    ap-south-2 = {
       arm = {
         payg = "ami-07e6ed8cbfabdee55"
         byol = "ami-0b125c1a60792614d"

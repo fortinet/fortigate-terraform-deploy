@@ -23,7 +23,7 @@ variable "tag_name_unique" {
 // License Type to create FortiGate-VM
 // Provide the license type for FortiGate-VM Instances, either byol or payg.
 variable "license_type" {
-  default     = "payg"
+  default = "payg"
 }
 
 // license file for the active fgt
@@ -45,7 +45,7 @@ variable "license2" {
 
 // AMIs are for FGTVM-AWS(PAYG) - 6.4.13
 variable "fgt-ond-amis" {
-  type = map
+  type = map(any)
   default = {
     us-west-2      = "ami-02c3d0e3485fd9cc3"
     us-west-1      = "ami-06fd9ee9a22819e93"
@@ -73,7 +73,7 @@ variable "fgt-ond-amis" {
 
 // AMIs are for FGTVM AWS(BYOL) - 6.4.13
 variable "fgtvmbyolami" {
-  type = map
+  type = map(any)
   default = {
     us-west-2      = "ami-0bcde649fd65b5581"
     us-west-1      = "ami-0a9343e9bedc1089d"

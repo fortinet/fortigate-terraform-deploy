@@ -61,13 +61,13 @@ resource "aws_eip" "ClusterPublicIP" {
 
 resource "aws_eip" "MGMTPublicIP" {
   depends_on        = [aws_instance.fgtactive]
-  domain                    = "vpc"
+  domain            = "vpc"
   network_interface = aws_network_interface.eth3.id
 }
 
 resource "aws_eip" "PassiveMGMTPublicIP" {
   depends_on        = [aws_instance.fgtpassive]
-  domain                    = "vpc"
+  domain            = "vpc"
   network_interface = aws_network_interface.passiveeth3.id
 }
 

@@ -1,6 +1,6 @@
 //AWS Configuration
-variable access_key {}
-variable secret_key {}
+variable "access_key" {}
+variable "secret_key" {}
 
 variable "region" {
   default = "us-west-2"
@@ -29,7 +29,7 @@ variable "privatecidraz1" {
 
 // AMIs are for FGTVM-AWS(PAYG) - 6.2.3
 variable "fgtvmami" {
-  type = map
+  type = map(any)
   default = {
     us-west-2      = "ami-02b9cc036cab1071d"
     us-west-1      = "ami-0f54d37e47fa994a0"

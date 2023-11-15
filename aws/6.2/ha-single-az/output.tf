@@ -3,7 +3,7 @@ output "FGTActiveMGMTPublicIP" {
 }
 
 output "FGTClusterPublicFQDN" {
-  value = "${join("", list("https://", "${aws_eip.ClusterPublicIP.public_dns}", ":" , "${var.adminsport}"))}"
+  value = join("", list("https://", "${aws_eip.ClusterPublicIP.public_dns}", ":", "${var.adminsport}"))
 }
 
 output "FGTClusterPublicIP" {

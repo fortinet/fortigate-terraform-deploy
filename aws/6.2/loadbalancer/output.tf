@@ -3,7 +3,7 @@ output "FGTActivePublicIP" {
 }
 
 output "FGTLBPublicFQDN" {
-  value = "${join("", list("https://", "${aws_eip.LBPublicIP.public_dns}", ":", "${var.adminsport}"))}"
+  value = join("", list("https://", "${aws_eip.LBPublicIP.public_dns}", ":", "${var.adminsport}"))
 }
 
 output "FGTLBPublicIP" {

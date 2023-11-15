@@ -4,21 +4,21 @@
 // create oci instance for active
 resource "oci_core_instance" "mastervm" {
   availability_domain = lookup(data.oci_identity_availability_domains.ads.availability_domains[var.availability_domain - 1], "name")
-  compartment_id      = "${var.compartment_ocid}"
+  compartment_id      = var.compartment_ocid
   display_name        = "fgt-mastervm"
-  shape               = "${var.instance_shape}"
+  shape               = var.instance_shape
 
   create_vnic_details {
-    subnet_id        = "${oci_core_subnet.mgmt_subnet.id}"
+    subnet_id        = oci_core_subnet.mgmt_subnet.id
     display_name     = "fgt-mastervm-vnic"
     assign_public_ip = true
     hostname_label   = "fgt-mastervm-vnic"
-    private_ip       = "${var.mgmt_private_ip_active}"
+    private_ip       = var.mgmt_private_ip_active
   }
 
   source_details {
     source_type = "image"
-    source_id   = "${local.mp_listing_resource_id}" // marketplace listing
+    source_id   = local.mp_listing_resource_id // marketplace listing
     //source_id = "ocid1.image.oc1.phx.aaaaaaaalvrzh6j2edqh6s42rabhbhclwgnk4owdpjhqu5qsgtur7pc4lqaa"     // private image
     boot_volume_size_in_gbs = "50"
   }
@@ -37,52 +37,52 @@ resource "oci_core_instance" "mastervm" {
 //  public nic attachment
 resource "oci_core_vnic_attachment" "vnic_attach_public" {
   depends_on   = ["oci_core_instance.mastervm"]
-  instance_id  = "${oci_core_instance.mastervm.id}"
+  instance_id  = oci_core_instance.mastervm.id
   display_name = "fgt-mastervm-vnic_public"
 
   create_vnic_details {
-    subnet_id              = "${oci_core_subnet.public_subnet.id}"
+    subnet_id              = oci_core_subnet.public_subnet.id
     display_name           = "fgt-mastervm-vnic_public"
     assign_public_ip       = false
     skip_source_dest_check = true
-    private_ip             = "${var.public_private_ip_active}"
+    private_ip             = var.public_private_ip_active
   }
 }
 
 // floating ip for public ip
 resource "oci_core_private_ip" "public_private_ip" {
   #Get Primary VNIC id
-  vnic_id = "${element(oci_core_vnic_attachment.vnic_attach_public.*.vnic_id, 0)}"
+  vnic_id = element(oci_core_vnic_attachment.vnic_attach_public.*.vnic_id, 0)
 
   #Optional
   display_name   = "public_ip"
   hostname_label = "public"
-  ip_address     = "${var.public_private_ip_floating}"
+  ip_address     = var.public_private_ip_floating
 }
 
 resource "oci_core_public_ip" "public_public_ip" {
   #Required
-  compartment_id = "${var.compartment_ocid}"
+  compartment_id = var.compartment_ocid
   lifetime       = "RESERVED"
 
   #Optional
   display_name  = "vm-public"
-  private_ip_id = "${oci_core_private_ip.public_private_ip.id}"
+  private_ip_id = oci_core_private_ip.public_private_ip.id
 }
 
 
 // trust nic attachment
 resource "oci_core_vnic_attachment" "vnic_attach_trust" {
   depends_on   = ["oci_core_vnic_attachment.vnic_attach_public"]
-  instance_id  = "${oci_core_instance.mastervm.id}"
+  instance_id  = oci_core_instance.mastervm.id
   display_name = "fgt-mastervm-vnic_trust"
 
   create_vnic_details {
-    subnet_id              = "${oci_core_subnet.trust_subnet.id}"
+    subnet_id              = oci_core_subnet.trust_subnet.id
     display_name           = "fgt-mastervm-vnic_trust"
     assign_public_ip       = false
     skip_source_dest_check = true
-    private_ip             = "${var.trust_private_ip_active}"
+    private_ip             = var.trust_private_ip_active
   }
 }
 
@@ -90,21 +90,21 @@ resource "oci_core_vnic_attachment" "vnic_attach_trust" {
 // hasync nic attachment
 resource "oci_core_vnic_attachment" "vnic_attach_hasync" {
   depends_on   = ["oci_core_vnic_attachment.vnic_attach_trust"]
-  instance_id  = "${oci_core_instance.mastervm.id}"
+  instance_id  = oci_core_instance.mastervm.id
   display_name = "fgt-maser-vm-vnic_hasync"
 
   create_vnic_details {
-    subnet_id              = "${oci_core_subnet.hasync_subnet.id}"
+    subnet_id              = oci_core_subnet.hasync_subnet.id
     display_name           = "fgt-master-vm-vnic_hasync"
     assign_public_ip       = false
     skip_source_dest_check = true
-    private_ip             = "${var.hasync_private_ip_active}"
+    private_ip             = var.hasync_private_ip_active
   }
 }
 
 // Use  for bootstrapping cloud-init
 data "template_file" "userdata_lic" {
-  template = "${file("${var.bootstrap-active}")}"
+  template = file("${var.bootstrap-active}")
 
   vars = {
     license_file        = "${file("${var.license}")}"

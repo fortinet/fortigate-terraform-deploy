@@ -1,6 +1,6 @@
 //AWS Configuration
-variable access_key {}
-variable secret_key {}
+variable "access_key" {}
+variable "secret_key" {}
 
 variable "region" {
   default = "ap-southeast-2"
@@ -106,7 +106,7 @@ variable "license_type" {
 
 // AMIs are for FGTVM-AWS(PAYG) - 6.4.13
 variable "fgtvmami" {
-  type = map
+  type = map(any)
   default = {
     us-west-2      = "ami-02c3d0e3485fd9cc3"
     us-west-1      = "ami-06fd9ee9a22819e93"
@@ -134,7 +134,7 @@ variable "fgtvmami" {
 
 // AMIs are for FGTVM AWS(BYOL) - 6.4.13
 variable "fgtvmbyolami" {
-  type = map
+  type = map(any)
   default = {
     us-west-2      = "ami-0bcde649fd65b5581"
     us-west-1      = "ami-0a9343e9bedc1089d"
