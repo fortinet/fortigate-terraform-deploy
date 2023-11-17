@@ -1,4 +1,4 @@
-# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on the Azure
+# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on Azure
 ## Introduction
 A Terraform script to deploy a FortiGate-VM Cluster on Azure
 
