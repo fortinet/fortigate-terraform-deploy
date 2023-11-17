@@ -1,4 +1,4 @@
-# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on the Azure in different zones
+# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on Azure in different zones
 ## Introduction
 ## This topology is only recommended for using with FOS 6.4.2 and later.
 ## port1 - hamgmt

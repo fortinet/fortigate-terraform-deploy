@@ -1,4 +1,4 @@
-# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on the Azure in different zones
+# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on Azure in different zones
 
 ## Introduction
 
