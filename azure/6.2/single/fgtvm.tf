@@ -56,5 +56,5 @@ resource "azurerm_virtual_machine" "fgtvm" {
 }
 
 data "template_file" "fgtvm" {
-  template = "${file("${var.bootstrap-fgtvm}")}"
+  template = file("${var.bootstrap-fgtvm}")
 }

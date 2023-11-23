@@ -63,18 +63,18 @@ resource "aws_instance" "fgtpassive" {
 
 
 data "template_file" "passiveFortiGate" {
-  template = "${file("${var.bootstrap-passive}")}"
+  template = file("${var.bootstrap-passive}")
   vars = {
-    type            = "${var.license_type}"
-    license_file    = "${var.license2}"
-    port1_ip        = "${var.passiveport1}"
-    port1_mask      = "${var.passiveport1mask}"
-    port2_ip        = "${var.passiveport2}"
-    port2_mask      = "${var.passiveport2mask}"
-    active_peerip   = "${var.activeport1}"
-    defaultgwy      = "${var.passiveport1gateway}"
-    adminsport      = "${var.adminsport}"
-    presharekey    = "${var.presharekey}"
+    type          = "${var.license_type}"
+    license_file  = "${var.license2}"
+    port1_ip      = "${var.passiveport1}"
+    port1_mask    = "${var.passiveport1mask}"
+    port2_ip      = "${var.passiveport2}"
+    port2_mask    = "${var.passiveport2mask}"
+    active_peerip = "${var.activeport1}"
+    defaultgwy    = "${var.passiveport1gateway}"
+    adminsport    = "${var.adminsport}"
+    presharekey   = "${var.presharekey}"
   }
 }
 

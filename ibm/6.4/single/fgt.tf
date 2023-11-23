@@ -42,7 +42,7 @@ resource "ibm_is_instance" "fgt1" {
 
 // Use for bootstrapping cloud-init
 data "template_file" "userdata" {
-  template = "${file("${var.bootstrap}")}"
+  template = file("${var.bootstrap}")
 
   vars = {
     license_file = "${file("${var.license}")}"

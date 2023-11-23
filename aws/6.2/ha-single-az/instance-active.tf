@@ -102,7 +102,7 @@ resource "aws_instance" "fgtactive" {
 
 
 data "template_file" "activeFortiGate" {
-  template = "${file("${var.bootstrap-active}")}"
+  template = file("${var.bootstrap-active}")
   vars = {
     port1_ip        = "${var.activeport1float}"
     port1_mask      = "${var.activeport1mask}"

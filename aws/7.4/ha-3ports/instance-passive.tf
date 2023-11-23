@@ -42,7 +42,7 @@ resource "aws_network_interface_sg_attachment" "passivehasyncmgmtattachment" {
 
 
 resource "aws_instance" "fgtpassive" {
-  depends_on        = [aws_instance.fgtactive]
+  depends_on = [aws_instance.fgtactive]
   //it will use region, architect, and license type to decide which ami to use for deployment
   ami               = var.fgtami[var.region][var.arch][var.license_type]
   instance_type     = var.size

@@ -312,7 +312,7 @@ resource "aws_eip" "eip-shared" {
 
 # Create the instances
 resource "aws_instance" "fgt1" {
-    //it will use region, architect, and license type to decide which ami to use for deployment
+  //it will use region, architect, and license type to decide which ami to use for deployment
   ami               = var.fgtami[var.region][var.arch][var.license_type]
   instance_type     = var.instance_type
   availability_zone = var.availability_zone1

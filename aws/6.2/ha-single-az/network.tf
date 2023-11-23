@@ -53,9 +53,9 @@ resource "aws_route_table_association" "internalassociate" {
 }
 
 resource "aws_eip" "ClusterPublicIP" {
-  depends_on        = [aws_instance.fgtactive]
-  vpc               = true
-  network_interface = aws_network_interface.eth0.id
+  depends_on                = [aws_instance.fgtactive]
+  vpc                       = true
+  network_interface         = aws_network_interface.eth0.id
   associate_with_private_ip = var.activeport1float
 }
 

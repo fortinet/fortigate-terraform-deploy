@@ -13,7 +13,7 @@ variable "az" {
 // IAM role that has proper permission for HA
 // Refer to the URL For details. https://docs.fortinet.com/document/fortigate-public-cloud/7.2.0/aws-administration-guide/229470/deploying-fortigate-vm-active-passive-ha-aws-between-multiple-zones
 variable "iam" {
-  default = "<AWS IAM ROLE NAME>"    //Put in the IAM Role name created
+  default = "<AWS IAM ROLE NAME>" //Put in the IAM Role name created
 }
 
 variable "vpcid" {

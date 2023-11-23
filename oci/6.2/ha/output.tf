@@ -1,6 +1,6 @@
 //  Cluster Public IP
 output "ClusterPublicIP" {
-  value = "${oci_core_public_ip.public_public_ip.ip_address}"
+  value = oci_core_public_ip.public_public_ip.ip_address
 }
 //  Default Username and Password
 output "Default_Username" {
@@ -8,17 +8,17 @@ output "Default_Username" {
 }
 
 output "Default_Password" {
-  value = "${oci_core_instance.mastervm.*.id}"
+  value = oci_core_instance.mastervm.*.id
 }
 
 
 // Active Unit Mgmt IP
 output "FGTActiveMGMTPublicIP" {
-  value = "${oci_core_instance.mastervm.*.public_ip}"
+  value = oci_core_instance.mastervm.*.public_ip
 }
 
 // Passive Unit Mgmt IP
 
 output "FGTPassiveMGMTPublicIP" {
-  value = "${oci_core_instance.passivevm.*.public_ip}"
+  value = oci_core_instance.passivevm.*.public_ip
 }

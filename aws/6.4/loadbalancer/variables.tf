@@ -1,6 +1,6 @@
 //AWS Configuration
-variable access_key {}
-variable secret_key {}
+variable "access_key" {}
+variable "secret_key" {}
 
 variable "region" {
   default = "eu-west-1"
@@ -13,7 +13,7 @@ variable "az" {
 // IAM role that has proper permission for HA
 // Refer to the URL For details. https://docs.fortinet.com/document/fortigate-public-cloud/6.4.0/aws-administration-guide/229470/deploying-fortigate-vm-active-passive-ha-aws-between-multiple-zones
 variable "iam" {
-  default = "<AWS IAM ROLE NAME>"    //Put in the IAM Role name created
+  default = "<AWS IAM ROLE NAME>" //Put in the IAM Role name created
 }
 
 variable "vpccidr" {
@@ -39,7 +39,7 @@ variable "hamgmtcidr" {
 // Preshare key for autoscale
 variable "presharekey" {
   default = "Test123#"
-} 
+}
 
 // Load Balancer Listen rules for forwarding the traffic
 variable "test_forwarding_config" {
@@ -52,12 +52,12 @@ variable "test_forwarding_config" {
 // License Type to create FortiGate-VM
 // Provide the license type for FortiGate-VM Instances, either byol or payg.
 variable "license_type" {
-  default     = "byol"
+  default = "byol"
 }
 
 // AMIs are for FGTVM-AWS(PAYG) - 6.4.13
 variable "fgtvmami" {
-  type = map
+  type = map(any)
   default = {
     us-west-2      = "ami-02c3d0e3485fd9cc3"
     us-west-1      = "ami-06fd9ee9a22819e93"
@@ -85,7 +85,7 @@ variable "fgtvmami" {
 
 // AMIs are for FGTVM AWS(BYOL) - 6.4.13
 variable "fgtvmbyolami" {
-  type = map
+  type = map(any)
   default = {
     us-west-2      = "ami-0bcde649fd65b5581"
     us-west-1      = "ami-0a9343e9bedc1089d"

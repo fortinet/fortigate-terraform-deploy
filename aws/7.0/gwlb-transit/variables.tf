@@ -163,14 +163,14 @@ variable "fgtami" {
       }
     },
     af-south-1 = {
-     arm = {
+      arm = {
         payg = "ami-03291470544e3dcac"
         byol = "ami-0f7ef8e7cac3fbbbf"
-     },
-     x86 = {
+      },
+      x86 = {
         payg = "ami-00378e3f324cb2bca"
         byol = "ami-030bed93165b6d9b0"
-     }
+      }
     },
     ap-east-1 = {
       arm = {

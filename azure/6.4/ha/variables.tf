@@ -1,8 +1,8 @@
 // Azure configuration
-variable subscription_id {}
-variable client_id {}
-variable client_secret {}
-variable tenant_id {}
+variable "subscription_id" {}
+variable "client_id" {}
+variable "client_secret" {}
+variable "tenant_id" {}
 
 
 //  For HA, choose instance size that support 4 nics at least
@@ -42,7 +42,7 @@ variable "custom_image_resource_group_name" {
 // License Type to create FortiGate-VM
 // Provide the license type for FortiGate-VM Instances, either byol or payg.
 variable "license_type" {
-  default     = "payg"
+  default = "payg"
 }
 
 variable "publisher" {
@@ -58,10 +58,10 @@ variable "fgtoffer" {
 // BYOL sku: fortinet_fg-vm
 // PAYG sku: fortinet_fg-vm_payg_20190624
 variable "fgtsku" {
-  type = map
+  type = map(any)
   default = {
-     byol = "fortinet_fg-vm"
-     payg = "fortinet_fg-vm_payg_20190624"
+    byol = "fortinet_fg-vm"
+    payg = "fortinet_fg-vm_payg_20190624"
   }
 }
 

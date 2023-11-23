@@ -28,8 +28,8 @@ resource "oci_core_instance" "passivevm" {
   }
 
   source_details {
-    source_type = "image"
-    source_id   = local.mp_listing_resource_id // marketplace listing
+    source_type             = "image"
+    source_id               = local.mp_listing_resource_id // marketplace listing
     boot_volume_size_in_gbs = "50"
   }
 
