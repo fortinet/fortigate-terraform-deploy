@@ -74,18 +74,18 @@ resource "ibm_is_instance" "fgt1" {
     license_file    = "${file("${var.license}")}"
     hostname        = "fgta"
     hapriority      = "255"
-    apikey          = "${var.ibmcloud_api_key}"
-    port1_ip        = "${var.fgtaport1}"
-    port1_mask      = "${var.fgtaport1mask}"
-    port2_ip        = "${var.fgtaport2}"
-    port2_mask      = "${var.fgtaport2mask}"
-    port3_ip        = "${var.fgtaport3}"
-    port3_mask      = "${var.fgtaport3mask}"
+    apikey          = var.ibmcloud_api_key
+    port1_ip        = var.fgtaport1
+    port1_mask      = var.fgtaport1mask
+    port2_ip        = var.fgtaport2
+    port2_mask      = var.fgtaport2mask
+    port3_ip        = var.fgtaport3
+    port3_mask      = var.fgtaport3mask
     region          = var.ibmregion[var.region]
-    passive_peerip  = "${var.fgtbport3}"
-    mgmt_gateway_ip = "${var.fgtaport4gateway}"
-    defaultgwy      = "${var.fgtaport1gateway}"
-    privategwy      = "${var.fgtaport2gateway}"
+    passive_peerip  = var.fgtbport3
+    mgmt_gateway_ip = var.fgtaport4gateway
+    defaultgwy      = var.fgtaport1gateway
+    privategwy      = var.fgtaport2gateway
   }))
   keys = [ibm_is_ssh_key.sshkey.id]
 }
@@ -125,18 +125,18 @@ resource "ibm_is_instance" "fgt2" {
     license_file    = "${file("${var.license2}")}"
     hostname        = "fgtb"
     hapriority      = "1"
-    apikey          = "${var.ibmcloud_api_key}"
-    port1_ip        = "${var.fgtbport1}"
-    port1_mask      = "${var.fgtbport1mask}"
-    port2_ip        = "${var.fgtbport2}"
-    port2_mask      = "${var.fgtbport2mask}"
-    port3_ip        = "${var.fgtbport3}"
-    port3_mask      = "${var.fgtbport3mask}"
+    apikey          = var.ibmcloud_api_key
+    port1_ip        = var.fgtbport1
+    port1_mask      = var.fgtbport1mask
+    port2_ip        = var.fgtbport2
+    port2_mask      = var.fgtbport2mask
+    port3_ip        = var.fgtbport3
+    port3_mask      = var.fgtbport3mask
     region          = var.ibmregion[var.region]
-    passive_peerip  = "${var.fgtaport3}"
-    mgmt_gateway_ip = "${var.fgtbport4gateway}"
-    defaultgwy      = "${var.fgtbport1gateway}"
-    privategwy      = "${var.fgtbport2gateway}"
+    passive_peerip  = var.fgtaport3
+    mgmt_gateway_ip = var.fgtbport4gateway
+    defaultgwy      = var.fgtbport1gateway
+    privategwy      = var.fgtbport2gateway
   }))
 
   keys = [ibm_is_ssh_key.sshkey.id]
