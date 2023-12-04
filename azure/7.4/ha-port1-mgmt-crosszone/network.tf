@@ -47,6 +47,7 @@ resource "azurerm_public_ip" "ClusterPublicIP" {
   resource_group_name = azurerm_resource_group.myterraformgroup.name
   sku                 = "Standard"
   allocation_method   = "Static"
+  zones               = [var.zone1, var.zone2]
 
   tags = {
     environment = "Terraform HA AP SDN FortiGates - Crosszone"
