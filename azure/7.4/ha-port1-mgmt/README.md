@@ -3,13 +3,9 @@
 ## Introduction
 
 ## This topology is only recommended for using with FOS 6.4.2 and later.
-
 ## port1 - hamgmt
-
 ## port2 - public/untrust
-
 ## port3 - private/trust
-
 ## port4 - hasync
 
 A Terraform script to deploy a FortiGate-VM Cluster on Azure
@@ -20,6 +16,7 @@ A Terraform script to deploy a FortiGate-VM Cluster on Azure
 * Terraform Provider AzureRM >= 2.24.0
 * Terraform Provider Template >= 2.2.0
 * Terraform Provider Random >= 3.1.0
+* Azure Service Principal authenication token(https://docs.fortinet.com/document/fortigate-public-cloud/7.4.0/azure-administration-guide/948968) 
 
 ## Deployment overview
 
@@ -87,6 +84,10 @@ The terms for the FortiGate PAYG or BYOL image in the Azure Marketplace needs to
 BYOL az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm
 PAYG az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm_payg_2023
 ```
+
+##Fabric Connector
+
+The FortiGate-VM uses Service Principal for the SDN Fabric Connector. A SDN Fabric Connector is created automatically during deployment.  User needs to configure the Azure Service Principal prior to the deployment.  More information can be found on the [Fortinet Documentation Libary](https://docs.fortinet.com/document/fortigate-public-cloud/7.4.0/azure-administration-guide/948968).
 
 ## Support
 
