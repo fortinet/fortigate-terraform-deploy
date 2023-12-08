@@ -68,6 +68,11 @@ BYOL az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm
 PAYG az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm_payg_2022
 ```
 
+##Fabric Connector
+
+The FortiGate-VM uses Service Principal for the SDN Fabric Connector. A SDN Fabric Connector is created automatically during deployment.  User needs to configure the Azure Service Principal prior to the deployment.  More information can be found on the [Fortinet Documentation Libary](https://docs.fortinet.com/document/fortigate-public-cloud/7.0.0/azure-administration-guide/948968).
+
+
 # Support
 Fortinet-provided scripts in this and other GitHub projects do not fall under the regular Fortinet technical support scope and are not supported by FortiCare Support Services.
 For direct issues, please refer to the [Issues](https://github.com/fortinet/fortigate-terraform-deploy/issues) tab of this GitHub project.
