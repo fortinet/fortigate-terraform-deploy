@@ -68,7 +68,7 @@ variable "fgtsku" {
 // FOS version
 variable "fgtversion" {
   type    = string
-  default = "7.4.1"
+  default = "7.4.2"
 }
 
 variable "adminusername" {
