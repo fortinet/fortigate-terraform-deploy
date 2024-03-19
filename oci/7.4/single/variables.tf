@@ -7,48 +7,49 @@ variable "compartment_ocid" {}
 variable "region" {}
 
 
-//x86
-//BYOL 7.4.2: ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q
-//PAYG 7.4.2 2ocpu: ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba
-//PAYG 7.4.2 4ocup: ocid1.appcataloglisting.oc1..aaaaaaaabepjdf2sw2jkr77a7zrbog7ukzxepoexzgkoyvbw2j2jn7l4y7lq
-//PAYG 7.4.2 8ocup: ocid1.appcataloglisting.oc1..aaaaaaaa6e3iscizq3p24bfb5nr4wxsxzc3s6mzpekxgv7f2kse35akhg45q
-//PAYG 7.4.2 16ocup: ocid1.appcataloglisting.oc1..aaaaaaaawyxdympmdyxagwj2kr77zybopywouiivxd7vxfttwftkvnw2lqla
-//PAYG 7.4.2 24ocup: ocid1.appcataloglisting.oc1..aaaaaaaamc75m7b3rukv6vd573mdrdqnlqabrbhmz5fggvvtalq3ckfl3zqa
+/x86
+//BYOL 7.4.3: ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q
+//PAYG 7.4.3 2ocpu:  ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba
+//PAYG 7.4.3 4ocup:  ocid1.appcataloglisting.oc1..aaaaaaaabepjdf2sw2jkr77a7zrbog7ukzxepoexzgkoyvbw2j2jn7l4y7lq
+//PAYG 7.4.3 8ocup: ocid1.appcataloglisting.oc1..aaaaaaaa6e3iscizq3p24bfb5nr4wxsxzc3s6mzpekxgv7f2kse35akhg45q
+//PAYG 7.4.3 16ocup:  ocid1.appcataloglisting.oc1..aaaaaaaawyxdympmdyxagwj2kr77zybopywouiivxd7vxfttwftkvnw2lqla
+//PAYG 7.4.3 24ocup:  ocid1.appcataloglisting.oc1..aaaaaaaamc75m7b3rukv6vd573mdrdqnlqabrbhmz5fggvvtalq3ckfl3zqa
 //ARM
-//BYOL 7.4.2: ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q
-//PAYG 7.4.2 2ocpu:  ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba
-//PAYG 7.4.2 4ocup:  ocid1.appcataloglisting.oc1..aaaaaaaabepjdf2sw2jkr77a7zrbog7ukzxepoexzgkoyvbw2j2jn7l4y7lq
-//PAYG 7.4.2 8ocup:  ocid1.appcataloglisting.oc1..aaaaaaaa6e3iscizq3p24bfb5nr4wxsxzc3s6mzpekxgv7f2kse35akhg45q
-//PAYG 7.4.2 16ocup: ocid1.appcataloglisting.oc1..aaaaaaaawyxdympmdyxagwj2kr77zybopywouiivxd7vxfttwftkvnw2lqla
-//PAYG 7.4.2 24ocup: ocid1.appcataloglisting.oc1..aaaaaaaamc75m7b3rukv6vd573mdrdqnlqabrbhmz5fggvvtalq3ckfl3zqa
+//BYOL 7.4.3: ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q
+//PAYG 7.4.3 2ocpu:  ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba
+//PAYG 7.4.3 4ocup:  ocid1.appcataloglisting.oc1..aaaaaaaabepjdf2sw2jkr77a7zrbog7ukzxepoexzgkoyvbw2j2jn7l4y7lq
+//PAYG 7.4.3 8ocup: ocid1.appcataloglisting.oc1..aaaaaaaa6e3iscizq3p24bfb5nr4wxsxzc3s6mzpekxgv7f2kse35akhg45q
+//PAYG 7.4.3 16ocup: ocid1.appcataloglisting.oc1..aaaaaaaawyxdympmdyxagwj2kr77zybopywouiivxd7vxfttwftkvnw2lqla
+//PAYG 7.4.3 24ocup: ocid1.appcataloglisting.oc1..aaaaaaaamc75m7b3rukv6vd573mdrdqnlqabrbhmz5fggvvtalq3ckfl3zqa
 variable "mp_listing_id" {
-  default = "ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba" //x86 2cores
+  default = "ocid1.appcataloglisting.oc1..aaaaaaaabepjdf2sw2jkr77a7zrbog7ukzxepoexzgkoyvbw2j2jn7l4y7lq" //x86 4 cores
 }
 
 //x86
-//BYOL 7.4.2:  ocid1.image.oc1..aaaaaaaaydhtoikm7qitqvsuhq435asbcggdhp6vwook73ct4b3h7yqigo3a
-//PAYG 7.4.2 2ocpu: ocid1.image.oc1..aaaaaaaapr46d7efbcsws4oqdxyn34oke52mizpb3r3jd6otmkpbd4irkb5a
-//PAYG 7.4.2 4ocup: ocid1.image.oc1..aaaaaaaaxrtwvf662z6cyc7tmqdziczaxhsw3lauht2nsobjii2nzwmdid4q
-//PAYG 7.4.2 8ocup: ocid1.image.oc1..aaaaaaaa4qkthjuokxnpimykv7exflqjsekxyudzqg4inbw7z6syrcxwzlua
-//PAYG 7.4.2 16ocup: ocid1.image.oc1..aaaaaaaajijjfl3bnhursqvguuwqm4ha2bs6a3ovjxho33zj2te2cxq5b36q
-//PAYG 7.4.2 24ocup: ocid1.image.oc1..aaaaaaaa7hquc4wqt2rdjsaihy3qtewtntu4upa2sp62o2fvdfugm4eerdwq
+//BYOL 7.4.3:  ocid1.image.oc1..aaaaaaaaq57pywudjr5yogjtl6qf3zs3yrwv66b5ooeiqykjgnneuerhfnia
+//PAYG 7.4.3 2ocpu:  ocid1.image.oc1..aaaaaaaaar3ixywupg2osmaaqxhknw4y7vqe3mc565nh45zo6zy5nb5dbaxa
+//PAYG 7.4.3 4ocup: ocid1.image.oc1..aaaaaaaafxpuqixoz4oifanzdpzjn3kpap4i6zmr3vz2ykevxefe34hvkoqq
+//PAYG 7.4.3 8ocup: ocid1.image.oc1..aaaaaaaaytxx2luau4rukn6forinnagzjdddqxe3abaafukrnxwxsab2edxq
+//PAYG 7.4.3 16ocup: ocid1.image.oc1..aaaaaaaapppoue5tmnc4nq56p5mttcikrp37oy2nvsreshd4f5f3vdzooxuq
+//PAYG 7.4.3 24ocup: ocid1.image.oc1..aaaaaaaavszdkeekbvamoelfuxdokzqn7rxbzjmmxjwi26uhnae3voozpggq
 //ARM
-//BYOL 7.4.2: ocid1.image.oc1..aaaaaaaalmipldxavqwtaogyaxwlyv6aa6ijviqt4x4dqpl2wmvnzjuiuwda
-//PAYG 7.4.2 2ocpu: ocid1.image.oc1..aaaaaaaazcokz7v3zrjv5fxoiogm7scpm7mgofuivafo5bxxeo3nepwtrlqq
-//PAYG 7.4.2 4ocup: ocid1.image.oc1..aaaaaaaawhin62aoexjb6mkdei3isfj7on2xfidmnr6zccmvk37zzrulgwpa
-//PAYG 7.4.2 8ocup: ocid1.image.oc1..aaaaaaaaehrqvxhxhz3tfxnhncap4n574aqzlbshvbqpvaqvuofnoz7q2nra
-//PAYG 7.4.2 16ocup: ocid1.image.oc1..aaaaaaaadyuwg4gx7ve5ehwma7pwjs7vv5pglhqomckg7xcdqbwvyv76764a
-//PAYG 7.4.2 24ocup: ocid1.image.oc1..aaaaaaaaitk5a64pvazc7keovgvmhcyofzy6327zlj3kvwyhtlairjlz5qvq
+//BYOL 7.4.3:  ocid1.image.oc1..aaaaaaaa232uwkhl5d6tvjk63uchznv7rrjnzonql6m4ynf6nqmskuujx5iq
+//PAYG 7.4.3 2ocpu:  ocid1.image.oc1..aaaaaaaaj6gb4m6tim4lf3gv4zdusu7hjwb25hka2kb7ich4hdfe4kabxv7q
+//PAYG 7.4.3 4ocup:  ocid1.image.oc1..aaaaaaaarwt2hkj5o24fngjambnt3r72dan67jyppn6pgylgscmtg5rw6aaa
+//PAYG 7.4.3 8ocup: ocid1.image.oc1..aaaaaaaaewhsoyjl4qrd7667kmzuqfjpteyvmchfjrbrbdwg2kvdcxkdn4wq
+//PAYG 7.4.3 16ocup:  ocid1.image.oc1..aaaaaaaamdyng4uicaektz24wkbqf6i4ot2evudxtr2u4lovayoxv63icdfq
+//PAYG 7.4.3 24ocup: ocid1.image.oc1..aaaaaaaasp3wjkouan4ohe2y5wxk6hu5yn6kfkvzd72ujxlmlozo32glp6la
 variable "mp_listing_resource_id" {
-  default = "ocid1.image.oc1..aaaaaaaalde5qyzwbmwvvdcnwh5eu4xjdicchd355qm6glzfwdxna634ir7q" //x86 payg 2 cores
+  default = "ocid1.image.oc1..aaaaaaaafxpuqixoz4oifanzdpzjn3kpap4i6zmr3vz2ykevxefe34hvkoqq" //x86 payg 4 cores
 }
 
 // Version
-// either - "7.4.2_(_ARM64_)" or "7.4.2_(_X64_)"
+// either - "7.4.3_(_ARM64_)" or "7.4.3_(X64)"
 //
 variable "mp_listing_resource_version" {
-  default = "7.4.2_(_X64_)"
+  default = "7.4.3_(X64)"
 }
+
 
 // Environment configuration
 variable "vcn_cidr" {
