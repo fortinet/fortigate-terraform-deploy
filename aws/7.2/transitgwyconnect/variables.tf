@@ -18,7 +18,7 @@ variable "az2" {
 // IAM role that has proper permission for HA
 // Refer to https://docs.fortinet.com/vm/aws/fortigate/6.2/aws-cookbook/6.2.0/229470/deploying-fortigate-vm-active-passive-ha-aws-between-multiple-zones
 variable "iam" {
-  default = "dchaoiam"
+  default = "<AWS IAM Role>"
 }
 
 // VPC for FortiGate Security VPC
