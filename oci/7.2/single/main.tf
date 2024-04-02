@@ -167,6 +167,11 @@ resource "oci_core_instance" "vm" {
   display_name        = "fgt-vm"
   shape               = var.instance_shape
 
+  shape_config {
+    ocpus         = var.instance_cpu
+    memory_in_gbs = var.instance_memory
+  }
+  
   create_vnic_details {
     subnet_id        = oci_core_subnet.public_subnet.id
     display_name     = "fgt001-vnic-untrust"
