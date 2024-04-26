@@ -33,6 +33,7 @@ resource "aws_instance" "fgtvm" {
   key_name          = var.keyname
   user_data = templatefile("${var.bootstrap-fgtvm}", {
     type         = "${var.license_type}"
+    format       = "${var.license_format}"
     license_file = "${var.license}"
     adminsport   = "${var.adminsport}"
   })
