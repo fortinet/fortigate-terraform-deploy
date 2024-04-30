@@ -39,6 +39,9 @@ To enable such a scenario, three Transit Gateway Route Tables are created.  One 
 * Clone the repository.
 * Change ACCESS_KEY and SECRET_KEY values in terraform.tfvars.example.  And rename `terraform.tfvars.example` to `terraform.tfvars`.
 * Change parameters in the variables.tf.
+> [!NOTE]    
+> In the license_format variable, there are two different choices.   
+> Either token or file.  Token is FortiFlex token, and file is FortiGate-VM license file.
 * If using SSO, uncomment the token variable in variables.tf and providers.tf
 * Initialize the providers and modules:
   ```sh
