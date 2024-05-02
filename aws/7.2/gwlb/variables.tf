@@ -57,6 +57,12 @@ variable "license_type" {
   default = "payg"
 }
 
+// BYOL License format to create FortiGate-VM
+// Provide the license type for FortiGate-VM Instances, either token or file.
+variable "license_format" {
+  default = "token"
+}
+
 // instance architect
 // Either arm or x86
 variable "arch" {
@@ -135,7 +141,7 @@ variable "fgtami" {
         byol = "ami-0eef8ffb3101b63a3"
       }
     },
-     ap-south-2 = {
+    ap-south-2 = {
       arm = {
         payg = "ami-05c8ab0a8941dd872"
         byol = "ami-0887eff38f220d7ff"

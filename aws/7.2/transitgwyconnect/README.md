@@ -61,6 +61,9 @@ Server(s) deployed in the app subnet in the Customer VPC and Customer 2 VPC.
 To deploy the FortiGate-VM instances to AWS:
 1. Clone the repository.
 2. Customize variables in the `terraform.tfvars.example` and `variables.tf` file as needed.  And rename `terraform.tfvars.example` to `terraform.tfvars`.
+> [!NOTE]
+> In the license_format variable, there are two different choices.
+> Either token or file.  Token is FortiFlex token, and file is FortiGate-VM license file.
 3. Initialize the providers and modules:
    ```sh
    $ cd XXXXX

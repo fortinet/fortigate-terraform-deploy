@@ -146,7 +146,7 @@ variable "fgtami" {
         byol = "ami-0eef8ffb3101b63a3"
       }
     },
-     ap-south-2 = {
+    ap-south-2 = {
       arm = {
         byol = "ami-0887eff38f220d7ff"
       },
