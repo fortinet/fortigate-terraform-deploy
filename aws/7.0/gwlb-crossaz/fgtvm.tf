@@ -112,6 +112,7 @@ resource "aws_instance" "fgtvm" {
   user_data = templatefile("${var.bootstrap-fgtvm}", {
     type         = "${var.license_type}"
     license_file = "${var.license}"
+    format       = "${var.license_format}"
     adminsport   = "${var.adminsport}"
     dst          = var.privatecidraz2
     gateway      = cidrhost(var.privatecidraz1, 1)

@@ -61,6 +61,12 @@ variable "arch" {
   default = "x86"
 }
 
+// BYOL License format to create FortiGate-VM
+// Provide the license type for FortiGate-VM Instances, either token or file.
+variable "license_format" {
+  default = "token"
+}
+
 // instance type needs to match the architect
 // c5n.xlarge is x86_64
 // For detail, refer to https://aws.amazon.com/ec2/instance-types/
@@ -258,7 +264,7 @@ variable "fgtami" {
         byol = "ami-0302c0aa6af4a1842"
       },
       x86 = {
-        payg = "ami-0299c83a397f71cda" 
+        payg = "ami-0299c83a397f71cda"
         byol = "ami-0cb19d69cb9b266ec"
       }
     },
