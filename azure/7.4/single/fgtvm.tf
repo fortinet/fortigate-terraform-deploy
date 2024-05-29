@@ -50,6 +50,7 @@ resource "azurerm_virtual_machine" "customfgtvm" {
     custom_data = templatefile("${var.bootstrap-fgtvm}", {
       type         = var.license_type
       license_file = var.license
+      format       = "${var.license_format}"
     })
   }
 
@@ -117,6 +118,7 @@ resource "azurerm_virtual_machine" "fgtvm" {
     custom_data = templatefile("${var.bootstrap-fgtvm}", {
       type         = var.license_type
       license_file = var.license
+      format       = "${var.license_format}"
     })
 
   }
