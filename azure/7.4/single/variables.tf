@@ -31,6 +31,12 @@ variable "custom_image_resource_group_name" {
   default = "<custom image resource group>"
 }
 
+// To accept marketplace agreement
+// Default is false
+variable "accept" {
+  default = "false"
+}
+
 // License Type to create FortiGate-VM
 // Provide the license type for FortiGate-VM Instances, either byol or payg.
 variable "license_type" {
