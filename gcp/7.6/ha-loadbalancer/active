@@ -1,0 +1,118 @@
+config sys glo
+set hostname active
+end
+config system interface
+    edit port1
+        set mode static
+        set ip ${active_port1_ip}/${active_port1_mask}
+        set allowaccess ping https ssh http fgfm
+        set description "ext"
+    next
+    edit port2
+        set mode static
+        set ip ${active_port2_ip}/${active_port2_mask}
+        set allowaccess ping https ssh http fgfm
+        set description "int"
+    next
+    edit port3
+        set mode static
+        set ip ${active_port3_ip}/${active_port3_mask}
+        set allowaccess ping https ssh http fgfm
+        set description "sync"
+    next
+    edit port4
+        set mode static
+        set ip ${active_port4_ip}/${active_port4_mask}
+        set allowaccess ping https ssh http fgfm
+        set description "hamgmt"
+    next
+    edit "loopback"
+        set vdom "root"
+        set ip 192.168.199.1 255.255.255.255
+        set allowaccess ping probe-response
+        set type loopback
+        set role lan
+    next
+end
+config system ha
+    set group-name "group1"
+    set mode a-p
+    set hbdev "port3" 50
+    set session-pickup enable
+    set ha-mgmt-status enable
+    config ha-mgmt-interfaces
+        edit 1
+            set interface "port4"
+            set gateway ${hamgmt_gateway_ip}
+        next
+    end
+    set override enable
+    set priority 255
+    set unicast-hb enable
+    set unicast-hb-peerip ${passive_hb_ip}
+    set unicast-hb-netmask ${hb_netmask}
+end
+config router static
+    edit 1
+       set device port1
+       set gateway ${port1_gateway}
+    next
+    edit 2
+       set dst ${private_subnet}
+       set device port2
+       set gateway ${port2_gateway}
+    next
+end
+config system sdn-connector
+    edit "gcp"
+        set type gcp
+        set ha-status enable
+        config external-ip
+            edit ${clusterip}
+            next
+        end
+        config route
+            edit ${internalroute}
+            next
+        end
+    next
+end
+config system vdom-exception
+    edit 1
+        set object system.interface
+    next
+end
+config firewall vip
+    edit "lb-probe"
+        set extip "${fgt_public_ip}"
+        set extintf "port1"
+        set portforward enable
+        set mappedip "192.168.199.1"
+        set extport 8008
+        set mappedport 8008
+    next
+end
+config system probe-response
+set mode http-probe
+end
+config firewall service custom
+    edit "ProbeService-8008"
+        set comment "Default Probe for GCP on port 8008"
+        set tcp-portrange 8008
+    next
+end
+config firewall policy
+    edit 2
+        set name "DefaultGCPProbePolicy"
+        set srcintf "port1"
+        set dstintf "loopback"
+        set srcaddr "all"
+        set dstaddr "lb-probe"
+        set action accept
+        set schedule "always"
+        set service "ProbeService-8008"
+        set fsso disable
+        set nat enable
+        set comments "Default Policy to allow GCP loadbalancer probe traffics on port 8008"
+    next
+end
