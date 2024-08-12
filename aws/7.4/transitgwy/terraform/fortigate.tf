@@ -285,7 +285,7 @@ resource "aws_network_interface" "eni-fgt2-mgmt" {
 # Create and attach the eip to the units
 resource "aws_eip" "eip-mgmt1" {
   depends_on        = [aws_instance.fgt1]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eni-fgt1-mgmt.id
   tags = {
     Name = "${var.tag_name_prefix}-fgt1-eip-mgmt"
@@ -294,7 +294,7 @@ resource "aws_eip" "eip-mgmt1" {
 
 resource "aws_eip" "eip-mgmt2" {
   depends_on        = [aws_instance.fgt2]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eni-fgt2-mgmt.id
   tags = {
     Name = "${var.tag_name_prefix}-fgt2-eip-mgmt"
@@ -303,7 +303,7 @@ resource "aws_eip" "eip-mgmt2" {
 
 resource "aws_eip" "eip-shared" {
   depends_on        = [aws_instance.fgt1]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eni-fgt1-data.id
   tags = {
     Name = "${var.tag_name_prefix}-eip-cluster"
@@ -312,7 +312,7 @@ resource "aws_eip" "eip-shared" {
 
 # Create the instances
 resource "aws_instance" "fgt1" {
-    //it will use region, architect, and license type to decide which ami to use for deployment
+  //it will use region, architect, and license type to decide which ami to use for deployment
   ami               = var.fgtami[var.region][var.arch][var.license_type]
   instance_type     = var.instance_type
   availability_zone = var.availability_zone1
@@ -320,6 +320,7 @@ resource "aws_instance" "fgt1" {
   user_data = templatefile("./fgt-userdata.tpl", {
     fgt_id               = "FGT-Active"
     type                 = "${var.license_type}"
+    format               = "${var.license_format}"
     license_file         = "${var.license}"
     fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt1-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr1}")])
     fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt1-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr1}")])
@@ -360,6 +361,7 @@ resource "aws_instance" "fgt2" {
   user_data = templatefile("./fgt-userdata.tpl", {
     fgt_id               = "FGT-Passive"
     type                 = "${var.license_type}"
+    format               = "${var.license_format}"
     license_file         = "${var.license2}"
     fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt2-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr2}")])
     fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr2}")])

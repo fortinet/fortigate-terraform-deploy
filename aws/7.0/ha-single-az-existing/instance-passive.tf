@@ -69,6 +69,7 @@ resource "aws_instance" "fgtpassive" {
   user_data = templatefile("${var.bootstrap-passive}", {
     type            = "${var.license_type}"
     license_file    = "${var.license2}"
+    format          = "${var.license_format}"
     port1_ip        = "${var.passiveport1}"
     port1_mask      = "${var.passiveport1mask}"
     port2_ip        = "${var.passiveport2}"

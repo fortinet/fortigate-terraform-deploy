@@ -23,15 +23,18 @@ variable "token" {
   type    = string
   default = "<gcp oauth access token>"
 }
+
 # FortiGate Image name
-# 7.4.0 x86 payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-740-20230512-001-w-license
-# 7.4.0 x86 byol is projects/fortigcp-project-001/global/images/fortinet-fgt-740-20230512-001-w-license
-# 7.4.0 arm payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-arm64-740-20230512-001-w-license
-# 7.4.0 arm byol is projects/fortigcp-project-001/global/images/fortinet-fgt-arm64-740-20230512-001-w-license
+# 7.4.4 x86 payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-744-20240516-001-w-license
+# 7.4.4 x86 byol is projects/fortigcp-project-001/global/images/fortinet-fgt-744-20240516-001-w-license
+# 7.4.4 arm payg is projects/fortigcp-project-001/global/images/fortinet-fgtondemand-arm64-744-20240516-001-w-license
+# 7.4.4 arm byol is projects/fortigcp-project-001/global/images/fortinet-fgt-arm64-744-20240516-001-w-license
+
 variable "image" {
   type    = string
-  default = "projects/fortigcp-project-001/global/images/fortinet-fgtondemand-740-20230512-001-w-license"
+  default = "projects/fortigcp-project-001/global/images/fortinet-fgtondemand-744-20240516-001-w-license"
 }
+
 # GCP VNIC type
 # either GVNIC or VIRTIO_NET
 # arm mus use GVNIC
@@ -60,7 +63,7 @@ variable "protected_subnet" {
 # user data for bootstrap fgt configuration
 variable "user_data" {
   type    = string
-  default = "config.txt"
+  default = "bootstrap.conf"
 }
 
 # user data for bootstrap fgt license file

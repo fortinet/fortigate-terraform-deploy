@@ -161,7 +161,7 @@ variable "fgtbport4gateway" {
 
 // FortiOS Custom Image ID
 variable "image" {
-  default = "cos://us-geo/fortinet/fortigate_byol_740_b2360_GA.qcow2"
+  default = "cos://us-geo/fortinet/fortigate_byol_743_b2573_GA.qcow2"
 }
 
 // IBM Cloud instance profile

@@ -1,4 +1,4 @@
-# Deployment of a FortiGate-VM (PAYG) Cluster on the Azure
+# Deployment of a FortiGate-VM (PAYG) Cluster on Azure
 ## Introduction
 A Terraform script to deploy a FortiGate-VM Cluster on Azure
 
@@ -52,6 +52,14 @@ Username = <FGT admin>
 To destroy the instance, use the command:
 ```sh
 $ terraform destroy
+```
+
+## Requirements and limitations
+
+The terms for the FortiGate PAYG image in the Azure Marketplace needs to be accepted once before usage. This is done automatically during deployment via the Azure Portal. For the Azure CLI the commands below need to be run before the first deployment in a subscription.
+
+```sh
+PAYG az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm_payg_20190624
 ```
 
 # Support

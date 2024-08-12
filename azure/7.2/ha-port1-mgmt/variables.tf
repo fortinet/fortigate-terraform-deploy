@@ -56,19 +56,19 @@ variable "fgtoffer" {
 }
 
 // BYOL sku: fortinet_fg-vm
-// PAYG sku: fortinet_fg-vm_payg_2022
+// PAYG sku: fortinet_fg-vm_payg_2023
 variable "fgtsku" {
   type = map(any)
   default = {
     byol = "fortinet_fg-vm"
-    payg = "fortinet_fg-vm_payg_2022"
+    payg = "fortinet_fg-vm_payg_2023"
   }
 }
 
 // FOS version
 variable "fgtversion" {
   type    = string
-  default = "7.2.5"
+  default = "7.2.8"
 }
 
 variable "adminusername" {

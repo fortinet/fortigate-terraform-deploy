@@ -51,6 +51,7 @@ resource "aws_instance" "fgtactive" {
   user_data = templatefile("${var.bootstrap-active}", {
     type            = "${var.license_type}"
     license_file    = "${var.license}"
+    format          = "${var.license_format}"
     port1_ip        = "${var.activeport1}"
     port1_mask      = "${var.activeport1mask}"
     port2_ip        = "${var.activeport2}"

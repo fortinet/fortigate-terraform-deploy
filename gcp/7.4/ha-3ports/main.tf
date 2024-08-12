@@ -259,17 +259,17 @@ resource "google_compute_instance" "default2" {
   }
   network_interface {
     subnetwork = google_compute_subnetwork.public_subnet.name
-    image      = var.image
+    nic_type   = var.nictype
     network_ip = var.passive_port1_ip
   }
   network_interface {
     subnetwork = google_compute_subnetwork.private_subnet.name
-    image      = var.image
+    nic_type   = var.nictype
     network_ip = var.passive_port2_ip
   }
   network_interface {
     subnetwork = google_compute_subnetwork.ha_subnet.name
-    image      = var.image
+    nic_type   = var.nictype
     network_ip = var.passive_port3_ip
     access_config {
       nat_ip = google_compute_address.static3.address

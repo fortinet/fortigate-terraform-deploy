@@ -1,8 +1,8 @@
 // Azure configuration
-variable subscription_id {}
-variable client_id {}
-variable client_secret {}
-variable tenant_id {}
+variable "subscription_id" {}
+variable "client_id" {}
+variable "client_secret" {}
+variable "tenant_id" {}
 
 
 //  For HA, choose instance size that support 4 nics at least
@@ -58,17 +58,17 @@ variable "fgtoffer" {
 // BYOL sku: fortinet_fg-vm
 // PAYG sku: fortinet_fg-vm_payg_20190624
 variable "fgtsku" {
-  type = map
+  type = map(any)
   default = {
     byol = "fortinet_fg-vm"
-    payg = "fortinet_fg-vm_payg_2022"
+    payg = "fortinet_fg-vm_payg_2023"
   }
 }
 
 // FOS version
 variable "fgtversion" {
   type    = string
-  default = "7.0.12"
+  default = "7.0.15"
 }
 
 variable "adminusername" {

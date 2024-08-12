@@ -1,4 +1,4 @@
-# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on the Azure with 3 ports
+# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on Azure with 3 ports
 ## Introduction
 ## This topology is only recommended for using with FOS 7.0.5 and later.
 ## Since it needs FSO 7.0 that supports 3 ports only HA setup
@@ -58,6 +58,19 @@ To destroy the instance, use the command:
 ```sh
 $ terraform destroy
 ```
+
+## Requirements and limitations
+
+The terms for the FortiGate PAYG or BYOL image in the Azure Marketplace needs to be accepted once before usage. This is done automatically during deployment via the Azure Portal. For the Azure CLI the commands below need to be run before the first deployment in a subscription.
+
+```sh
+BYOL az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm
+PAYG az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm_payg_2022
+```
+
+##Fabric Connector
+
+The FortiGate-VM uses Service Principal for the SDN Fabric Connector. A SDN Fabric Connector is created automatically during deployment.  User needs to configure the Azure Service Principal prior to the deployment.  More information can be found on the [Fortinet Documentation Libary](https://docs.fortinet.com/document/fortigate-public-cloud/7.0.0/azure-administration-guide/948968).
 
 # Support
 Fortinet-provided scripts in this and other GitHub projects do not fall under the regular Fortinet technical support scope and are not supported by FortiCare Support Services.

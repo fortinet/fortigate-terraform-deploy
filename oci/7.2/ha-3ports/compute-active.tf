@@ -7,6 +7,11 @@ resource "oci_core_instance" "activevm" {
   compartment_id      = var.compartment_ocid
   display_name        = "fgt-activevm"
   shape               = var.instance_shape
+  
+  shape_config {
+    ocpus         = var.instance_cpu
+    memory_in_gbs = var.instance_memory
+  }
 
   create_vnic_details {
     subnet_id        = oci_core_subnet.mgmt_subnet.id

@@ -53,6 +53,7 @@ resource "aws_instance" "fgtvm" {
   user_data = chomp(templatefile("${var.bootstrap-fgtvm}", {
     type            = "${var.license_type}"
     license_file    = "${var.license}"
+    format          = "${var.license_format}"
     port1_ip        = "${var.fgtport1ip[0]}"
     port1_mask      = "${cidrnetmask(var.publiccidraz1)}"
     port2_ip        = "${var.fgtport2ip[0]}"

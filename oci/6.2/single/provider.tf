@@ -9,7 +9,7 @@ terraform {
   required_version = ">=0.12.0"
   required_providers {
     oci      = ">=3.69.0"
-    template  = ">=2.1.2"
+    template = ">=2.1.2"
   }
 }
 

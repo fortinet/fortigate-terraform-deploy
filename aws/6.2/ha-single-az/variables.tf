@@ -1,6 +1,6 @@
 //AWS Configuration
-variable access_key {}
-variable secret_key {}
+variable "access_key" {}
+variable "secret_key" {}
 
 variable "region" {
   default = "us-west-2"
@@ -10,10 +10,10 @@ variable "az" {
   default = "us-west-2a"
 }
 
-/ IAM role that has proper permission for HA
+// IAM role that has proper permission for HA
 // Refer to the URL For details. https://docs.fortinet.com/document/fortigate-public-cloud/6.2.0/aws-administration-guide/229470/deploying-fortigate-vm-active-passive-ha-aws-between-multiple-zones
 variable "iam" {
-  default = "<AWS IAM ROLE NAME>"    //Put in the IAM Role name created
+  default = "<AWS IAM ROLE NAME>" //Put in the IAM Role name created
 }
 
 variable "vpccidr" {
@@ -38,7 +38,7 @@ variable "hamgmtcidr" {
 
 // AMIs are for FGTVM-AWS(PAYG) - 6.2.3
 variable "fgtvmami" {
-  type = map
+  type = map(any)
   default = {
     us-west-2      = "ami-02b9cc036cab1071d"
     us-west-1      = "ami-0f54d37e47fa994a0"

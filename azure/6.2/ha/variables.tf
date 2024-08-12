@@ -1,8 +1,8 @@
 // Azure configuration
-variable subscription_id {}
-variable client_id {}
-variable client_secret {}
-variable tenant_id {}
+variable "subscription_id" {}
+variable "client_id" {}
+variable "client_secret" {}
+variable "tenant_id" {}
 
 
 //  For HA, choose instance size that support 4 nics at least
