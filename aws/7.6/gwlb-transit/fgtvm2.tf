@@ -58,7 +58,7 @@ resource "aws_instance" "fgtvm2" {
   key_name          = var.keyname
   user_data = chomp(templatefile("${var.bootstrap-fgtvm2}", {
     type         = "${var.license_type}"
-    license_file = "${var.license2}"
+    license_file = var.licenses[1]
     format       = "${var.license_format}"
     adminsport   = "${var.adminsport}"
     cidr         = "${var.privatecidraz1}"

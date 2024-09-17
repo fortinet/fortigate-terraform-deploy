@@ -23,18 +23,11 @@ variable "tag_name_unique" {
   default     = "terraform"
 }
 
-// license file for the active fgt
-variable "license" {
-  // Change to your own byol license file, license.lic
-  type    = string
-  default = "license.txt"
-}
-
-// license file for the passive fgt
-variable "license2" {
-  // Change to your own byol license file, license2.lic
-  type    = string
-  default = "license2.txt"
+//license files for the two fgts
+variable "licenses" {
+  // Change to your own byol license files
+  type    = list(string)
+  default = ["license.lic", "license2.lic"]
 }
 
 // License Type to create FortiGate-VM
@@ -206,7 +199,7 @@ variable "fgtami" {
         payg = "ami-0a7159318f086358f"
         byol = "ami-07192d3458cf51a0e"
       },
-     x86 = {
+      x86 = {
         payg = "ami-02e31d37ec350ccfa"
         byol = "ami-07dfe4c56d45564e5"
       }

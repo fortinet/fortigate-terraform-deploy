@@ -111,7 +111,7 @@ resource "aws_instance" "fgtvm" {
   key_name          = var.keyname
   user_data = templatefile("${var.bootstrap-fgtvm}", {
     type         = "${var.license_type}"
-    license_file = "${var.license}"
+    license_file = var.licenses[0]
     adminsport   = "${var.adminsport}"
     dst          = var.privatecidraz2
     gateway      = cidrhost(var.privatecidraz1, 1)
@@ -154,7 +154,7 @@ resource "aws_instance" "fgtvm2" {
   key_name          = var.keyname
   user_data = templatefile("${var.bootstrap-fgtvm}", {
     type         = "${var.license_type}"
-    license_file = "${var.license2}"
+    license_file = var.licenses[1]
     format       = "${var.license_format}"
     adminsport   = "${var.adminsport}"
     dst          = var.privatecidraz1
