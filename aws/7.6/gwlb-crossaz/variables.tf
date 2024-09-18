@@ -226,7 +226,7 @@ variable "fgtami" {
         payg = "ami-0a7159318f086358f"
         byol = "ami-07192d3458cf51a0e"
       },
-     x86 = {
+      x86 = {
         payg = "ami-02e31d37ec350ccfa"
         byol = "ami-07dfe4c56d45564e5"
       }
@@ -400,16 +400,9 @@ variable "bootstrap-fgtvm" {
   default = "fgtvm.conf"
 }
 
-// license file for the fgt
-variable "license" {
-  // Change to your own byol license file, license.lic
-  type    = string
-  default = "license.lic"
-}
-
-// license file for the fgt
-variable "license2" {
-  // Change to your own byol license file, license.lic
-  type    = string
-  default = "license2.lic"
+//license files for the two fgts
+variable "licenses" {
+  // Change to your own byol license files
+  type    = list(string)
+  default = ["license.lic", "license2.lic"]
 }

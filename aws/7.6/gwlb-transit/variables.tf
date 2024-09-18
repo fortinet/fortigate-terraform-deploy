@@ -444,16 +444,10 @@ variable "bootstrap-fgtvm2" {
   default = "fgtvm2.conf"
 }
 
-// license file for the fgt
-variable "license" {
-  // Change to your own byol license file, license.lic
-  type    = string
-  default = "license.lic"
-}
 
-// license file for the fgt 2
-variable "license2" {
-  // Change to your own byol license file, license.lic
-  type    = string
-  default = "license2.lic"
+//license files for the two fgts
+variable "licenses" {
+  // Change to your own byol license files
+  type    = list(string)
+  default = ["license.lic", "license2.lic"]
 }
