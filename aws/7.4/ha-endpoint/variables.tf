@@ -492,17 +492,9 @@ variable "bootstrap-passive" {
   default = "config-passive.conf"
 }
 
-// license file for the active fgt
-variable "license" {
-  // Change to your own byol license file, license.lic
-  type    = string
-  default = "license.lic"
+//license files for the two fgts
+variable "licenses" {
+  // Change to your own byol license files
+  type    = list(string)
+  default = ["license.lic", "license2.lic"]
 }
-
-// license file for the passive fgt
-variable "license2" {
-  // Change to your own byol license file, license2.lic
-  type    = string
-  default = "license2.lic"
-}
-
