@@ -163,8 +163,6 @@ resource "google_compute_instance_template" "active" {
       hb_netmask               = var.mgmt_mask        // mgmt netmask
       port1_gateway            = google_compute_subnetwork.public_subnet.gateway_address
       port2_gateway            = google_compute_subnetwork.private_subnet.gateway_address
-      clusterip                = "cluster-ip-${random_string.random_name_post.result}"
-      internalroute            = "internal-route-${random_string.random_name_post.result}"
       internal_loadbalancer_ip = google_compute_address.internal_address.address
       public_subnet            = var.public_subnet
       private_subnet           = var.protected_subnet
@@ -254,8 +252,6 @@ resource "google_compute_instance_template" "passive" {
       hb_netmask               = var.mgmt_mask       // mgmt netmask
       port1_gateway            = google_compute_subnetwork.public_subnet.gateway_address
       port2_gateway            = google_compute_subnetwork.private_subnet.gateway_address
-      clusterip                = "cluster-ip-${random_string.random_name_post.result}"
-      internalroute            = "internal-route-${random_string.random_name_post.result}"
       internal_loadbalancer_ip = google_compute_address.internal_address.address
       public_subnet            = var.public_subnet
       private_subnet           = var.protected_subnet
