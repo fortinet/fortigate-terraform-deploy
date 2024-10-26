@@ -412,3 +412,25 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-att-mgmt" {
   depends_on = [aws_ec2_transit_gateway.TGW-XAZ]
 }
 
+# S3 endpoint inside the VPC
+resource "aws_vpc_endpoint" "s3-endpoint-fgtvm-vpc" {
+  count           = var.bucket ? 1 : 0
+  vpc_id          = aws_vpc.vpc_sec.id
+  service_name    = "com.amazonaws.${var.region}.s3"
+  route_table_ids = [aws_route_table.data_rt.id]
+  policy          = <<POLICY
+{
+    "Statement": [
+        {
+            "Action": "*",
+            "Effect": "Allow",
+            "Resource": "*",
+            "Principal": "*"
+        }
+    ]
+}
+POLICY
+  tags = {
+    Name = "fgtvm-endpoint-to-s3"
+  }
+}

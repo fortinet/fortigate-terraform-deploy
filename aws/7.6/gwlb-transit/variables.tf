@@ -264,7 +264,7 @@ variable "fgtami" {
         payg = "ami-0a7159318f086358f"
         byol = "ami-07192d3458cf51a0e"
       },
-     x86 = {
+      x86 = {
         payg = "ami-02e31d37ec350ccfa"
         byol = "ami-07dfe4c56d45564e5"
       }

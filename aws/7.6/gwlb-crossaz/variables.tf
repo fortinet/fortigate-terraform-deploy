@@ -72,6 +72,14 @@ variable "license_format" {
   default = "token"
 }
 
+// use s3 bucket for bootstrap
+// Either true or false
+//
+variable "bucket" {
+  type    = bool
+  default = "true"
+}
+
 // instance architect
 // Either arm or x86
 variable "arch" {

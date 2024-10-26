@@ -26,16 +26,12 @@ resource "aws_network_interface_sg_attachment" "internalattachment" {
   network_interface_id = aws_network_interface.eth1.id
 }
 
-resource "aws_instance" "fgtactive" {
-  //it will use region, architect, and license type to decide which ami to use for deployment
-  ami               = var.fgtami[var.region][var.arch][var.license_type]
-  instance_type     = var.size
-  availability_zone = var.az
-  key_name          = var.keyname
-  user_data = templatefile("${var.bootstrap-active}", {
-    type           = "${var.license_type}"
-    license_file   = var.licenses[0]
-    format         = "${var.license_format}"
+# Render a part using a `template_file`
+data "template_file" "fgtconfig" {
+  template = file("${var.bootstrap-active}")
+
+  vars = {
+    adminsport     = "${var.adminsport}"
     port1_ip       = "${var.activeport1}"
     port1_mask     = "${var.activeport1mask}"
     port2_ip       = "${var.activeport2}"
@@ -44,8 +40,46 @@ resource "aws_instance" "fgtactive" {
     defaultgwy     = "${var.activeport1gateway}"
     adminsport     = "${var.adminsport}"
     presharekey    = "${var.presharekey}"
-  })
-  iam_instance_profile = var.iam
+  }
+}
+
+# Cloudinit config in MIME format
+data "template_cloudinit_config" "config" {
+  gzip          = false
+  base64_encode = false
+
+  # Main cloud-config configuration file.
+  part {
+    filename     = "config"
+    content_type = "text/x-shellscript"
+    content      = data.template_file.fgtconfig.rendered
+  }
+
+  part {
+    filename     = "license"
+    content_type = "text/plain"
+    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[0]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[0]}")}"
+  }
+}
+
+resource "aws_instance" "fgtactive" {
+  //it will use region, architect, and license type to decide which ami to use for deployment
+  ami               = var.fgtami[var.region][var.arch][var.license_type]
+  instance_type     = var.size
+  availability_zone = var.az
+  key_name          = var.keyname
+
+  user_data = var.bucket ? (var.license_format == "file" ? "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license                       = var.licenses[0],
+    config                        = "${var.bootstrap-active}"
+    })}" : "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license-token                 = file("${var.licenses[0]}"),
+    config                        = "${var.bootstrap-active}"
+  })}") : "${data.template_cloudinit_config.config.rendered}"
+
+  iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.fortigateha.id
 
   root_block_device {
     volume_type = "gp2"

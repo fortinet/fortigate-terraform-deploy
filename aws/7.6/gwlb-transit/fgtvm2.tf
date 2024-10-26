@@ -49,6 +49,36 @@ resource "aws_network_interface_sg_attachment" "fgt2internalattachment" {
   network_interface_id = aws_network_interface.fgt2eth1.id
 }
 
+# Render a part using a `template_file`
+data "template_file" "fgtconfig2" {
+  template = file("${var.bootstrap-fgtvm2}")
+
+  vars = {
+    adminsport = "${var.adminsport}"
+    cidr       = "${var.privatecidraz1}"
+    gateway    = cidrhost(var.privatecidraz2, 1)
+    endpointip = "${data.aws_network_interface.vpcendpointipaz2.private_ip}"
+  }
+}
+
+# Cloudinit config in MIME format
+data "template_cloudinit_config" "config2" {
+  gzip          = false
+  base64_encode = false
+
+  part {
+    filename     = "license"
+    content_type = "text/plain"
+    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.license2}"))} INTERVAL:4 COUNT:4" : "${file("${var.license2}")}"
+  }
+
+  # Main cloud-config configuration file.
+  part {
+    filename     = "config"
+    content_type = "text/x-shellscript"
+    content      = data.template_file.fgtconfig2.rendered
+  }
+}
 
 resource "aws_instance" "fgtvm2" {
   //it will use region, architect, and license type to decide which ami to use for deployment
@@ -56,15 +86,18 @@ resource "aws_instance" "fgtvm2" {
   instance_type     = var.size
   availability_zone = var.az2
   key_name          = var.keyname
-  user_data = chomp(templatefile("${var.bootstrap-fgtvm2}", {
-    type         = "${var.license_type}"
-    license_file = var.licenses[1]
-    format       = "${var.license_format}"
-    adminsport   = "${var.adminsport}"
-    cidr         = "${var.privatecidraz1}"
-    gateway      = cidrhost(var.privatecidraz2, 1)
-    endpointip   = "${data.aws_network_interface.vpcendpointipaz2.private_ip}"
-  }))
+
+  user_data = var.bucket ? (var.license_format == "file" ? "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license                       = var.license2,
+    config                        = "${var.bootstrap-fgtvm}2"
+    })}" : "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license-token                 = file("${var.license2}"),
+    config                        = "${var.bootstrap-fgtvm}2"
+  })}") : "${data.template_cloudinit_config.config2.rendered}"
+
+  iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : ""
 
   root_block_device {
     volume_type = "gp2"
