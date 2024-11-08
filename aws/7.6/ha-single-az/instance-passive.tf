@@ -54,18 +54,12 @@ resource "aws_network_interface_sg_attachment" "passivehasyncattachment" {
   network_interface_id = aws_network_interface.passiveeth2.id
 }
 
+# Render a part using a `template_file`
+data "template_file" "fgtconfig2" {
+  template = file("${var.bootstrap-passive}")
 
-resource "aws_instance" "fgtpassive" {
-  depends_on = [aws_instance.fgtactive]
-  //it will use region, architect, and license type to decide which ami to use for deployment
-  ami               = var.fgtami[var.region][var.arch][var.license_type]
-  instance_type     = var.size
-  availability_zone = var.az
-  key_name          = var.keyname
-  user_data = templatefile("${var.bootstrap-passive}", {
-    type            = "${var.license_type}"
-    license_file    = var.licenses[1]
-    format          = "${var.license_format}"
+  vars = {
+    adminsport      = "${var.adminsport}"
     port1_ip        = "${var.passiveport1}"
     port1_mask      = "${var.passiveport1mask}"
     port2_ip        = "${var.passiveport2}"
@@ -77,9 +71,47 @@ resource "aws_instance" "fgtpassive" {
     active_peerip   = "${var.activeport3}"
     mgmt_gateway_ip = "${var.passiveport4gateway}"
     defaultgwy      = "${var.passiveport1gateway}"
-    adminsport      = "${var.adminsport}"
-  })
-  iam_instance_profile = var.iam
+  }
+}
+
+# Cloudinit config in MIME format
+data "template_cloudinit_config" "config2" {
+  gzip          = false
+  base64_encode = false
+
+  # Main cloud-config configuration file.
+  part {
+    filename     = "config"
+    content_type = "text/x-shellscript"
+    content      = data.template_file.fgtconfig2.rendered
+  }
+
+  part {
+    filename     = "license"
+    content_type = "text/plain"
+    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[1]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[1]}")}"
+  }
+}
+
+resource "aws_instance" "fgtpassive" {
+  depends_on = [aws_instance.fgtactive]
+  //it will use region, architect, and license type to decide which ami to use for deployment
+  ami               = var.fgtami[var.region][var.arch][var.license_type]
+  instance_type     = var.size
+  availability_zone = var.az
+  key_name          = var.keyname
+
+  user_data = var.bucket ? (var.license_format == "file" ? "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license                       = var.licenses[1],
+    config                        = "${var.bootstrap-passive}"
+    })}" : "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license-token                 = file("${var.licenses[1]}"),
+    config                        = "${var.bootstrap-passive}"
+  })}") : "${data.template_cloudinit_config.config2.rendered}"
+
+  iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.fortigateha.id
 
   root_block_device {
     volume_type = "gp2"

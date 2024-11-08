@@ -10,12 +10,6 @@ variable "az" {
   default = "eu-west-1a"
 }
 
-// IAM role that has proper permission for HA
-// Refer to the URL For details. https://docs.fortinet.com/document/fortigate-public-cloud/7.2.0/aws-administration-guide/229470/deploying-fortigate-vm-active-passive-ha-aws-between-multiple-zones
-variable "iam" {
-  default = "<AWS IAM ROLE NAME>" //Put in the IAM Role name created
-}
-
 variable "vpccidr" {
   default = "10.1.0.0/16"
 }
@@ -56,9 +50,17 @@ variable "license_type" {
 }
 
 // BYOL License format to create FortiGate-VM
-// Provide the license type for FortiGate-VM Instances, either token or file.
+// Provide the license type for FortiGate-VM Instances, file.
 variable "license_format" {
-  default = "token"
+  default = "file"
+}
+
+// use s3 bucket for bootstrap
+// Either true or false
+//
+variable "bucket" {
+  type    = bool
+  default = "false"
 }
 
 // instance architect
@@ -159,7 +161,7 @@ variable "fgtami" {
         byol = "ami-0fbb9838a8d140a68"
       }
     },
-    ap-south-4 = {
+    ap-southeast-4 = {
       arm = {
         payg = "ami-02e3088d08a963925"
         byol = "ami-08affe4343719a53a"

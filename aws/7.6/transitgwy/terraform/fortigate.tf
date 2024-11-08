@@ -171,6 +171,37 @@ resource "aws_iam_instance_profile" "APICall_profile" {
   role = aws_iam_role.APICallrole.name
 }
 
+# Assign the IAM Profile to the FortiGate instance
+#
+resource "aws_iam_instance_profile" "fortigate" {
+  count = var.bucket ? 1 : 0
+  name  = "fgtiamprofile${random_string.random_name_post.result}"
+
+  role = aws_iam_role.fortigate[0].name
+}
+
+
+# Create an IAM Role to assign to the FortiGate VM instance
+#
+resource "aws_iam_role" "fortigate" {
+  count = var.bucket ? 1 : 0
+  name  = "fgtiamrole${random_string.random_name_post.result}"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Sid = ""
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role" "APICallrole" {
   name = "APICall_role"
 
@@ -214,6 +245,47 @@ resource "aws_iam_policy" "APICallpolicy" {
             "Resource": "*"
         }
       ]
+}
+EOF
+}
+
+
+# IAM Policy for FortiGate to access the S3 Buckets and HA Failover
+#
+resource "aws_iam_role_policy" "fortigate-iam_role_policy" {
+  count  = var.bucket ? 1 : 0
+  name   = "fgtiamrolepolicy${random_string.random_name_post.result}"
+  role   = aws_iam_role.fortigate[0].id
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+   {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:Describe*",
+        "ec2:AssociateAddress",
+        "ec2:AssignPrivateIpAddresses",
+        "ec2:UnassignPrivateIpAddresses",
+        "ec2:ReplaceRoute"
+        ],
+      "Resource": "*"
+   },
+   {
+      "Effect": "Allow",
+      "Action": ["s3:ListBucket"],
+      "Resource": ["arn:aws:s3:::${aws_s3_bucket.s3_bucket[0].id}"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": ["arn:aws:s3:::${aws_s3_bucket.s3_bucket[0].id}/*"]
+    }
+  ]
 }
 EOF
 }
@@ -310,18 +382,12 @@ resource "aws_eip" "eip-shared" {
   }
 }
 
-# Create the instances
-resource "aws_instance" "fgt1" {
-  //it will use region, architect, and license type to decide which ami to use for deployment
-  ami               = var.fgtami[var.region][var.arch][var.license_type]
-  instance_type     = var.instance_type
-  availability_zone = var.availability_zone1
-  key_name          = var.keypair
-  user_data = templatefile("./fgt-userdata.tpl", {
+# Render a part using a `template_file`
+data "template_file" "fgtconfig" {
+  template = file("./fgt-userdata.tpl")
+
+  vars = {
     fgt_id               = "FGT-Active"
-    type                 = "${var.license_type}"
-    format               = "${var.license_format}"
-    license_file         = var.licenses[0]
     fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt1-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr1}")])
     fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt1-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr1}")])
     fgt_mgmt_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt1-mgmt.private_ips), 0), cidrnetmask("${var.security_vpc_mgmt_subnet_cidr1}")])
@@ -333,8 +399,48 @@ resource "aws_instance" "fgt1" {
     mgmt_gw              = cidrhost(var.security_vpc_mgmt_subnet_cidr1, 1)
     fgt_priority         = "255"
     fgt-remote-heartbeat = element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0)
-  })
-  iam_instance_profile = aws_iam_instance_profile.APICall_profile.name
+  }
+}
+
+# Cloudinit config in MIME format
+data "template_cloudinit_config" "config" {
+  gzip          = false
+  base64_encode = false
+
+  # Main cloud-config configuration file.
+  part {
+    filename     = "config"
+    content_type = "text/x-shellscript"
+    content      = data.template_file.fgtconfig.rendered
+  }
+
+  part {
+    filename     = "license"
+    content_type = "text/plain"
+    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[0]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[0]}")}"
+  }
+}
+
+# Create the instances
+resource "aws_instance" "fgt1" {
+  //it will use region, architect, and license type to decide which ami to use for deployment
+  ami               = var.fgtami[var.region][var.arch][var.license_type]
+  instance_type     = var.instance_type
+  availability_zone = var.availability_zone1
+  key_name          = var.keypair
+
+  user_data = var.bucket ? (var.license_format == "file" ? "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license                       = var.licenses[0],
+    config                        = "fgt-userdata.tpl"
+    })}" : "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license-token                 = file("${var.licenses[0]}"),
+    config                        = "fgt-userdata.tpl"
+  })}") : "${data.template_cloudinit_config.config.rendered}"
+
+  iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.APICall_profile.name
+
   network_interface {
     device_index         = 0
     network_interface_id = aws_network_interface.eni-fgt1-data.id
@@ -352,17 +458,12 @@ resource "aws_instance" "fgt1" {
   }
 }
 
-resource "aws_instance" "fgt2" {
-  //it will use region, architect, and license type to decide which ami to use for deployment
-  ami               = var.fgtami[var.region][var.arch][var.license_type]
-  instance_type     = var.instance_type
-  availability_zone = var.availability_zone2
-  key_name          = var.keypair
-  user_data = templatefile("./fgt-userdata.tpl", {
+# Render a part using a `template_file`
+data "template_file" "fgtconfig2" {
+  template = file("./fgt-userdata.tpl")
+
+  vars = {
     fgt_id               = "FGT-Passive"
-    type                 = "${var.license_type}"
-    format               = "${var.license_format}"
-    license_file         = var.licenses[1]
     fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt2-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr2}")])
     fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr2}")])
     fgt_mgmt_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt2-mgmt.private_ips), 0), cidrnetmask("${var.security_vpc_mgmt_subnet_cidr2}")])
@@ -374,9 +475,48 @@ resource "aws_instance" "fgt2" {
     mgmt_gw              = cidrhost(var.security_vpc_mgmt_subnet_cidr2, 1)
     fgt_priority         = "100"
     fgt-remote-heartbeat = element(tolist(aws_network_interface.eni-fgt1-hb.private_ips), 0)
+  }
+}
 
-  })
-  iam_instance_profile = aws_iam_instance_profile.APICall_profile.name
+# Cloudinit config in MIME format
+data "template_cloudinit_config" "config2" {
+  gzip          = false
+  base64_encode = false
+
+  # Main cloud-config configuration file.
+  part {
+    filename     = "config"
+    content_type = "text/x-shellscript"
+    content      = data.template_file.fgtconfig2.rendered
+  }
+
+  part {
+    filename     = "license"
+    content_type = "text/plain"
+    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[1]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[1]}")}"
+  }
+}
+
+resource "aws_instance" "fgt2" {
+  //it will use region, architect, and license type to decide which ami to use for deployment
+  ami               = var.fgtami[var.region][var.arch][var.license_type]
+  instance_type     = var.instance_type
+  availability_zone = var.availability_zone2
+  key_name          = var.keypair
+
+  user_data = var.bucket ? (var.license_format == "file" ? "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license                       = var.licenses[1],
+    config                        = "fgt-userdata2.tpl"
+    })}" : "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license-token                 = file("${var.licenses[1]}"),
+    config                        = "fgt-userdata2.tpl"
+  })}") : "${data.template_cloudinit_config.config2.rendered}"
+
+  iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.APICall_profile.name
+
+
   network_interface {
     device_index         = 0
     network_interface_id = aws_network_interface.eni-fgt2-data.id

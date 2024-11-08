@@ -82,3 +82,26 @@ resource "aws_security_group" "allow_all" {
     Name = "Public Allow"
   }
 }
+
+# S3 endpoint inside the VPC
+resource "aws_vpc_endpoint" "s3-endpoint-fgtvm-vpc" {
+  count           = var.bucket ? 1 : 0
+  vpc_id          = var.vpcid
+  service_name    = "com.amazonaws.${var.region}.s3"
+  route_table_ids = var.publicrttableid
+  policy          = <<POLICY
+{
+    "Statement": [
+        {
+            "Action": "*",
+            "Effect": "Allow",
+            "Resource": "*",
+            "Principal": "*"
+        }
+    ]
+}
+POLICY
+  tags = {
+    Name = "fgtvm-endpoint-to-s3"
+  }
+}

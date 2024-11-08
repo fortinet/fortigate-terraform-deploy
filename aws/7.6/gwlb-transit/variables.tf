@@ -209,7 +209,7 @@ variable "fgtami" {
         byol = "ami-0fbb9838a8d140a68"
       }
     },
-    ap-south-4 = {
+    ap-southeast-4 = {
       arm = {
         payg = "ami-02e3088d08a963925"
         byol = "ami-08affe4343719a53a"
@@ -264,7 +264,7 @@ variable "fgtami" {
         payg = "ami-0a7159318f086358f"
         byol = "ami-07192d3458cf51a0e"
       },
-     x86 = {
+      x86 = {
         payg = "ami-02e31d37ec350ccfa"
         byol = "ami-07dfe4c56d45564e5"
       }

@@ -91,3 +91,26 @@ resource "aws_subnet" "csprivatesubnetaz2" {
     Name = "cs private subnet az2"
   }
 }
+
+# S3 endpoint inside the VPC
+resource "aws_vpc_endpoint" "s3-endpoint-fgtvm-vpc" {
+  count           = var.bucket ? 1 : 0
+  vpc_id          = aws_vpc.fgtvm-vpc.id
+  service_name    = "com.amazonaws.${var.region}.s3"
+  route_table_ids = [aws_route_table.fgtvmpublicrt.id]
+  policy          = <<POLICY
+{
+    "Statement": [
+        {
+            "Action": "*",
+            "Effect": "Allow",
+            "Resource": "*",
+            "Principal": "*"
+        }
+    ]
+}
+POLICY
+  tags = {
+    Name = "fgtvm-endpoint-to-s3"
+  }
+}

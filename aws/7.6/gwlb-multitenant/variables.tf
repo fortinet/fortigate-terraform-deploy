@@ -81,6 +81,20 @@ variable "license_type" {
   default = "byol"
 }
 
+// BYOL License format to create FortiGate-VM
+// Provide the license type for FortiGate-VM Instances, either token or file.
+variable "license_format" {
+  default = "file"
+}
+
+// use s3 bucket for bootstrap
+// Either true or false
+//
+variable "bucket" {
+  type    = bool
+  default = "false"
+}
+
 // instance architect
 // Either x86 or arm
 variable "arch" {
@@ -163,7 +177,7 @@ variable "fgtami" {
         byol = "ami-0fbb9838a8d140a68"
       }
     },
-    ap-south-4 = {
+    ap-southeast-4 = {
       arm = {
         byol = "ami-08affe4343719a53a"
       },
@@ -207,7 +221,7 @@ variable "fgtami" {
       arm = {
         byol = "ami-07192d3458cf51a0e"
       },
-     x86 = {
+      x86 = {
         byol = "ami-07dfe4c56d45564e5"
       }
     },

@@ -33,21 +33,18 @@ resource "aws_instance" "fgtpassive" {
   instance_type     = var.size
   availability_zone = var.az
   key_name          = var.keyname
-  user_data = templatefile("${var.bootstrap-passive}", {
-    type          = "${var.license_type}"
-    license_file  = var.licenses[1]
-    format        = "${var.license_format}"
-    port1_ip      = "${var.passiveport1}"
-    port1_mask    = "${var.passiveport1mask}"
-    port2_ip      = "${var.passiveport2}"
-    port2_mask    = "${var.passiveport2mask}"
-    active_peerip = "${var.activeport1}"
-    defaultgwy    = "${var.passiveport1gateway}"
-    adminsport    = "${var.adminsport}"
-    presharekey   = "${var.presharekey}"
 
-  })
-  iam_instance_profile = var.iam
+  user_data = var.bucket ? (var.license_format == "file" ? "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license                       = var.licenses[1],
+    config                        = "${var.bootstrap-passive}"
+    })}" : "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license-token                 = file("${var.licenses[1]}"),
+    config                        = "${var.bootstrap-passive}"
+  })}") : "${data.template_cloudinit_config.config2.rendered}"
+
+  iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.fortigateha.id
 
   root_block_device {
     volume_type = "gp2"

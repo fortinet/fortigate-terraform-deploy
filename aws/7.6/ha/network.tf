@@ -82,8 +82,7 @@ resource "aws_eip" "MGMTPublicIP" {
 }
 
 resource "aws_eip" "PassiveMGMTPublicIP" {
-  depends_on = [aws_instance.fgtpassive]
-  //depends_on        = [aws_network_interface.passiveeth3]
+  depends_on        = [aws_instance.fgtpassive]
   domain            = "vpc"
   network_interface = aws_network_interface.passiveeth3.id
 }

@@ -23,6 +23,11 @@ variable "privatecidraz1" {
   default = "10.1.1.0/24"
 }
 
+// BYOL License format to create FortiGate-VM
+// Provide the license type for FortiGate-VM Instances, either token or file.
+variable "license_format" {
+  default = "token"
+}
 
 // License Type to create FortiGate-VM
 // Provide the license type for FortiGate-VM Instances, either byol or payg.
@@ -30,10 +35,12 @@ variable "license_type" {
   default = "payg"
 }
 
-// BYOL License format to create FortiGate-VM
-// Provide the license type for FortiGate-VM Instances, either token or file.
-variable "license_format" {
-  default = "token"
+// use s3 bucket for bootstrap
+// Either true or false
+//
+variable "bucket" {
+  type    = bool
+  default = "false"
 }
 
 // instance architect
@@ -134,7 +141,7 @@ variable "fgtami" {
         byol = "ami-0fbb9838a8d140a68"
       }
     },
-    ap-south-4 = {
+    ap-southeast-4 = {
       arm = {
         payg = "ami-02e3088d08a963925"
         byol = "ami-08affe4343719a53a"
@@ -189,7 +196,7 @@ variable "fgtami" {
         payg = "ami-0a7159318f086358f"
         byol = "ami-07192d3458cf51a0e"
       },
-     x86 = {
+      x86 = {
         payg = "ami-02e31d37ec350ccfa"
         byol = "ami-07dfe4c56d45564e5"
       }
@@ -357,12 +364,12 @@ variable "adminsport" {
   default = "8443"
 }
 
+// FGTVM config in plaintext Format for S3 Bucket
 variable "bootstrap-fgtvm" {
   // Change to your own path
   type    = string
   default = "fgtvm.conf"
 }
-
 
 // license file for the active fgt
 variable "license" {
