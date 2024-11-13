@@ -69,7 +69,7 @@ variable "license_format" {
 //
 variable "bucket" {
   type    = bool
-  default = "true"
+  default = "false"
 }
 
 // instance architect

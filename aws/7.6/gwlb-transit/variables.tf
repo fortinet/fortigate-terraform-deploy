@@ -128,7 +128,7 @@ variable "license_type" {
 }
 
 // BYOL License format to create FortiGate-VM
-// Provide the license type for FortiGate-VM Instances, either file.
+// Provide the license type for FortiGate-VM Instances, file.
 variable "license_format" {
   default = "file"
 }
