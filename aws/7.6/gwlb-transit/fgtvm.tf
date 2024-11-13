@@ -70,7 +70,7 @@ data "template_cloudinit_config" "config" {
   part {
     filename     = "license"
     content_type = "text/plain"
-    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.license}"))} INTERVAL:4 COUNT:4" : "${file("${var.license}")}"
+    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[0]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[0]}")}"
   }
 
   part {
@@ -89,11 +89,11 @@ resource "aws_instance" "fgtvm" {
 
   user_data = var.bucket ? (var.license_format == "file" ? "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
     region                        = var.region,
-    license                       = var.license,
+    license                       = var.licenses[0]
     config                        = "${var.bootstrap-fgtvm}"
     })}" : "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
     region                        = var.region,
-    license-token                 = file("${var.license}"),
+    license-token                 = file("${var.licenses[0]}"),
     config                        = "${var.bootstrap-fgtvm}"
   })}") : "${data.template_cloudinit_config.config.rendered}"
 

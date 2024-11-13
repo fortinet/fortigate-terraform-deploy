@@ -69,9 +69,9 @@ resource "aws_s3_bucket" "s3_bucket" {
 resource "aws_s3_object" "lic1" {
   count  = var.bucket ? 1 : 0
   bucket = aws_s3_bucket.s3_bucket[0].id
-  key    = var.license
-  source = var.license
-  etag   = filemd5(var.license)
+  key    = var.licenses[0]
+  source = var.licenses[0]
+  etag   = filemd5(var.licenses[0])
 }
 
 # S3 Bucket license file for BYOL License
@@ -79,9 +79,9 @@ resource "aws_s3_object" "lic1" {
 resource "aws_s3_object" "lic2" {
   count  = var.bucket ? 1 : 0
   bucket = aws_s3_bucket.s3_bucket[0].id
-  key    = var.license2
-  source = var.license2
-  etag   = filemd5(var.license2)
+  key    = var.licenses[1]
+  source = var.licenses[1]
+  etag   = filemd5(var.licenses[1])
 }
 
 # S3 Bucket config file for storing fgtvm config

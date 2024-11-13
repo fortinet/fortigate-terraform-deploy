@@ -98,6 +98,14 @@ variable "cs2privatecidraz2" {
   default = "30.1.3.0/24"
 }
 
+// use s3 bucket for bootstrap
+// Either true or false
+//
+variable "bucket" {
+  type    = bool
+  default = "false"
+}
+
 // instance architect
 // Either arm or x86
 variable "arch" {
@@ -120,9 +128,9 @@ variable "license_type" {
 }
 
 // BYOL License format to create FortiGate-VM
-// Provide the license type for FortiGate-VM Instances, either token or file.
+// Provide the license type for FortiGate-VM Instances, either file.
 variable "license_format" {
-  default = "token"
+  default = "file"
 }
 
 // AMIs for FGTVM-7.6.0

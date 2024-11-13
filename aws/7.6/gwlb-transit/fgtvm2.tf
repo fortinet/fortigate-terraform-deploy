@@ -33,7 +33,7 @@ data "aws_network_interface" "vpcendpointipaz2" {
   //  Using AZ1's endpoint ip
   filter {
     name   = "availability-zone"
-    values = ["${var.az1}"]
+    values = ["${var.az2}"]
   }
 }
 
@@ -69,7 +69,7 @@ data "template_cloudinit_config" "config2" {
   part {
     filename     = "license"
     content_type = "text/plain"
-    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.license2}"))} INTERVAL:4 COUNT:4" : "${file("${var.license2}")}"
+    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[1]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[1]}")}"
   }
 
   # Main cloud-config configuration file.
@@ -89,11 +89,11 @@ resource "aws_instance" "fgtvm2" {
 
   user_data = var.bucket ? (var.license_format == "file" ? "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
     region                        = var.region,
-    license                       = var.license2,
+    license                       = var.licenses[1],
     config                        = "${var.bootstrap-fgtvm}2"
     })}" : "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
     region                        = var.region,
-    license-token                 = file("${var.license2}"),
+    license-token                 = file("${var.licenses[1]}"),
     config                        = "${var.bootstrap-fgtvm}2"
   })}") : "${data.template_cloudinit_config.config2.rendered}"
 
