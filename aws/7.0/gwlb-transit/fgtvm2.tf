@@ -33,7 +33,7 @@ data "aws_network_interface" "vpcendpointipaz2" {
   //  Using AZ1's endpoint ip
   filter {
     name   = "availability-zone"
-    values = ["${var.az1}"]
+    values = ["${var.az2}"]
   }
 }
 
