@@ -12,18 +12,6 @@ variable "size" {
   default = "Standard_F4"
 }
 
-// Availability zones only support in certain regions
-// Check: https://docs.microsoft.com/en-us/azure/availability-zones/az-overview
-variable "zone1" {
-  type    = string
-  default = "1"
-}
-
-variable "zone2" {
-  type    = string
-  default = "2"
-}
-
 variable "location" {
   type    = string
   default = "westus2"
@@ -57,16 +45,10 @@ variable "license_type" {
   default = "payg"
 }
 
-// To accept marketplace agreement
-// Default is false
-variable "accept" {
-  default = "false"
-}
-
 // BYOL License format to create FortiGate-VM
-// Provide the license type for FortiGate-VM Instances, either token or file.
+// Provide the license type for FortiGate-VM Instances, file.
 variable "license_format" {
-  default = "token"
+  default = "file"
 }
 
 variable "publisher" {
@@ -80,7 +62,7 @@ variable "fgtoffer" {
 }
 
 // BYOL sku: fortinet_fg-vm
-// PAYG sku: fortinet_fg-vm_payg_2022
+// PAYG sku: fortinet_fg-vm_payg_2023
 variable "fgtsku" {
   type = map(any)
   default = {
@@ -143,12 +125,20 @@ variable "activeport2" {
   default = "172.1.0.10"
 }
 
+variable "activeport2float" {
+  default = "172.1.0.12"
+}
+
 variable "activeport2mask" {
   default = "255.255.255.0"
 }
 
 variable "activeport3" {
   default = "172.1.1.10"
+}
+
+variable "activeport3float" {
+  default = "172.1.1.12"
 }
 
 variable "activeport3mask" {
