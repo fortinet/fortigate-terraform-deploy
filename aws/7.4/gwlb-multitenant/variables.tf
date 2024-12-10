@@ -95,245 +95,252 @@ variable "size" {
   default = "c5.xlarge"
 }
 
-// AMIs for FGTVM-7.4.4
+// AMIs for FGTVM-7.4.5
 variable "fgtami" {
   type = map(any)
   default = {
     us-east-1 = {
       arm = {
-        byol = "ami-051109a33edc50a75"
+        byol = "ami-0536dcf364e36bcec"
       },
       x86 = {
-        byol = "ami-0e4847279c5283aa2"
+        byol = "ami-0559c7c6724e01262"
       }
     },
     us-east-2 = {
       arm = {
-        byol = "ami-095ed8e3a5f1ed3b5"
+        byol = "ami-07f62055ce215bd18"
       },
       x86 = {
-        byol = "ami-0701eb9a6d43b66dd"
+        byol = "ami-00c145440037c6b21"
       }
     },
     us-west-1 = {
       arm = {
-        byol = "ami-02db608924c9194f9"
+        byol = "ami-0914088208bb570f8"
       },
       x86 = {
-        byol = "ami-089fe1ce20c057ba4"
+        byol = "ami-079b0e3ef6221d249"
       }
     },
     us-west-2 = {
       arm = {
-        byol = "ami-0af4177d4cf113639"
+        byol = "ami-03814fe20a6ed576c"
       },
       x86 = {
-        byol = "ami-043f32731c051ef30"
+        byol = "ami-0520b03fa1e96dff1"
       }
     },
     af-south-1 = {
       arm = {
-        byol = "ami-021a7464e2ad1ed66"
+        byol = "ami-032c2010e34e4332e"
       },
       x86 = {
-        byol = "ami-004471032ea59250a"
+        byol = "ami-0c051ce7b4e85bf40"
       }
     },
     ap-east-1 = {
       arm = {
-        byol = "ami-0d7a06d425800c113"
+        byol = "ami-0072f94af7f4f93ba"
       },
       x86 = {
-        byol = "ami-077865546a21b9b96"
+        byol = "ami-02515e344c7778ac8"
       }
     },
     ap-south-2 = {
       arm = {
-        byol = "ami-0e95c6a644ac341d1"
+        byol = "ami-0f383183e285c1703"
       },
       x86 = {
-        byol = "ami-0e000e5e14f809201"
+        byol = "ami-02e3be07e7f3a6586"
       }
     },
     ap-southeast-3 = {
       arm = {
-        byol = "ami-06b56ab6a9d531ce7"
+        byol = "ami-0c2dc177212730e72"
       },
       x86 = {
-        byol = "ami-082b1066ebf456a11"
+        byol = "ami-0194818d444bd85da"
       }
     },
-    ap-southeast-4 = {
+    ap-south-5 = {
       arm = {
-        byol = "ami-0d0cf7dcf555ede51"
+        byol = "ami-02bbb23dc6dd14827"
       },
       x86 = {
-        byol = "ami-06892800639a5d6f7"
+        byol = "ami-0f4ce61ce69217181"
+      }
+    },
+    ap-south-4 = {
+      arm = {
+        byol = "ami-069697f2046e3cb15"
+      },
+      x86 = {
+        byol = "ami-0ebe9030bd9161983"
       }
     },
     ap-south-1 = {
       arm = {
-        byol = "ami-0f11f0b1d16a69e39"
+        byol = "ami-04e8c6e484057e98e"
       },
       x86 = {
-        byol = "ami-0fd5961d925548d98"
+        byol = "ami-0dd625af5ab6d2a72"
       }
     },
     ap-northeast-3 = {
       arm = {
-        byol = "ami-096f57146543924e2"
+        byol = "ami-06f67b123a1a40d55"
       },
       x86 = {
-        byol = "ami-0b259db60fd5f061f"
+        byol = "ami-0ab795fe1a23537a5"
       }
     },
     ap-northeast-2 = {
       arm = {
-        byol = "ami-009cb0f5d623c6326"
+        byol = "ami-045ea8be6c243cd0a"
       },
       x86 = {
-        byol = "ami-039554a1af48f8ee5"
+        byol = "ami-020938ef8e49a210f"
       }
     },
     ap-southeast-1 = {
       arm = {
-        byol = "ami-07fdc65a1a571179a"
+        byol = "ami-0ff1ce4e8883d2fb3"
       },
       x86 = {
-        byol = "ami-0eb8820bd46e0765a"
+        byol = "ami-03b1d9d7296ea7993"
       }
     },
     ap-southeast-2 = {
       arm = {
-        byol = "ami-04a9c6f43b3cb7d0a"
+        byol = "ami-07738cb70dd8a16a5"
       },
       x86 = {
-        byol = "ami-0dbe1fa7d24a74263"
+        byol = "ami-0ea065af22125b218"
       }
     },
     ap-northeast-1 = {
       arm = {
-        byol = "ami-0ffe00e1164b37144"
+        byol = "ami-05965718cd88b817b"
       },
       x86 = {
-        byol = "ami-05906e2828255bade"
+        byol = "ami-0a3961a3c638b6453"
       }
     },
     ca-central-1 = {
       arm = {
-        byol = "ami-005af7ff39cf00576"
+        byol = "ami-0cf3785e4fc1848a6"
       },
       x86 = {
-        byol = "ami-0c3163cc35c83c8ff"
+        byol = "ami-00dbecce4966eb181"
       }
     },
     ca-west-1 = {
       arm = {
-        byol = "ami-0eb16cc0fac9174a8"
+        byol = "ami-0c0bb0308988a629b"
       },
       x86 = {
-        byol = "ami-06f2d6119e152ba4e"
+        byol = "ami-0922f98afc98731ce"
       }
     },
     eu-central-1 = {
       arm = {
-        byol = "ami-02fde47bd7b94a280"
+        byol = "ami-044a606d5768ceb31"
       },
       x86 = {
-        byol = "ami-04e4ffecb22527420"
+        byol = "ami-07b55992f68203c8b"
       }
     },
     eu-west-1 = {
       arm = {
-        byol = "ami-09d5652c5fdbb1c31"
+        byol = "ami-0dff6a991566be05d"
       },
       x86 = {
-        byol = "ami-05ad9966a950de71b"
+        byol = "ami-024c701b0e3bd932c"
       }
     },
     eu-west-2 = {
       arm = {
-        byol = "ami-0f74e8ba3b5bafa46"
+        byol = "ami-096baa712ae4f4caf"
       },
       x86 = {
-        byol = "ami-0dfefd514a7331cce"
+        byol = "ami-04fa5491255877210"
       }
     },
     eu-south-1 = {
       arm = {
-        byol = "ami-0f85dd0f8550a7769"
+        byol = "ami-0e5c456693598ccb7"
       },
       x86 = {
-        byol = "ami-0e92f5c29b121c2c8"
+        byol = "ami-0b3b71437fd59588e"
       }
     },
     eu-west-3 = {
       arm = {
-        byol = "ami-0f693e7d1bf908095"
+        byol = "ami-01150d87d326a87a0"
       },
       x86 = {
-        byol = "ami-0be9af3b721f8c959"
+        byol = "ami-0d42d3300c9e29900"
       }
     },
     eu-south-2 = {
       arm = {
-        byol = "ami-01b81d365b334e298"
+        byol = "ami-02e481e1c12dcf590"
       },
       x86 = {
-        byol = "ami-05eff062612d6d191"
+        byol = "ami-02812c07b2b4d8f1a"
       }
     },
     eu-north-1 = {
       arm = {
-        byol = "ami-0de89c6b16d8ba760"
+        byol = "ami-0b021ff363900d406"
       },
       x86 = {
-        byol = "ami-0586c7ea6a8b2a5b5"
+        byol = "ami-03a73bd6c1b282b53"
       }
     },
     eu-central-2 = {
       arm = {
-        byol = "ami-08a6af34d97a1d345"
+        byol = "ami-00715a1a63df0b7e6"
       },
       x86 = {
-        byol = "ami-053853a9c88f69298"
+        byol = "ami-050567398caab9edf"
       }
     },
     me-south-1 = {
       arm = {
-        byol = "ami-0dfa267484fd1ed56"
+        byol = "ami-0542af7939f51386f"
       },
       x86 = {
-        byol = "ami-0117fe58866dcdfef"
+        byol = "ami-0f0de50dcd055600e"
       }
     },
     me-central-1 = {
       arm = {
-        byol = "ami-05c25bd2865a5270e"
+        byol = "ami-09bcd9e94f52219ba"
       },
       x86 = {
-        byol = "ami-03f4a133efea58bdb"
+        byol = "ami-0fd7e544028b4fdb9"
       }
     },
     il-central-1 = {
       arm = {
-        byol = "ami-01042692389b3ce89"
+        byol = "ami-0234d712fffb1ccfc"
       },
       x86 = {
-        byol = "ami-06a63ee02b6a9069e"
+        byol = "ami-03d61edc6b6ffcbac"
       }
     },
     sa-east-1 = {
       arm = {
-        byol = "ami-0c642f033805183c3"
+        byol = "ami-01d7bf72a830edeb2"
       },
       x86 = {
-        byol = "ami-03b2da92bd1e10472"
+        byol = "ami-09792ec9ebeabdb35"
       }
     }
   }
 }
-
 
 //  Existing SSH Key on the AWS 
 variable "keyname" {
