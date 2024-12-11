@@ -106,13 +106,13 @@ resource "azurerm_virtual_machine" "activefgtvm" {
   storage_image_reference {
     publisher = var.custom ? null : var.publisher
     offer     = var.custom ? null : var.fgtoffer
-    sku       = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
+    sku       = var.fgtsku[var.arch][var.license_type]
     version   = var.custom ? null : var.fgtversion
     id        = var.custom ? element(azurerm_image.custom.*.id, 0) : null
   }
 
   plan {
-    name      = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
+    name      = var.fgtsku[var.arch][var.license_type]
     publisher = var.publisher
     product   = var.fgtoffer
   }

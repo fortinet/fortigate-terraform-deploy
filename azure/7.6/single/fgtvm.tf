@@ -85,12 +85,12 @@ resource "azurerm_virtual_machine" "fgtvm" {
   storage_image_reference {
     publisher = var.publisher
     offer     = var.fgtoffer
-    sku       = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
+    sku       = var.fgtsku[var.arch][var.license_type]
     version   = var.fgtversion
   }
 
   plan {
-    name      = var.license_type == "byol" ? var.fgtsku["byol"] : var.fgtsku["payg"]
+    name      = var.fgtsku[var.arch][var.license_type]
     publisher = var.publisher
     product   = var.fgtoffer
   }

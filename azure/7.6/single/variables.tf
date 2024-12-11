@@ -4,9 +4,11 @@ variable "client_id" {}
 variable "client_secret" {}
 variable "tenant_id" {}
 
+// x86 - Standard_F4s_v2
+// arm - Standard_D2ps_v5
 variable "size" {
   type    = string
-  default = "Standard_F4"
+  default = "Standard_F4s_v2"
 }
 
 // To use custom image
@@ -43,6 +45,12 @@ variable "license_type" {
   default = "payg"
 }
 
+// instance architect
+// Either arm or x86
+variable "arch" {
+  default = "x86"
+}
+
 // BYOL License format to create FortiGate-VM
 // Provide the license type for FortiGate-VM Instances, either token or file.
 variable "license_format" {
@@ -59,19 +67,29 @@ variable "fgtoffer" {
   default = "fortinet_fortigate-vm_v5"
 }
 
-// BYOL sku: fortinet_fg-vm
-// PAYG sku: fortinet_fg-vm_payg_2022
+// x86
+// BYOL sku: fortinet_fg-vm_g2
+// PAYG sku: fortinet_fg-vm_payg_2023_g2
+// arm
+// BYOL sku: fortinet_fg-vm_arm64
+// PAYG sku: fortinet_fg-vm_payg_2023_arm64
 variable "fgtsku" {
   type = map(any)
   default = {
-    byol = "fortinet_fg-vm"
-    payg = "fortinet_fg-vm_payg_2023"
+    x86 = {
+      byol = "fortinet_fg-vm_g2"
+      payg = "fortinet_fg-vm_payg_2023_g2"
+    },
+    arm = {
+      byol = "fortinet_fg-vm_arm64"
+      payg = "fortinet_fg-vm_payg_2023_arm64"
+    }
   }
 }
 
 variable "fgtversion" {
   type    = string
-  default = "7.6.0"
+  default = "7.6.1"
 }
 
 variable "adminusername" {
