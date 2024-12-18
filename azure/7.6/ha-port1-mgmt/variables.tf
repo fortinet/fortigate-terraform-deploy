@@ -11,7 +11,7 @@ variable "tenant_id" {}
 // arm - Standard_D8ps_v5
 variable "size" {
   type    = string
-  default = "Standard_F4"
+  default = "Standard_F4s_v2"
 }
 
 variable "location" {
