@@ -7,11 +7,11 @@ variable "tenant_id" {}
 
 //  For HA, choose instance size that support 4 nics at least
 //  Check : https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes
-// x86 - Standard_F4s_v2
+// x86 - Standard_F8s_v2
 // arm - Standard_D2ps_v5
 variable "size" {
   type    = string
-  default = "Standard_F4s_v2"
+  default = "Standard_F8s_v2"
 }
 
 // Availability zones only support in certain regions
