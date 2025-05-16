@@ -5,12 +5,12 @@ variable "ssh_public_key" {
 // IBM Regions
 variable "region" {
   type    = string
-  default = "ca-tor"
+  default = "au-syd"
 }
 // IBM availability zones
 variable "zone1" {
   type    = string
-  default = "ca-tor-1"
+  default = "au-syd-1"
 }
 
 // IBM region map for FortiOS
@@ -174,6 +174,13 @@ variable "profile" {
 variable "bootstrap" {
   type    = string
   default = "config.conf"
+}
+
+
+// Bootstrap configuration file
+variable "bootstrap2" {
+  type    = string
+  default = "config2.conf"
 }
 
 // License file for the FortiGate
