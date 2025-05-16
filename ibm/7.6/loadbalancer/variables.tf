@@ -164,6 +164,11 @@ variable "image" {
   default = "cos://us-geo/fortinet/fortigate_byol_762_b3462_GA.qcow2"
 }
 
+// preshare key
+variable "psk" {
+  default = "123456"
+}
+
 // IBM Cloud instance profile
 // https://cloud.ibm.com/docs/vpc?topic=vpc-profiles
 variable "profile" {

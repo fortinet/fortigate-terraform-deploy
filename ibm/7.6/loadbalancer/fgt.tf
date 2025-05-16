@@ -97,6 +97,7 @@ resource "ibm_is_instance" "fgt1" {
     port2_mask      = "${var.fgtaport2mask}"
     port3_ip        = "${var.fgtaport3}"
     port3_mask      = "${var.fgtaport3mask}"
+    preshare        = "${var.psk}"
     region          = var.ibmregion[var.region]
     passive_peerip  = "${var.fgtbport3}"
     mgmt_gateway_ip = "${var.fgtaport4gateway}"
@@ -155,6 +156,7 @@ resource "ibm_is_instance" "fgt2" {
     port2_mask      = "${var.fgtbport2mask}"
     port3_ip        = "${var.fgtbport3}"
     port3_mask      = "${var.fgtbport3mask}"
+    preshare        = "${var.psk}"
     region          = var.ibmregion[var.region]
     passive_peerip  = "${var.fgtaport3}"
     mgmt_gateway_ip = "${var.fgtbport4gateway}"
