@@ -161,7 +161,7 @@ variable "fgtbport4gateway" {
 
 // FortiOS Custom Image ID
 variable "image" {
-  default = "cos://us-geo/fortinet/fortigate_byol_762_b3462_GA.qcow2"
+  default = "cos://us-geo/fortinet/fortigate_byol_763_b3510_GA.qcow2"
 }
 
 // preshare key
