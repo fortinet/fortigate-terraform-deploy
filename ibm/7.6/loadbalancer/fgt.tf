@@ -62,6 +62,7 @@ resource "ibm_is_instance" "fgt1" {
   }
 
   network_interfaces {
+    allow_ip_spoofing = "true"
     name            = "fgtaport2"
     subnet          = ibm_is_subnet.subnet2.id
     security_groups = [ibm_is_security_group.fgt_security_group.id]
@@ -123,6 +124,7 @@ resource "ibm_is_instance" "fgt2" {
   }
 
   network_interfaces {
+    allow_ip_spoofing = "true"
     name            = "fgtbport2"
     subnet          = ibm_is_subnet.subnet2.id
     security_groups = [ibm_is_security_group.fgt_security_group.id]
