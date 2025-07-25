@@ -24,6 +24,33 @@ resource "aws_network_interface_sg_attachment" "internalattachment" {
   network_interface_id = aws_network_interface.eth1.id
 }
 
+# Render a part using a `template_file`
+data "template_file" "fgtconfig" {
+  template = file("${var.bootstrap-fgtvm}")
+
+  vars = {
+    adminsport = "${var.adminsport}"
+  }
+}
+
+# Cloudinit config in MIME format
+data "template_cloudinit_config" "config" {
+  gzip          = false
+  base64_encode = false
+
+  # Main cloud-config configuration file.
+  part {
+    filename     = "config"
+    content_type = "text/x-shellscript"
+    content      = data.template_file.fgtconfig.rendered
+  }
+
+  part {
+    filename     = "license"
+    content_type = "text/plain"
+    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.license}"))} INTERVAL:4 COUNT:4" : "${file("${var.license}")}"
+  }
+}
 
 resource "aws_instance" "fgtvm" {
   //it will use region, architect, and license type to decide which ami to use for deployment
@@ -31,12 +58,18 @@ resource "aws_instance" "fgtvm" {
   instance_type     = var.size
   availability_zone = var.az1
   key_name          = var.keyname
-  user_data = templatefile("${var.bootstrap-fgtvm}", {
-    type         = "${var.license_type}"
-    license_file = "${var.license}"
-    format       = "${var.license_format}"
-    adminsport   = "${var.adminsport}"
-  })
+ 
+  user_data = var.bucket ? (var.license_format == "file" ? "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license                       = var.license,
+    config                        = "${var.bootstrap-fgtvm}"
+    })}" : "${jsonencode({ bucket = aws_s3_bucket.s3_bucket[0].id,
+    region                        = var.region,
+    license-token                 = file("${var.license}"),
+    config                        = "${var.bootstrap-fgtvm}"
+  })}") : "${data.template_cloudinit_config.config.rendered}"
+
+  iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : ""
 
   root_block_device {
     volume_type = "standard"
