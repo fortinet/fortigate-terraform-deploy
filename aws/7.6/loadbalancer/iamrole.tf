@@ -154,7 +154,7 @@ resource "aws_s3_object" "conf" {
   bucket = aws_s3_bucket.s3_bucket[0].id
   key    = var.bootstrap-active
   content = templatefile("${var.bootstrap-active}", {
-    adminsport      = "${var.adminsport}"
+    adminsport     = "${var.adminsport}"
     port1_ip       = "${var.activeport1}"
     port1_mask     = "${var.activeport1mask}"
     port2_ip       = "${var.activeport2}"
@@ -173,7 +173,7 @@ resource "aws_s3_object" "conf2" {
   bucket = aws_s3_bucket.s3_bucket[0].id
   key    = var.bootstrap-passive
   content = templatefile("${var.bootstrap-passive}", {
-    adminsport      = "${var.adminsport}"
+    adminsport    = "${var.adminsport}"
     port1_ip      = "${var.passiveport1}"
     port1_mask    = "${var.passiveport1mask}"
     port2_ip      = "${var.passiveport2}"

@@ -382,11 +382,16 @@ resource "aws_eip" "eip-shared" {
   }
 }
 
-# Render a part using a `template_file`
-data "template_file" "fgtconfig" {
-  template = file("./fgt-userdata.tpl")
+# Cloudinit config in MIME format
+data "cloudinit_config" "config" {
+  gzip          = false
+  base64_encode = false
 
-  vars = {
+  # Main cloud-config configuration file.
+  part {
+    filename     = "config"
+    content_type = "text/x-shellscript"
+    content = templatefile("./fgt-userdata.tpl", {
     fgt_id               = "FGT-Active"
     fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt1-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr1}")])
     fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt1-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr1}")])
@@ -399,19 +404,7 @@ data "template_file" "fgtconfig" {
     mgmt_gw              = cidrhost(var.security_vpc_mgmt_subnet_cidr1, 1)
     fgt_priority         = "255"
     fgt-remote-heartbeat = element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0)
-  }
-}
-
-# Cloudinit config in MIME format
-data "template_cloudinit_config" "config" {
-  gzip          = false
-  base64_encode = false
-
-  # Main cloud-config configuration file.
-  part {
-    filename     = "config"
-    content_type = "text/x-shellscript"
-    content      = data.template_file.fgtconfig.rendered
+    })
   }
 
   part {
@@ -437,7 +430,7 @@ resource "aws_instance" "fgt1" {
     region                        = var.region,
     license-token                 = file("${var.licenses[0]}"),
     config                        = "fgt-userdata.tpl"
-  })}") : "${data.template_cloudinit_config.config.rendered}"
+  })}") : "${data.cloudinit_config.config.rendered}"
 
   iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.APICall_profile.name
 
@@ -458,11 +451,16 @@ resource "aws_instance" "fgt1" {
   }
 }
 
-# Render a part using a `template_file`
-data "template_file" "fgtconfig2" {
-  template = file("./fgt-userdata.tpl")
+# Cloudinit config in MIME format
+data "cloudinit_config" "config2" {
+  gzip          = false
+  base64_encode = false
 
-  vars = {
+  # Main cloud-config configuration file.
+  part {
+    filename     = "config"
+    content_type = "text/x-shellscript"
+    content = templatefile("./fgt-userdata.tpl", {
     fgt_id               = "FGT-Passive"
     fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt2-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr2}")])
     fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr2}")])
@@ -475,19 +473,7 @@ data "template_file" "fgtconfig2" {
     mgmt_gw              = cidrhost(var.security_vpc_mgmt_subnet_cidr2, 1)
     fgt_priority         = "100"
     fgt-remote-heartbeat = element(tolist(aws_network_interface.eni-fgt1-hb.private_ips), 0)
-  }
-}
-
-# Cloudinit config in MIME format
-data "template_cloudinit_config" "config2" {
-  gzip          = false
-  base64_encode = false
-
-  # Main cloud-config configuration file.
-  part {
-    filename     = "config"
-    content_type = "text/x-shellscript"
-    content      = data.template_file.fgtconfig2.rendered
+    })
   }
 
   part {
@@ -512,7 +498,7 @@ resource "aws_instance" "fgt2" {
     region                        = var.region,
     license-token                 = file("${var.licenses[1]}"),
     config                        = "fgt-userdata2.tpl"
-  })}") : "${data.template_cloudinit_config.config2.rendered}"
+  })}") : "${data.cloudinit_config.config2.rendered}"
 
   iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.APICall_profile.name
 

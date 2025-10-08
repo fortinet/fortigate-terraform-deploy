@@ -25,6 +25,35 @@ resource "aws_network_interface_sg_attachment" "passiveinternalattachment" {
   network_interface_id = aws_network_interface.passiveeth1.id
 }
 
+# Cloudinit config in MIME format
+data "cloudinit_config" "config2" {
+  gzip          = false
+  base64_encode = false
+
+  # Main cloud-config configuration file.
+  part {
+    filename     = "config"
+    content_type = "text/x-shellscript"
+    content = templatefile("${var.bootstrap-passive}", {
+      adminsport    = "${var.adminsport}"
+      port1_ip      = "${var.passiveport1}"
+      port1_mask    = "${var.passiveport1mask}"
+      port2_ip      = "${var.passiveport2}"
+      port2_mask    = "${var.passiveport2mask}"
+      active_peerip = "${var.activeport1}"
+      defaultgwy    = "${var.passiveport1gateway}"
+      adminsport    = "${var.adminsport}"
+      presharekey   = "${var.presharekey}"
+    })
+  }
+
+  part {
+    filename     = "license"
+    content_type = "text/plain"
+    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[1]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[1]}")}"
+  }
+}
+
 
 resource "aws_instance" "fgtpassive" {
   depends_on = [aws_instance.fgtactive]
@@ -42,7 +71,7 @@ resource "aws_instance" "fgtpassive" {
     region                        = var.region,
     license-token                 = file("${var.licenses[1]}"),
     config                        = "${var.bootstrap-passive}"
-  })}") : "${data.template_cloudinit_config.config2.rendered}"
+  })}") : "${data.cloudinit_config.config2.rendered}"
 
   iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.fortigateha.id
 
