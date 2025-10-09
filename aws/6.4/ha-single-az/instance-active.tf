@@ -60,8 +60,25 @@ resource "aws_instance" "fgtactive" {
   instance_type        = var.size
   availability_zone    = var.az
   key_name             = var.keyname
-  user_data            = data.template_file.activeFortiGate.rendered
   iam_instance_profile = var.iam
+  user_data = templatefile("${var.bootstrap-active}", {
+    type            = "${var.license_type}"
+    license_file    = "${var.license}"
+    port1_ip        = "${var.activeport1float}"
+    port1_mask      = "${var.activeport1mask}"
+    port2_ip        = "${var.activeport2float}"
+    port2_mask      = "${var.activeport2mask}"
+    port3_ip        = "${var.activeport3}"
+    port3_mask      = "${var.activeport3mask}"
+    port4_ip        = "${var.activeport4}"
+    port4_mask      = "${var.activeport4mask}"
+    passive_peerip  = "${var.passiveport3}"
+    mgmt_gateway_ip = "${var.activeport4gateway}"
+    defaultgwy      = "${var.activeport1gateway}"
+    adminsport      = "${var.adminsport}"
+  })
+
+
 
   root_block_device {
     volume_type = "standard"
@@ -94,30 +111,7 @@ resource "aws_instance" "fgtactive" {
     device_index         = 3
   }
 
-
   tags = {
     Name = "FortiGateVM Active"
   }
 }
-
-
-data "template_file" "activeFortiGate" {
-  template = file("${var.bootstrap-active}")
-  vars = {
-    type            = "${var.license_type}"
-    license_file    = "${var.license}"
-    port1_ip        = "${var.activeport1float}"
-    port1_mask      = "${var.activeport1mask}"
-    port2_ip        = "${var.activeport2float}"
-    port2_mask      = "${var.activeport2mask}"
-    port3_ip        = "${var.activeport3}"
-    port3_mask      = "${var.activeport3mask}"
-    port4_ip        = "${var.activeport4}"
-    port4_mask      = "${var.activeport4mask}"
-    passive_peerip  = "${var.passiveport3}"
-    mgmt_gateway_ip = "${var.activeport4gateway}"
-    defaultgwy      = "${var.activeport1gateway}"
-    adminsport      = "${var.adminsport}"
-  }
-}
-
