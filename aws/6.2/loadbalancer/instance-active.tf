@@ -31,8 +31,17 @@ resource "aws_instance" "fgtactive" {
   instance_type        = var.size
   availability_zone    = var.az
   key_name             = var.keyname
-  user_data            = data.template_file.activeFortiGate.rendered
   iam_instance_profile = var.iam
+  user_data = templatefile("${var.bootstrap-active}", {
+    port1_ip       = "${var.activeport1}"
+    port1_mask     = "${var.activeport1mask}"
+    port2_ip       = "${var.activeport2}"
+    port2_mask     = "${var.activeport2mask}"
+    passive_peerip = "${var.passiveport1}"
+    presharekey    = "${var.presharekey}"
+    defaultgwy     = "${var.activeport1gateway}"
+    adminsport     = "${var.adminsport}"
+ })
 
   root_block_device {
     volume_type = "standard"
@@ -59,19 +68,3 @@ resource "aws_instance" "fgtactive" {
     Name = "FortiGateVM Active"
   }
 }
-
-
-data "template_file" "activeFortiGate" {
-  template = file("${var.bootstrap-active}")
-  vars = {
-    port1_ip       = "${var.activeport1}"
-    port1_mask     = "${var.activeport1mask}"
-    port2_ip       = "${var.activeport2}"
-    port2_mask     = "${var.activeport2mask}"
-    passive_peerip = "${var.passiveport1}"
-    presharekey    = "${var.presharekey}"
-    defaultgwy     = "${var.activeport1gateway}"
-    adminsport     = "${var.adminsport}"
-  }
-}
-

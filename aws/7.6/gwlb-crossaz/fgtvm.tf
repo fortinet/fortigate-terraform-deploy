@@ -100,21 +100,8 @@ resource "aws_network_interface_sg_attachment" "internalattachment2" {
   network_interface_id = aws_network_interface.eth1-1.id
 }
 
-# Render a part using a `template_file`
-data "template_file" "fgtconfig1" {
-  template = file("${var.bootstrap-fgtvm}")
-
-  vars = {
-    adminsport  = "${var.adminsport}"
-    dst         = var.privatecidraz2
-    gateway     = cidrhost(var.privatecidraz1, 1)
-    endpointip  = "${data.aws_network_interface.vpcendpointip.private_ip}"
-    endpointip2 = "${data.aws_network_interface.vpcendpointipaz2.private_ip}"
-  }
-}
-
 # Cloudinit config in MIME format
-data "template_cloudinit_config" "config1" {
+data "cloudinit_config" "config1" {
   gzip          = false
   base64_encode = false
 
@@ -122,7 +109,13 @@ data "template_cloudinit_config" "config1" {
   part {
     filename     = "config"
     content_type = "text/x-shellscript"
-    content      = data.template_file.fgtconfig1.rendered
+    content = templatefile("${var.bootstrap-fgtvm}", {
+      adminsport  = "${var.adminsport}"
+      dst         = var.privatecidraz2
+      gateway     = cidrhost(var.privatecidraz1, 1)
+      endpointip  = "${data.aws_network_interface.vpcendpointip.private_ip}"
+      endpointip2 = "${data.aws_network_interface.vpcendpointipaz2.private_ip}"
+    })
   }
 
   part {
@@ -147,7 +140,7 @@ resource "aws_instance" "fgtvm" {
     region                        = var.region,
     license-token                 = file("${var.licenses[0]}"),
     config                        = "${var.bootstrap-fgtvm}"
-  })}") : "${data.template_cloudinit_config.config1.rendered}"
+  })}") : "${data.cloudinit_config.config1.rendered}"
 
   iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : ""
 
@@ -177,21 +170,8 @@ resource "aws_instance" "fgtvm" {
   }
 }
 
-# Render a part using a `template_file`
-data "template_file" "fgtconfig2" {
-  template = file("${var.bootstrap-fgtvm}")
-
-  vars = {
-    adminsport  = "${var.adminsport}"
-    dst         = var.privatecidraz1
-    gateway     = cidrhost(var.privatecidraz2, 1)
-    endpointip  = "${data.aws_network_interface.vpcendpointip.private_ip}"
-    endpointip2 = "${data.aws_network_interface.vpcendpointipaz2.private_ip}"
-  }
-}
-
 # Cloudinit config in MIME format
-data "template_cloudinit_config" "config2" {
+data "cloudinit_config" "config2" {
   gzip          = false
   base64_encode = false
 
@@ -199,7 +179,13 @@ data "template_cloudinit_config" "config2" {
   part {
     filename     = "config"
     content_type = "text/x-shellscript"
-    content      = data.template_file.fgtconfig2.rendered
+    content = templatefile("${var.bootstrap-fgtvm}", {
+      adminsport  = "${var.adminsport}"
+      dst         = var.privatecidraz1
+      gateway     = cidrhost(var.privatecidraz2, 1)
+      endpointip  = "${data.aws_network_interface.vpcendpointip.private_ip}"
+      endpointip2 = "${data.aws_network_interface.vpcendpointipaz2.private_ip}"
+    })
   }
 
   part {
@@ -224,7 +210,7 @@ resource "aws_instance" "fgtvm2" {
     region                        = var.region,
     license-token                 = file("${var.licenses[1]}"),
     config                        = "${var.bootstrap-fgtvm}2"
-  })}") : "${data.template_cloudinit_config.config2.rendered}"
+  })}") : "${data.cloudinit_config.config2.rendered}"
 
   iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : ""
 

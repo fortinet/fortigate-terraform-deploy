@@ -54,15 +54,31 @@ resource "aws_network_interface_sg_attachment" "passivehasyncattachment" {
   network_interface_id = aws_network_interface.passiveeth2.id
 }
 
-
 resource "aws_instance" "fgtpassive" {
   depends_on           = [aws_instance.fgtactive]
   ami                  = var.license_type == "byol" ? var.fgtvmbyolami[var.region] : var.fgtvmami[var.region]
   instance_type        = var.size
   availability_zone    = var.az
   key_name             = var.keyname
-  user_data            = data.template_file.passiveFortiGate.rendered
   iam_instance_profile = var.iam
+  user_data = templatefile("${var.bootstrap-passive}", {
+    type            = "${var.license_type}"
+    license_file    = "${var.license2}"
+    port1_ip        = "${var.passiveport1}"
+    port1_mask      = "${var.passiveport1mask}"
+    port2_ip        = "${var.passiveport2}"
+    port2_mask      = "${var.passiveport2mask}"
+    port3_ip        = "${var.passiveport3}"
+    port3_mask      = "${var.passiveport3mask}"
+    port4_ip        = "${var.passiveport4}"
+    port4_mask      = "${var.passiveport4mask}"
+    active_peerip   = "${var.activeport3}"
+    mgmt_gateway_ip = "${var.passiveport4gateway}"
+    defaultgwy      = "${var.passiveport1gateway}"
+    adminsport      = "${var.adminsport}"
+  })
+
+
 
   root_block_device {
     volume_type = "standard"
@@ -100,25 +116,3 @@ resource "aws_instance" "fgtpassive" {
     Name = "FortiGateVM Passive"
   }
 }
-
-
-data "template_file" "passiveFortiGate" {
-  template = file("${var.bootstrap-passive}")
-  vars = {
-    type            = "${var.license_type}"
-    license_file    = "${var.license2}"
-    port1_ip        = "${var.passiveport1}"
-    port1_mask      = "${var.passiveport1mask}"
-    port2_ip        = "${var.passiveport2}"
-    port2_mask      = "${var.passiveport2mask}"
-    port3_ip        = "${var.passiveport3}"
-    port3_mask      = "${var.passiveport3mask}"
-    port4_ip        = "${var.passiveport4}"
-    port4_mask      = "${var.passiveport4mask}"
-    active_peerip   = "${var.activeport3}"
-    mgmt_gateway_ip = "${var.passiveport4gateway}"
-    defaultgwy      = "${var.passiveport1gateway}"
-    adminsport      = "${var.adminsport}"
-  }
-}
-

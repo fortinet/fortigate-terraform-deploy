@@ -58,29 +58,8 @@ resource "aws_network_interface_sg_attachment" "hasyncattachment" {
   network_interface_id = aws_network_interface.eth2.id
 }
 
-
-# Render a part using a `template_file`
-data "template_file" "fgtconfig" {
-  template = file("${var.bootstrap-active}")
-
-  vars = {
-    adminsport      = "${var.adminsport}"
-    port1_ip        = "${var.activeport1float}"
-    port1_mask      = "${var.activeport1mask}"
-    port2_ip        = "${var.activeport2float}"
-    port2_mask      = "${var.activeport2mask}"
-    port3_ip        = "${var.activeport3}"
-    port3_mask      = "${var.activeport3mask}"
-    port4_ip        = "${var.activeport4}"
-    port4_mask      = "${var.activeport4mask}"
-    passive_peerip  = "${var.passiveport3}"
-    mgmt_gateway_ip = "${var.activeport4gateway}"
-    defaultgwy      = "${var.activeport1gateway}"
-  }
-}
-
 # Cloudinit config in MIME format
-data "template_cloudinit_config" "config" {
+data "cloudinit_config" "config" {
   gzip          = false
   base64_encode = false
 
@@ -88,7 +67,20 @@ data "template_cloudinit_config" "config" {
   part {
     filename     = "config"
     content_type = "text/x-shellscript"
-    content      = data.template_file.fgtconfig.rendered
+    content = templatefile("${var.bootstrap-active}", {
+      adminsport      = "${var.adminsport}"
+      port1_ip        = "${var.activeport1float}"
+      port1_mask      = "${var.activeport1mask}"
+      port2_ip        = "${var.activeport2float}"
+      port2_mask      = "${var.activeport2mask}"
+      port3_ip        = "${var.activeport3}"
+      port3_mask      = "${var.activeport3mask}"
+      port4_ip        = "${var.activeport4}"
+      port4_mask      = "${var.activeport4mask}"
+      passive_peerip  = "${var.passiveport3}"
+      mgmt_gateway_ip = "${var.activeport4gateway}"
+      defaultgwy      = "${var.activeport1gateway}"
+    })
   }
 
   part {
@@ -113,7 +105,7 @@ resource "aws_instance" "fgtactive" {
     region                        = var.region,
     license-token                 = file("${var.licenses[0]}"),
     config                        = "${var.bootstrap-active}"
-  })}") : "${data.template_cloudinit_config.config.rendered}"
+  })}") : "${data.cloudinit_config.config.rendered}"
 
   iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.fortigateha.id
 

@@ -54,11 +54,16 @@ resource "aws_network_interface_sg_attachment" "passivehasyncattachment" {
   network_interface_id = aws_network_interface.passiveeth2.id
 }
 
-# Render a part using a `template_file`
-data "template_file" "fgtconfig2" {
-  template = file("${var.bootstrap-passive}")
+# Cloudinit config in MIME format
+data "cloudinit_config" "config2" {
+  gzip          = false
+  base64_encode = false
 
-  vars = {
+  # Main cloud-config configuration file.
+  part {
+    filename     = "config"
+    content_type = "text/x-shellscript"
+    content = templatefile("${var.bootstrap-passive}", {
     adminsport      = "${var.adminsport}"
     port1_ip        = "${var.passiveport1}"
     port1_mask      = "${var.passiveport1mask}"
@@ -74,19 +79,7 @@ data "template_file" "fgtconfig2" {
     privategwy      = "${var.passiveport2gateway}"
     vpc_ip          = cidrhost(var.vpccidr, 0)
     vpc_mask        = cidrnetmask(var.vpccidr)
-  }
-}
-
-# Cloudinit config in MIME format
-data "template_cloudinit_config" "config2" {
-  gzip          = false
-  base64_encode = false
-
-  # Main cloud-config configuration file.
-  part {
-    filename     = "config"
-    content_type = "text/x-shellscript"
-    content      = data.template_file.fgtconfig2.rendered
+    })
   }
 
   part {
@@ -112,7 +105,7 @@ resource "aws_instance" "fgtpassive" {
     region                        = var.region,
     license-token                 = file("${var.licenses[1]}"),
     config                        = "${var.bootstrap-passive}"
-  })}") : "${data.template_cloudinit_config.config2.rendered}"
+  })}") : "${data.cloudinit_config.config2.rendered}"
 
   iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.fortigateha.id
 
