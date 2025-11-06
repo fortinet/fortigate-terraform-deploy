@@ -2,3 +2,21 @@
 access_key = "<AWS access key>"
 secret_key = "<AWS secret key>"
 token	   = "<AWS session token>"
+
+// Provide a common tag prefix value that will be used in the name tag for all resources
+tag_name_prefix = ""
+
+// Provide the license type for FortiGate-VM Instances, either byol or payg
+license_type = "payg"
+licenses = ["",""]
+
+// password for FortiGate HA configuration
+password = ""
+
+// Provide the region and availability zones to deploy the VPC in
+region = ""
+availability_zone1 = ""
+availability_zone2 = ""
+
+// Provide a keypair for accessing the FortiGate instances
+keypair = ""
