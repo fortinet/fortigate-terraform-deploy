@@ -21,7 +21,7 @@ data "aws_ami" "ubuntu" {
 # test device in spoke1
 resource "aws_instance" "instance-spoke1" {
   ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
+  instance_type          = "t3.micro"
   subnet_id              = aws_subnet.spoke_vpc1-priv1.id
   vpc_security_group_ids = [aws_security_group.NSG-spoke1-ssh-icmp-https.id]
   key_name               = var.keypair
@@ -36,7 +36,7 @@ resource "aws_instance" "instance-spoke1" {
 # test device in spoke2
 resource "aws_instance" "instance-spoke2" {
   ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
+  instance_type          = "t3.micro"
   subnet_id              = aws_subnet.spoke_vpc2-priv2.id
   vpc_security_group_ids = [aws_security_group.NSG-spoke2-ssh-icmp-https.id]
   key_name               = var.keypair
@@ -51,7 +51,7 @@ resource "aws_instance" "instance-spoke2" {
 # test device in mgmt
 resource "aws_instance" "instance-mgmt" {
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.micro"
+  instance_type               = "t3.micro"
   subnet_id                   = aws_subnet.spoke_mgmt-priv1.id
   vpc_security_group_ids      = [aws_security_group.NSG-mgmt-ssh-icmp-https.id]
   key_name                    = var.keypair

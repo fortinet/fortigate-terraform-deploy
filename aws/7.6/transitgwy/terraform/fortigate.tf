@@ -392,32 +392,32 @@ data "cloudinit_config" "config" {
     filename     = "config"
     content_type = "text/x-shellscript"
     content = templatefile("./fgt-userdata.tpl", {
-    fgt_id               = "FGT-Active"
-    fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt1-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr1}")])
-    fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt1-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr1}")])
-    fgt_mgmt_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt1-mgmt.private_ips), 0), cidrnetmask("${var.security_vpc_mgmt_subnet_cidr1}")])
-    data_gw              = cidrhost(var.security_vpc_data_subnet_cidr1, 1)
-    spoke1_cidr          = var.spoke_vpc1_cidr
-    spoke2_cidr          = var.spoke_vpc2_cidr
-    mgmt_cidr            = var.mgmt_cidr
-    password             = var.password
-    mgmt_gw              = cidrhost(var.security_vpc_mgmt_subnet_cidr1, 1)
-    fgt_priority         = "255"
-    fgt-remote-heartbeat = element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0)
+      fgt_id               = "FGT-Active"
+      fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt1-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr1}")])
+      fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt1-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr1}")])
+      fgt_mgmt_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt1-mgmt.private_ips), 0), cidrnetmask("${var.security_vpc_mgmt_subnet_cidr1}")])
+      data_gw              = cidrhost(var.security_vpc_data_subnet_cidr1, 1)
+      spoke1_cidr          = var.spoke_vpc1_cidr
+      spoke2_cidr          = var.spoke_vpc2_cidr
+      mgmt_cidr            = var.mgmt_cidr
+      password             = var.password
+      mgmt_gw              = cidrhost(var.security_vpc_mgmt_subnet_cidr1, 1)
+      fgt_priority         = "255"
+      fgt-remote-heartbeat = element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0)
     })
   }
 
   part {
     filename     = "license"
     content_type = "text/plain"
-    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[0]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[0]}")}"
+    content      = var.license_type == "byol" ? (var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[0]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[0]}")}") : ""
   }
 }
 
 # Create the instances
 resource "aws_instance" "fgt1" {
   //it will use region, architect, and license type to decide which ami to use for deployment
-  ami               = var.fgtami[var.region][var.arch][var.license_type]
+  ami               = data.aws_ami.fgt_ami.id
   instance_type     = var.instance_type
   availability_zone = var.availability_zone1
   key_name          = var.keypair
@@ -461,31 +461,31 @@ data "cloudinit_config" "config2" {
     filename     = "config"
     content_type = "text/x-shellscript"
     content = templatefile("./fgt-userdata.tpl", {
-    fgt_id               = "FGT-Passive"
-    fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt2-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr2}")])
-    fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr2}")])
-    fgt_mgmt_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt2-mgmt.private_ips), 0), cidrnetmask("${var.security_vpc_mgmt_subnet_cidr2}")])
-    data_gw              = cidrhost(var.security_vpc_data_subnet_cidr2, 1)
-    spoke1_cidr          = var.spoke_vpc1_cidr
-    spoke2_cidr          = var.spoke_vpc2_cidr
-    mgmt_cidr            = var.mgmt_cidr
-    password             = var.password
-    mgmt_gw              = cidrhost(var.security_vpc_mgmt_subnet_cidr2, 1)
-    fgt_priority         = "100"
-    fgt-remote-heartbeat = element(tolist(aws_network_interface.eni-fgt1-hb.private_ips), 0)
+      fgt_id               = "FGT-Passive"
+      fgt_data_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt2-data.private_ips), 0), cidrnetmask("${var.security_vpc_data_subnet_cidr2}")])
+      fgt_heartbeat_ip     = join("/", [element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0), cidrnetmask("${var.security_vpc_heartbeat_subnet_cidr2}")])
+      fgt_mgmt_ip          = join("/", [element(tolist(aws_network_interface.eni-fgt2-mgmt.private_ips), 0), cidrnetmask("${var.security_vpc_mgmt_subnet_cidr2}")])
+      data_gw              = cidrhost(var.security_vpc_data_subnet_cidr2, 1)
+      spoke1_cidr          = var.spoke_vpc1_cidr
+      spoke2_cidr          = var.spoke_vpc2_cidr
+      mgmt_cidr            = var.mgmt_cidr
+      password             = var.password
+      mgmt_gw              = cidrhost(var.security_vpc_mgmt_subnet_cidr2, 1)
+      fgt_priority         = "100"
+      fgt-remote-heartbeat = element(tolist(aws_network_interface.eni-fgt1-hb.private_ips), 0)
     })
   }
 
   part {
     filename     = "license"
     content_type = "text/plain"
-    content      = var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[1]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[1]}")}"
+    content      = var.license_type == "byol" ? (var.license_format == "token" ? "LICENSE-TOKEN:${chomp(file("${var.licenses[1]}"))} INTERVAL:4 COUNT:4" : "${file("${var.licenses[1]}")}") : ""
   }
 }
 
 resource "aws_instance" "fgt2" {
   //it will use region, architect, and license type to decide which ami to use for deployment
-  ami               = var.fgtami[var.region][var.arch][var.license_type]
+  ami               = data.aws_ami.fgt_ami.id
   instance_type     = var.instance_type
   availability_zone = var.availability_zone2
   key_name          = var.keypair
