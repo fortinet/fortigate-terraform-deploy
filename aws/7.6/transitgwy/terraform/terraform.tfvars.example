@@ -7,8 +7,8 @@ token	   = "<AWS session token>"
 tag_name_prefix = ""
 
 // Provide the license type for FortiGate-VM Instances, either byol or payg
-license_type = "payg"
-licenses = ["",""]
+license_type = "byol"
+licenses = ["license.lic","license2.lic"]
 
 // password for FortiGate HA configuration
 password = ""
