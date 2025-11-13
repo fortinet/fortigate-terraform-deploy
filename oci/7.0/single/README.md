@@ -66,15 +66,17 @@ For other questions related to this project, contact [github@fortinet.com](mailt
 
 ## Application Catalog/Image ID for deployment
 Marketplace Catalog for mp_listing_id in variables.tf
-BYOL 7.0.11:  ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q
-PAGY 7.0.11  2ocpu: ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba
-PAYG 7.0.11  4ocup: ocid1.appcataloglisting.oc1..aaaaaaaa6d5wbjlrlihw7l33nvdso74lv2s66snabevr33awotpgjownggiq
-PAYG 7.0.11  8ocup: ocid1.appcataloglisting.oc1..aaaaaaaa6e3iscizq3p24bfb5nr4wxsxzc3s6mzpekxgv7f2kse35akhg45q
-PAYG 7.0.11  24ocup: ocid1.appcataloglisting.oc1..aaaaaaaamc75m7b3rukv6vd573mdrdqnlqabrbhmz5fggvvtalq3ckfl3zqa
+BYOL 7.0.17:byol: ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q
+PAYG 7.0.17 2ocpu  ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba
+PAYG 7.0.17 4ocup: ocid1.appcataloglisting.oc1..aaaaaaaabepjdf2sw2jkr77a7zrbog7ukzxepoexzgkoyvbw2j2jn7l4y7lq
+PAYG 7.0.17 8ocup  ocid1.appcataloglisting.oc1..aaaaaaaa6e3iscizq3p24bfb5nr4wxsxzc3s6mzpekxgv7f2kse35akhg45q
+PAYG 7.0.17 16ocup:  ocid1.appcataloglisting.oc1..aaaaaaaawyxdympmdyxagwj2kr77zybopywouiivxd7vxfttwftkvnw2lqla
+PAYG 7.0.17 24ocup:  ocid1.appcataloglisting.oc1..aaaaaaaamc75m7b3rukv6vd573mdrdqnlqabrbhmz5fggvvtalq3ckfl3zqa
 
 Marketplace Image for mp_listing_resource_id in variables.tf
-BYOL 7.0.11: ocid1.image.oc1..aaaaaaaajvkggybrfj2h2s22fgjyhnsuh4emtrseajftf2btu2mpjwafcn6a
-PAGY 7.0.11  2ocpu: ocid1.image.oc1..aaaaaaaaf77ieaobtkvndibyvmzkh7u77ulusjm7axfj47m24kmdxzbgwg4a
-PAYG 7.0.11  4ocup: ocid1.image.oc1..aaaaaaaaxqyehwo53v2lyy4bcbwtfylizk5o3l7dz3pjortwvzp4liwugena
-PAYG 7.0.11  8ocup: ocid1.image.oc1..aaaaaaaabbk4bzgwvedmdi4aio3aq2c2325a37mex6xiucwsyqhyqgvcpsqq
-PAYG 7.0.11  24ocup: ocid1.image.oc1..aaaaaaaaylwkpx2f22apyus3hnbxnnnlop5uloorbeawdmj7ldqnrplp7acq
+BYOL 7.0.17:byol:  ocid1.image.oc1..aaaaaaaaf6midpco2fwyamddruayonhavc6evwqbvpn5qapgtitn7ux4aofa
+PAYG 7.0.17 2ocpu: ocid1.image.oc1..aaaaaaaalpddbyumhik2gjtptjk7aocu7kjbmbgezvvl4vc5gmrqamrvoexq
+PAYG 7.0.17 4ocup: ocid1.image.oc1..aaaaaaaaihvuug2a32izrwzkiydjt3u5ujpciq73in7qqqr2zp6zqudrh3ha
+PAYG 7.0.17 8ocup: ocid1.image.oc1..aaaaaaaadpvtxoh4gl34yiedmg7azwbk6abg4wthu52kpulkhd2xoszlgh7q
+PAYG 7.0.17 16ocup:  ocid1.image.oc1..aaaaaaaalvdqrdcy55qml23ggm4zenatkrrvawxjdpmwxq5jjypb5o7aa3na
+PAYG 7.0.17 24ocup:  ocid1.image.oc1..aaaaaaaaf7yshp6b4cgzji5xkwmo3l4n36mblk6dtf2ietnoenhfmi6beppq
