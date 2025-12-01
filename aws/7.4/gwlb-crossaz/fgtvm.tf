@@ -134,16 +134,6 @@ resource "aws_instance" "fgtvm" {
     network_interface_id = aws_network_interface.eth0.id
   }
 
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.eth0.id
-  //    device_index         = 0
-  //  }
-
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.eth1.id
-  //    device_index         = 1
-  //  }
-
   tags = {
     Name = "FortiGateVM-az1"
   }
@@ -187,16 +177,6 @@ resource "aws_instance" "fgtvm2" {
   primary_network_interface {
     network_interface_id = aws_network_interface.eth0-1.id
   }
-
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.eth0-1.id
-  //    device_index         = 0
-  //  }
-
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.eth1-1.id
-  //    device_index         = 1
-  //  }
 
   tags = {
     Name = "FortiGateVM-az2"

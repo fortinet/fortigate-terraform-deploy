@@ -340,18 +340,6 @@ resource "aws_instance" "fgt1" {
     network_interface_id = aws_network_interface.eni-fgt1-data.id
   }
 
-  //  network_interface {
-  //    device_index         = 0
-  //    network_interface_id = aws_network_interface.eni-fgt1-data.id
-  //  }
-  //  network_interface {
-  //    device_index         = 1
-  //    network_interface_id = aws_network_interface.eni-fgt1-hb.id
-  //  }
-  //  network_interface {
-  //    device_index         = 2
-  //    network_interface_id = aws_network_interface.eni-fgt1-mgmt.id
-  //  }
   tags = {
     Name = "${var.tag_name_prefix}-${var.tag_name_unique}-fgt1"
   }
@@ -399,18 +387,6 @@ resource "aws_instance" "fgt2" {
     network_interface_id = aws_network_interface.eni-fgt2-data.id
   }
 
-  //  network_interface {
-  //    device_index         = 0
-  //    network_interface_id = aws_network_interface.eni-fgt2-data.id
-  //  }
-  //  network_interface {
-  //    device_index         = 1
-  //    network_interface_id = aws_network_interface.eni-fgt2-hb.id
-  //  }
-  //  network_interface {
-  //    device_index         = 2
-  //    network_interface_id = aws_network_interface.eni-fgt2-mgmt.id
-  //  }
   tags = {
     Name = "${var.tag_name_prefix}-${var.tag_name_unique}-fgt2"
   }

@@ -81,16 +81,6 @@ resource "aws_instance" "fgtvm2" {
     network_interface_id = aws_network_interface.fgt2eth0.id
   }
 
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.fgt2eth0.id
-  //    device_index         = 0
-  //  }
-
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.fgt2eth1.id
-  //    device_index         = 1
-  //  }
-
   tags = {
     Name = "FortiGateVM2"
   }

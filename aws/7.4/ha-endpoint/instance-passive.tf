@@ -100,27 +100,6 @@ resource "aws_instance" "fgtpassive" {
     network_interface_id = aws_network_interface.passiveeth0.id
   }
 
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.passiveeth0.id
-  //    device_index         = 0
-  //  }
-
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.passiveeth1.id
-  //    device_index         = 1
-  //  }
-
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.passiveeth2.id
-  //    device_index         = 2
-  //  }
-
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.passiveeth3.id
-  //    device_index         = 3
-  //  }
-
-
   tags = {
     Name = "FortiGateVM Passive"
   }

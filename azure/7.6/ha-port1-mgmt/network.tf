@@ -153,6 +153,7 @@ resource "azurerm_network_interface" "activeport1" {
   name                = "activeport1"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  accelerated_networking_enabled = var.accelerate == "true" ? true : false
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -169,10 +170,11 @@ resource "azurerm_network_interface" "activeport1" {
 }
 
 resource "azurerm_network_interface" "activeport2" {
-  name                 = "activeport2"
-  location             = var.location
-  resource_group_name  = azurerm_resource_group.myterraformgroup.name
-  enable_ip_forwarding = true
+  name                  = "activeport2"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.myterraformgroup.name
+  ip_forwarding_enabled = true
+  accelerated_networking_enabled = var.accelerate == "true" ? true : false
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -188,10 +190,11 @@ resource "azurerm_network_interface" "activeport2" {
 }
 
 resource "azurerm_network_interface" "activeport3" {
-  name                 = "activeport3"
-  location             = var.location
-  resource_group_name  = azurerm_resource_group.myterraformgroup.name
-  enable_ip_forwarding = true
+  name                  = "activeport3"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.myterraformgroup.name
+  ip_forwarding_enabled = true
+  accelerated_networking_enabled = var.accelerate == "true" ? true : false
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -209,6 +212,7 @@ resource "azurerm_network_interface" "activeport4" {
   name                = "activeport4"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  accelerated_networking_enabled = var.accelerate == "true" ? true : false
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -252,6 +256,7 @@ resource "azurerm_network_interface" "passiveport1" {
   name                = "passiveport1"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  accelerated_networking_enabled = var.accelerate == "true" ? true : false
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -268,10 +273,11 @@ resource "azurerm_network_interface" "passiveport1" {
 }
 
 resource "azurerm_network_interface" "passiveport2" {
-  name                 = "passiveport2"
-  location             = var.location
-  resource_group_name  = azurerm_resource_group.myterraformgroup.name
-  enable_ip_forwarding = true
+  name                  = "passiveport2"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.myterraformgroup.name
+  ip_forwarding_enabled = true
+  accelerated_networking_enabled = var.accelerate == "true" ? true : false
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -286,10 +292,11 @@ resource "azurerm_network_interface" "passiveport2" {
 }
 
 resource "azurerm_network_interface" "passiveport3" {
-  name                 = "passiveport3"
-  location             = var.location
-  resource_group_name  = azurerm_resource_group.myterraformgroup.name
-  enable_ip_forwarding = true
+  name                  = "passiveport3"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.myterraformgroup.name
+  ip_forwarding_enabled = true
+  accelerated_networking_enabled = var.accelerate == "true" ? true : false
 
   ip_configuration {
     name                          = "ipconfig1"
@@ -307,6 +314,7 @@ resource "azurerm_network_interface" "passiveport4" {
   name                = "passiveport4"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  accelerated_networking_enabled = var.accelerate == "true" ? true : false
 
   ip_configuration {
     name                          = "ipconfig1"

@@ -83,21 +83,6 @@ resource "aws_instance" "fgtactive" {
     network_interface_id = aws_network_interface.eth0.id
   }
 
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.eth0.id
-  //    device_index         = 0
-  //  }
-
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.eth1.id
-  //    device_index         = 1
-  //  }
-
-  //  network_interface {
-  //    network_interface_id = aws_network_interface.eth2.id
-  //    device_index         = 2
-  //  }
-
   tags = {
     Name = "FortiGateVM Active"
   }
