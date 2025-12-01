@@ -335,22 +335,28 @@ resource "aws_instance" "fgt1" {
     fgt-remote-heartbeat = element(tolist(aws_network_interface.eni-fgt2-hb.private_ips), 0)
   })
   iam_instance_profile = aws_iam_instance_profile.APICall_profile.name
-  network_interface {
-    device_index         = 0
+
+  primary_network_interface {
     network_interface_id = aws_network_interface.eni-fgt1-data.id
   }
-  network_interface {
-    device_index         = 1
-    network_interface_id = aws_network_interface.eni-fgt1-hb.id
-  }
-  network_interface {
-    device_index         = 2
-    network_interface_id = aws_network_interface.eni-fgt1-mgmt.id
-  }
+
   tags = {
     Name = "${var.tag_name_prefix}-${var.tag_name_unique}-fgt1"
   }
 }
+
+resource "aws_network_interface_attachment" "eth1-attach" {
+  instance_id          = aws_instance.fgt1.id
+  network_interface_id = aws_network_interface.eni-fgt1-hb.id
+  device_index         = 1
+}
+
+resource "aws_network_interface_attachment" "eth2-attach" {
+  instance_id          = aws_instance.fgt1.id
+  network_interface_id = aws_network_interface.eni-fgt1-mgmt.id
+  device_index         = 2
+}
+
 
 resource "aws_instance" "fgt2" {
   //it will use region, architect, and license type to decide which ami to use for deployment
@@ -377,19 +383,23 @@ resource "aws_instance" "fgt2" {
 
   })
   iam_instance_profile = aws_iam_instance_profile.APICall_profile.name
-  network_interface {
-    device_index         = 0
+  primary_network_interface {
     network_interface_id = aws_network_interface.eni-fgt2-data.id
   }
-  network_interface {
-    device_index         = 1
-    network_interface_id = aws_network_interface.eni-fgt2-hb.id
-  }
-  network_interface {
-    device_index         = 2
-    network_interface_id = aws_network_interface.eni-fgt2-mgmt.id
-  }
+
   tags = {
     Name = "${var.tag_name_prefix}-${var.tag_name_unique}-fgt2"
   }
+}
+
+resource "aws_network_interface_attachment" "fgt2eth1-attach" {
+  instance_id          = aws_instance.fgt2.id
+  network_interface_id = aws_network_interface.eni-fgt2-hb.id
+  device_index         = 1
+}
+
+resource "aws_network_interface_attachment" "fgt2eth2-attach" {
+  instance_id          = aws_instance.fgt2.id
+  network_interface_id = aws_network_interface.eni-fgt2-mgmt.id
+  device_index         = 2
 }

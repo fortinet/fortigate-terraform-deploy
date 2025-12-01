@@ -57,6 +57,13 @@ variable "license_format" {
   default = "token"
 }
 
+// enable accelerate network, either true or false, default is false
+// Make the the instance choosed supports accelerated networking.
+// Check: https://docs.microsoft.com/en-us/azure/virtual-network/accelerated-networking-overview#supported-vm-instances
+variable "accelerate" {
+  default = "false"
+}
+
 variable "publisher" {
   type    = string
   default = "fortinet"

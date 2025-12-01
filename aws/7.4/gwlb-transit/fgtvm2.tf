@@ -77,17 +77,18 @@ resource "aws_instance" "fgtvm2" {
     volume_type = "gp2"
   }
 
-  network_interface {
+  primary_network_interface {
     network_interface_id = aws_network_interface.fgt2eth0.id
-    device_index         = 0
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.fgt2eth1.id
-    device_index         = 1
   }
 
   tags = {
     Name = "FortiGateVM2"
   }
 }
+
+resource "aws_network_interface_attachment" "fgt2eth1-attach" {
+  instance_id          = aws_instance.fgtvm2.id
+  network_interface_id = aws_network_interface.fgt2eth1.id
+  device_index         = 1
+}
+
