@@ -94,6 +94,10 @@ resource "aws_instance" "fgtvm2" {
 
   iam_instance_profile = var.bucket ? aws_iam_instance_profile.fortigate[0].id : aws_iam_instance_profile.fortigateha.id
 
+  primary_network_interface {
+    network_interface_id = aws_network_interface.eth0-2.id
+  }
+
   root_block_device {
     volume_type = "gp2"
     volume_size = "2"
@@ -105,22 +109,19 @@ resource "aws_instance" "fgtvm2" {
     volume_type = "gp2"
   }
 
-  network_interface {
-    network_interface_id = aws_network_interface.eth0-2.id
-    device_index         = 0
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.eth1-2.id
-    device_index         = 1
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.eth2-2.id
-    device_index         = 2
-  }
-
   tags = {
     Name = "FortiGateVM-2"
   }
+}
+
+resource "aws_network_interface_attachment" "eth1-2-attach" {
+  instance_id          = aws_instance.fgtvm2.id
+  network_interface_id = aws_network_interface.eth1-2.id
+  device_index         = 1
+}
+
+resource "aws_network_interface_attachment" "eth2-2-attach" {
+  instance_id          = aws_instance.fgtvm2.id
+  network_interface_id = aws_network_interface.eth2-2.id
+  device_index         = 2
 }
