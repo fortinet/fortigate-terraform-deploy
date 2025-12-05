@@ -298,7 +298,7 @@ resource "aws_security_group" "allow_all" {
 
 //  Gateway Load Balancer on FGT VPC to single FGT
 resource "aws_lb" "gateway_lb" {
-  name               = "gatewaylb"
+  name               = "gatewaylb${random_string.random_name_post.result}"
   load_balancer_type = "gateway"
 
   subnet_mapping {
@@ -307,7 +307,7 @@ resource "aws_lb" "gateway_lb" {
 }
 
 resource "aws_lb_target_group" "fgt_target" {
-  name        = "fgttarget"
+  name        = "fgttarget${random_string.random_name_post.result}"
   port        = 6081
   protocol    = "GENEVE"
   target_type = "ip"

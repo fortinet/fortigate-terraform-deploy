@@ -64,21 +64,21 @@ data "cloudinit_config" "config2" {
     filename     = "config"
     content_type = "text/x-shellscript"
     content = templatefile("${var.bootstrap-passive}", {
-    adminsport      = "${var.adminsport}"
-    port1_ip        = "${var.passiveport1}"
-    port1_mask      = "${var.passiveport1mask}"
-    port2_ip        = "${var.passiveport2}"
-    port2_mask      = "${var.passiveport2mask}"
-    port3_ip        = "${var.passiveport3}"
-    port3_mask      = "${var.passiveport3mask}"
-    port4_ip        = "${var.passiveport4}"
-    port4_mask      = "${var.passiveport4mask}"
-    active_peerip   = "${var.activeport3}"
-    mgmt_gateway_ip = "${var.passiveport4gateway}"
-    defaultgwy      = "${var.passiveport1gateway}"
-    privategwy      = "${var.passiveport2gateway}"
-    vpc_ip          = cidrhost(var.vpccidr, 0)
-    vpc_mask        = cidrnetmask(var.vpccidr)
+      adminsport      = "${var.adminsport}"
+      port1_ip        = "${var.passiveport1}"
+      port1_mask      = "${var.passiveport1mask}"
+      port2_ip        = "${var.passiveport2}"
+      port2_mask      = "${var.passiveport2mask}"
+      port3_ip        = "${var.passiveport3}"
+      port3_mask      = "${var.passiveport3mask}"
+      port4_ip        = "${var.passiveport4}"
+      port4_mask      = "${var.passiveport4mask}"
+      active_peerip   = "${var.activeport3}"
+      mgmt_gateway_ip = "${var.passiveport4gateway}"
+      defaultgwy      = "${var.passiveport1gateway}"
+      privategwy      = "${var.passiveport2gateway}"
+      vpc_ip          = cidrhost(var.vpccidr, 0)
+      vpc_mask        = cidrnetmask(var.vpccidr)
     })
   }
 
@@ -120,28 +120,29 @@ resource "aws_instance" "fgtpassive" {
     volume_type = "gp2"
   }
 
-  network_interface {
+  primary_network_interface {
     network_interface_id = aws_network_interface.passiveeth0.id
-    device_index         = 0
   }
-
-  network_interface {
-    network_interface_id = aws_network_interface.passiveeth1.id
-    device_index         = 1
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.passiveeth2.id
-    device_index         = 2
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.passiveeth3.id
-    device_index         = 3
-  }
-
 
   tags = {
     Name = "FortiGateVM Passive"
   }
+}
+
+resource "aws_network_interface_attachment" "passiveeth1-attach" {
+  instance_id          = aws_instance.fgtpassive.id
+  network_interface_id = aws_network_interface.passiveeth1.id
+  device_index         = 1
+}
+
+resource "aws_network_interface_attachment" "passiveeth2-attach" {
+  instance_id          = aws_instance.fgtpassive.id
+  network_interface_id = aws_network_interface.passiveeth2.id
+  device_index         = 2
+}
+
+resource "aws_network_interface_attachment" "passiveeth3-attach" {
+  instance_id          = aws_instance.fgtpassive.id
+  network_interface_id = aws_network_interface.passiveeth3.id
+  device_index         = 3
 }

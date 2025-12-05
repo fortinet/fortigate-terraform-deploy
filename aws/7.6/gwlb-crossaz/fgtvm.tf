@@ -155,20 +155,21 @@ resource "aws_instance" "fgtvm" {
     volume_type = "gp2"
   }
 
-  network_interface {
+  primary_network_interface {
     network_interface_id = aws_network_interface.eth0.id
-    device_index         = 0
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.eth1.id
-    device_index         = 1
   }
 
   tags = {
     Name = "FortiGateVM-az1"
   }
 }
+
+resource "aws_network_interface_attachment" "eth1-attach" {
+  instance_id          = aws_instance.fgtvm.id
+  network_interface_id = aws_network_interface.eth1.id
+  device_index         = 1
+}
+
 
 # Cloudinit config in MIME format
 data "cloudinit_config" "config2" {
@@ -225,17 +226,17 @@ resource "aws_instance" "fgtvm2" {
     volume_type = "gp2"
   }
 
-  network_interface {
+  primary_network_interface {
     network_interface_id = aws_network_interface.eth0-1.id
-    device_index         = 0
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.eth1-1.id
-    device_index         = 1
   }
 
   tags = {
     Name = "FortiGateVM-az2"
   }
+}
+
+resource "aws_network_interface_attachment" "eth1-1-attach" {
+  instance_id          = aws_instance.fgtvm2.id
+  network_interface_id = aws_network_interface.eth1-1.id
+  device_index         = 1
 }

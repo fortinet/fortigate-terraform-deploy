@@ -86,17 +86,17 @@ resource "aws_instance" "fgtpassive" {
     volume_type = "gp2"
   }
 
-  network_interface {
+  primary_network_interface {
     network_interface_id = aws_network_interface.passiveeth0.id
-    device_index         = 0
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.passiveeth1.id
-    device_index         = 1
   }
 
   tags = {
     Name = "FortiGateVM Passive"
   }
+}
+
+resource "aws_network_interface_attachment" "passiveeth1-attach" {
+  instance_id          = aws_instance.fgtpassive.id
+  network_interface_id = aws_network_interface.passiveeth1.id
+  device_index         = 1
 }
