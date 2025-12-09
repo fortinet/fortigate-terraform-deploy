@@ -131,14 +131,8 @@ resource "aws_instance" "fgtvm" {
     volume_type = "standard"
   }
 
-  network_interface {
+  primary_network_interface {
     network_interface_id = aws_network_interface.eth0.id
-    device_index         = 0
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.eth1.id
-    device_index         = 1
   }
 
   tags = {
@@ -146,6 +140,11 @@ resource "aws_instance" "fgtvm" {
   }
 }
 
+ource "aws_network_interface_attachment" "eth1-attach" {
+  instance_id          = aws_instance.fgtvm.id
+  network_interface_id = aws_network_interface.eth1.id
+  device_index         = 1
+}
 
 resource "aws_instance" "fgtvm2" {
   //it will use region, architect, and license type to decide which ami to use for deployment
@@ -175,17 +174,18 @@ resource "aws_instance" "fgtvm2" {
     volume_type = "standard"
   }
 
-  network_interface {
+  primary_network_interface {
     network_interface_id = aws_network_interface.eth0-1.id
-    device_index         = 0
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.eth1-1.id
-    device_index         = 1
   }
 
   tags = {
     Name = "FortiGateVM-az2"
   }
 }
+
+resource "aws_network_interface_attachment" "eth1-attach-2" {
+  instance_id          = aws_instance.fgtvm2.id
+  network_interface_id = aws_network_interface.eth1-1.id
+  device_index         = 1
+}
+
