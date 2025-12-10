@@ -79,22 +79,24 @@ resource "aws_instance" "fgtactive" {
     volume_type = "standard"
   }
 
-  network_interface {
+  primary_network_interface {
     network_interface_id = aws_network_interface.eth0.id
-    device_index         = 0
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.eth1.id
-    device_index         = 1
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.eth2.id
-    device_index         = 2
   }
 
   tags = {
     Name = "FortiGateVM Active"
   }
 }
+
+resource "aws_network_interface_attachment" "eth1-attach" {
+  instance_id          = aws_instance.fgtactive.id
+  network_interface_id = aws_network_interface.eth1.id
+  device_index         = 1
+}
+
+resource "aws_network_interface_attachment" "eth2-attach" {
+  instance_id          = aws_instance.fgtactive.id
+  network_interface_id = aws_network_interface.eth2.id
+  device_index         = 2
+}
+
