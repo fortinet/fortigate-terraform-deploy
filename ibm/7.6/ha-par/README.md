@@ -19,7 +19,7 @@ Terraform deploys the following components:
    - One Public Address Range with user defined address length
    - Two FortiGate-VM instances which will be preconfigured with the necessary ip configurations, ha settings, and sdn connector settings.
    - One route table associated with private subnet with egress route to the private port of active FortiGate-VM.
-   - OnePublic Internet Routing table associated with Internet
+   - One Public Internet Routing table associated with Internet
 
 ## Deployment
 To deploy the FortiGate-VM HA (a-p) on the IBM cloud:
