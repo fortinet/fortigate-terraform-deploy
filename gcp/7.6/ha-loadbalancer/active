@@ -48,6 +48,7 @@ config system ha
     end
     set override enable
     set priority 255
+    set password ftnt123456
     set unicast-hb enable
     set unicast-hb-peerip ${passive_hb_ip}
     set unicast-hb-netmask ${hb_netmask}
