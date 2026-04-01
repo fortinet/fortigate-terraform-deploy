@@ -136,9 +136,18 @@ resource "google_compute_instance" "default" {
   metadata = {
     user-data = fileexists("${path.module}/${var.user_data}") ? "${file(var.user_data)}" : null
     license   = fileexists("${path.module}/${var.license_file}") ? "${file(var.license_file)}" : null
+    serial-port-enable : "true"
   }
   service_account {
     scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+  }
+  shielded_instance_config {
+    enable_integrity_monitoring = var.shield == "true" ? true : false
+    enable_secure_boot          = var.shield == "true" ? true : false
+    enable_vtpm                 = var.shield == "true" ? true : false
+  }
+  confidential_instance_config {
+    enable_confidential_compute = var.confidential == "true" ? true : false
   }
   scheduling {
     preemptible       = false

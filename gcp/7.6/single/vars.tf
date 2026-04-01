@@ -45,10 +45,24 @@ variable "nictype" {
 # GCP instance machine type
 # ARM platform needs to use t2a-standard-1
 # x86 can uses n1-standard-1
+# confidential: n2d-standard-2
 variable "machine" {
   type    = string
   default = "n1-standard-1"
 }
+
+# enable shield VM
+# https://docs.cloud.google.com/compute/shielded-vm/docs/shielded-vm
+variable "shield" {
+  default = "false"
+}
+
+# enable confidential VM
+# https://docs.cloud.google.com/confidential-computing/confidential-vm/docs/confidential-vm-overview
+variable "confidential" {
+  default = "false"
+}
+
 # Public Subnet CIDR
 variable "public_subnet" {
   type    = string
