@@ -73,25 +73,25 @@ variable "publisher" {
 
 variable "fgtoffer" {
   type    = string
-  default = "fortinet_fortigate-vm_v5"
+  default = "fortinet_fortigate-vm"
 }
 
 // x86
-// BYOL sku: fortinet_fg-vm_g2
-// PAYG sku: fortinet_fg-vm_payg_2023_g2
+// BYOL sku: fortinet_fg-vm_byol_76_g2
+// PAYG sku: fortinet_fg-vm_payg_76_g2
 // arm
-// BYOL sku: fortinet_fg-vm_arm64
-// PAYG sku: fortinet_fg-vm_payg_2023_arm64
+// BYOL sku: fortinet_fg-vm_byol_76_arm64
+// PAYG sku: fortinet_fg-vm_payg_76_arm64
 variable "fgtsku" {
   type = map(any)
   default = {
     x86 = {
-      byol = "fortinet_fg-vm_g2"
-      payg = "fortinet_fg-vm_payg_2023_g2"
+      byol = "fortinet_fg-vm_byol_76_g2"
+      payg = "fortinet_fg-vm_payg_76_g2"
     },
     arm = {
-      byol = "fortinet_fg-vm_arm64"
-      payg = "fortinet_fg-vm_payg_2023_arm64"
+      byol = "fortinet_fg-vm_byol_76_arm64"
+      payg = "fortinet_fg-vm_payg_76_arm64"
     }
   }
 }
@@ -99,7 +99,7 @@ variable "fgtsku" {
 // FOS version
 variable "fgtversion" {
   type    = string
-  default = "7.6.4"
+  default = "7.6.6"
 }
 
 variable "adminusername" {
