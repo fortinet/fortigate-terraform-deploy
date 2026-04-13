@@ -124,4 +124,5 @@ resource "aws_network_interface_attachment" "eth1-attach" {
 resource "aws_network_interface_attachment" "eth2-attach" {
   instance_id          = aws_instance.fgtvm.id
   network_interface_id = aws_network_interface.eth2.id
+  device_index         = 2
 } 
