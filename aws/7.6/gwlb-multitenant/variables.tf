@@ -113,7 +113,7 @@ variable "size" {
 variable "fgtami" {
   type = map(any)
   default = {
-    f-south-1 = {
+    af-south-1 = {
       arm = {
         byol = "ami-002fe329850eec4a5"
       },

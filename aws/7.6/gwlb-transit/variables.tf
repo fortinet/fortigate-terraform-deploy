@@ -137,7 +137,7 @@ variable "license_format" {
 variable "fgtami" {
   type = map(any)
   default = {
-    f-south-1 = {
+    af-south-1 = {
       arm = {
         byol = "ami-002fe329850eec4a5"
         payg = "ami-0e9a2d7cae714c977"
