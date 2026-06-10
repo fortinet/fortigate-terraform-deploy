@@ -7,11 +7,11 @@ variable "tenant_id" {}
 
 //  For HA, choose instance size that support 4 nics at least
 //  Check : https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes
-// x86 - Standard_F8s_v2
-// arm - Standard_D8ps_v5
+// x86 - Standard_D8_v4
+// arm - Standard_D8ps_v6
 variable "size" {
   type    = string
-  default = "Standard_F8s_v2"
+  default = "Standard_D8_v4"
 }
 
 variable "location" {
@@ -99,7 +99,7 @@ variable "fgtsku" {
 // FOS version
 variable "fgtversion" {
   type    = string
-  default = "7.6.6"
+  default = "7.6.7"
 }
 
 variable "adminusername" {
