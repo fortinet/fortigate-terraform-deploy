@@ -135,7 +135,7 @@ resource "azurerm_network_interface" "fgtport2" {
   name                 = "fgtport2"
   location             = var.location
   resource_group_name  = azurerm_resource_group.myterraformgroup.name
-  enable_ip_forwarding = true
+  ip_forwarding_enabled = true
 
   ip_configuration {
     name                          = "ipconfig1"

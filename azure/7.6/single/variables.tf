@@ -4,11 +4,11 @@ variable "client_id" {}
 variable "client_secret" {}
 variable "tenant_id" {}
 
-// x86 - Standard_F4s_v2
-// arm - Standard_D2ps_v5
+// x86 - Standard_D8_v4
+// arm - Standard_D8ps_v6
 variable "size" {
   type    = string
-  default = "Standard_F4s_v2"
+  default = "Standard_D8_v4"
 }
 
 // To use custom image
@@ -89,7 +89,7 @@ variable "fgtsku" {
 
 variable "fgtversion" {
   type    = string
-  default = "7.6.6"
+  default = "7.6.7"
 }
 
 variable "adminusername" {
