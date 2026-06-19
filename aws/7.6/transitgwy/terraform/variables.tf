@@ -32,7 +32,7 @@ variable "licenses" {
 
 // FortiGate VM version to deploy
 variable "fgt_version" {
-  default = "7.6.6"
+  default = "7.6.7"
 }
 
 // License Type to create FortiGate-VM
