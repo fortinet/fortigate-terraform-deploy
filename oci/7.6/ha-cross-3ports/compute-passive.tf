@@ -24,13 +24,13 @@ resource "oci_core_instance" "passivevm" {
   }
 
   launch_options {
-    //network_type = "PARAVIRTUALIZED"
-    network_type = "VFIO"
+    network_type = "PARAVIRTUALIZED"
+    //network_type = "VFIO"
   }
 
   source_details {
     source_type             = "image"
-    source_id               = local.mp_listing_resource_id // marketplace listing
+    source_id               = var.oci_image
     boot_volume_size_in_gbs = "50"
   }
 
