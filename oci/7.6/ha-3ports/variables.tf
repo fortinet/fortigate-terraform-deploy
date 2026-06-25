@@ -6,35 +6,34 @@ variable "fingerprint" {}
 variable "compartment_ocid" {}
 variable "region" {}
 
-// 7.6.4 has no arm build
-//x86
-//BYOL 7.6.4:byol: ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q
-//PAYG 7.6.4 2ocpu  ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba
-//PAYG 7.6.4 4ocup: ocid1.appcataloglisting.oc1..aaaaaaaabepjdf2sw2jkr77a7zrbog7ukzxepoexzgkoyvbw2j2jn7l4y7lq
-//PAYG 7.6.4 8ocup  ocid1.appcataloglisting.oc1..aaaaaaaa6e3iscizq3p24bfb5nr4wxsxzc3s6mzpekxgv7f2kse35akhg45q
-//PAYG 7.6.4 16ocup:  ocid1.appcataloglisting.oc1..aaaaaaaawyxdympmdyxagwj2kr77zybopywouiivxd7vxfttwftkvnw2lqla
-//PAYG 7.6.4 24ocup:  ocid1.appcataloglisting.oc1..aaaaaaaamc75m7b3rukv6vd573mdrdqnlqabrbhmz5fggvvtalq3ckfl3zqa
-
-variable "mp_listing_id" {
-  default = "ocid1.appcataloglisting.oc1..aaaaaaaabepjdf2sw2jkr77a7zrbog7ukzxepoexzgkoyvbw2j2jn7l4y7lq"
-}
-
-//x86
-//BYOL 7.6.4:byol:  ocid1.image.oc1..aaaaaaaa6sh4hz4ziatjmda262htabajhihetqgli22mnfyksxjly7gy26gq
-//PAYG 7.6.4 2ocpu: ocid1.image.oc1..aaaaaaaawynwkn2pks4wjebr65ctxdfl6l6sqym3hvkij4s45ayot4jzzxuq
-//PAYG 7.6.4 4ocup: ocid1.image.oc1..aaaaaaaa6qqlsuqbpezqqzlrldld4hfhjjw7lkedfwhtmnx4lp2q7tptytaa
-//PAYG 7.6.4 8ocup:  ocid1.image.oc1..aaaaaaaa253cvjattvnzdkpok4jaur7ujtl7savbtqstzb6mdfrts6tebswq
-//PAYG 7.6.4 16ocup:  ocid1.image.oc1..aaaaaaaanrwk6ajdmtedmw6vlkslhnxnd7qwzarbd2rslruhi5p4jzerwdda
-//PAYG 7.6.4 24ocup:  ocid1.image.oc1..aaaaaaaaa3xulwhsdlgmvm7eroihoovqtmulatqsnqul4ljjtkhdhmqdjt6q
-
-variable "mp_listing_resource_id" {
-  default = "ocid1.image.oc1..aaaaaaaa6qqlsuqbpezqqzlrldld4hfhjjw7lkedfwhtmnx4lp2q7tptytaa"
-}
-
-// Version
-// everythign is 7.6.4_(_X64_)
-variable "mp_listing_resource_version" {
-  default = "7.6.4_(_X64_)"
+# FOS 7.6.7
+#BYOL
+#x64 : ocid1.image.oc1..aaaaaaaa56z2rxorqqbkdgfxc6xyqnauxlpj42h6gk7dwpuri35mqwxnwzqq
+#ARM64 : ocid1.image.oc1..aaaaaaaadzk5rl2civ6ws5mnkdur2otdybr7m7s7mdlxlev5vt7snrare54a
+#
+#2core
+#x64 : ocid1.image.oc1..aaaaaaaavfkuner4b7l7wmbkbwpufqjett4qw6tq76vd2m44i6wwb7bw4yzq
+#ARM64 : ocid1.image.oc1..aaaaaaaagwsaopxxs7mpq7oujzrc4kyn5cje3dnpwj3625zxng5m2zx33hiq
+#
+#4core
+#x64 : ocid1.image.oc1..aaaaaaaa2rbixjjw7u6l6qm23xyf7y6fxwhuzodc57yr2hmyrsb7h3rddjca
+#ARM64 : ocid1.image.oc1..aaaaaaaayol4ia5sfxjs5pbmntrzbnoophgpe6u5olp7miurdxqcdyya4njq
+#
+#8core
+#x64 : ocid1.image.oc1..aaaaaaaat7qg7xdvpzs6bn5hx64ndjv6okxvo2de6ds2gvgxepqjon3qsyca
+#ARM64 : ocid1.image.oc1..aaaaaaaapvkyffw4pi3hoh3ia56ehtg63aljr7jcj4ivbeq6qp5uqjhvapza
+#
+#16core
+#x64 : ocid1.image.oc1..aaaaaaaadn6jadrrxamo7ft5lbuxtgb5y2f4w4sg3gviv3eora7kz5aa7x5q
+#ARM64 : ocid1.image.oc1..aaaaaaaa26fi62ioazittm7k4zvjrlihysbancmtgeasyioj6ryemavbleyq
+#
+#24core
+#x64 : ocid1.image.oc1..aaaaaaaai2a3g54zgjqvnxwvv2pcoy2xty2iuj6xxi237hm4hzptn6ivww7q
+#ARM64 : ocid1.image.oc1..aaaaaaaariui24ro2rdiu7pe66jxavbpvkdwwlfsx5sodsnzo7lybwd47w6a
+// Image
+variable "oci_image" {
+  //     default = "ocid1.image.oc1..aaaaaaaa2rbixjjw7u6l6qm23xyf7y6fxwhuzodc57yr2hmyrsb7h3rddjca"
+  default = "ocid1.image.oc1..aaaaaaaayol4ia5sfxjs5pbmntrzbnoophgpe6u5olp7miurdxqcdyya4njq"
 }
 
 // Cert use for SDN Connector setting
@@ -128,24 +127,27 @@ variable "trust_private_mask" {
   default = "255.255.255.0"
 }
 
+// instance shape
+// "VM.Standard.E5.Flex" //x86
+// "VM.Standard.A1.Flex" //arm
+variable "instance_shape" {
+  type = string
+  //  default = "VM.Standard.E5.Flex" //x86
+  default = "VM.Standard.A1.Flex" //arm
+}
+
 // instance cpu
 variable "instance_cpu" {
-  type    = string
-  default = "4"
+  type = string
+  //  default = "4"
+  default = "8"
 }
 
 // instance memory
 variable "instance_memory" {
-  type    = string
+  type = string
+  //  default = "4"
   default = "8"
-}
-
-// instance shape
-// "VM.Standard.E4.Flex" //x86
-// "VM.Standard.A1.Flex" //arm
-variable "instance_shape" {
-  type    = string
-  default = "VM.Standard.E4.Flex" //x86
 }
 
 # Choose an Availability Domain (1,2,3)
