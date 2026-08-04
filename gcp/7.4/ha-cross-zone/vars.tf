@@ -141,7 +141,7 @@ variable "passive_port1_ip" {
 }
 variable "passive_port1_mask" {
   type    = string
-  default = "24"
+  default = "32"
 }
 
 # passive int
@@ -151,7 +151,7 @@ variable "passive_port2_ip" {
 }
 variable "passive_port2_mask" {
   type    = string
-  default = "24"
+  default = "32"
 }
 
 # passive sync
