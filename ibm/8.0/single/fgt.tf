@@ -50,6 +50,10 @@ resource "ibm_is_instance" "fgt1" {
     security_groups = [ibm_is_security_group.fgt_security_group.id]
   }
 
+  metadata_service {
+    enabled = true
+  }
+
   volumes = [ibm_is_volume.testacc_volume.id]
 
   vpc  = ibm_is_vpc.vpc1.id

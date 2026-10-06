@@ -17,15 +17,19 @@ variable "zone1" {
 variable "ibmregion" {
   type = map(string)
   default = {
-    "us-south" = "dallas-private"
-    "us-east"  = "washington-dc-private"
-    "ca-tor"   = "toronto-private"
-    "br-sao"   = "sao-paolo-private"
-    "eu-gb"    = "london-private"
-    "eu-de"    = "frankfurt-private"
-    "au-syd"   = "sydney-private"
-    "jp-tok"   = "tokyo-private"
-    "jp-osa"   = "osaka-private"
+    "au-syd"   = "au-syd.private"
+    "br-sao"   = "br-sao.private"
+    "ca-mon"   = "ca-mon.private"
+    "ca-tor"   = "ca-tor.private"
+    "eu-de"    = "eu-de.private"
+    "eu-es"    = "eu-es.private"
+    "eu-gb"    = "eu-gb.private"
+    "in-che"   = "in-che.private"
+    "in-mum"   = "in-mum.private"
+    "jp-tok"   = "jp-tok.private"
+    "jp-osa"   = "jp-osa.private"
+    "us-east"  = "us-east.private"
+    "us-south" = "us-south.private"
   }
 }
 
@@ -176,7 +180,7 @@ variable "fgtbport4gateway" {
 
 // FortiOS Custom Image ID
 variable "image" {
-  default = "cos://us-geo/fortinet/fortigate_byol_800_b0167_GA.qcow2"
+  default = "cos://us-geo/fortinet/fortigate_byol_801_b0245_ga.qcow2"
 }
 
 // IBM Cloud instance profile
