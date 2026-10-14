@@ -67,6 +67,10 @@ resource "ibm_is_instance" "fgt1" {
     }
   }
 
+  metadata_service {
+    enabled = true
+  }
+
   volumes = [ibm_is_volume.testacc_volume.id]
 
   vpc  = ibm_is_vpc.vpc1.id
@@ -125,6 +129,10 @@ resource "ibm_is_instance" "fgt2" {
     primary_ip {
       address = var.fgtbport3
     }
+  }
+
+  metadata_service {
+    enabled = true
   }
 
   volumes = [ibm_is_volume.testacc_volume2.id]
