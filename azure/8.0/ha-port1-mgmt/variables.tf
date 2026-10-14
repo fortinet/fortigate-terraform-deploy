@@ -105,7 +105,7 @@ variable "fgtsku" {
 
 variable "fgtversion" {
   type    = string
-  default = "8.0.0"
+  default = "8.0.1"
 }
 
 variable "adminusername" {
