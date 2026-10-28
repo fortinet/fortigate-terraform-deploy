@@ -7,9 +7,11 @@ variable "tenant_id" {}
 
 //  For HA, choose instance size that support 4 nics at least
 //  Check : https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes
+// x86 - Standard_D8s_v5
+// arm - Standard_D8ps_v5
 variable "size" {
   type    = string
-  default = "Standard_F4"
+  default = "Standard_D8s_v5"
 }
 
 variable "location" {
@@ -45,6 +47,12 @@ variable "license_type" {
   default = "payg"
 }
 
+// instance architect
+// Either arm or x86
+variable "arch" {
+  default = "x86"
+}
+
 // To accept marketplace agreement
 // Default is false
 variable "accept" {
@@ -71,7 +79,7 @@ variable "publisher" {
 
 variable "fgtoffer" {
   type    = string
-  default = "fortinet_fortigate-vm_v5"
+  default = "fortinet_fortigate-vm"
 }
 
 // BYOL sku: fortinet_fg-vm
@@ -79,15 +87,20 @@ variable "fgtoffer" {
 variable "fgtsku" {
   type = map(any)
   default = {
-    byol = "fortinet_fg-vm"
-    payg = "fortinet_fg-vm_payg_2023"
+    x86 = {
+      byol = "fortinet_fg-vm_byol_74_g2"
+      payg = "fortinet_fg-vm_payg_74_g2"
+    },
+    arm = {
+      byol = "fortinet_fg-vm_byol_74_arm64"
+      payg = "fortinet_fg-vm_payg_74_arm64"
+    }
   }
 }
 
-// FOS version
 variable "fgtversion" {
   type    = string
-  default = "7.4.9"
+  default = "7.4.13"
 }
 
 variable "adminusername" {

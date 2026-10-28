@@ -4,9 +4,11 @@ variable "client_id" {}
 variable "client_secret" {}
 variable "tenant_id" {}
 
+// x86 - Standard_F4s_v2
+// arm - Standard_D2ps_v5
 variable "size" {
   type    = string
-  default = "Standard_F4"
+  default = "Standard_F4s_v2"
 }
 
 // To use custom image
@@ -46,7 +48,13 @@ variable "license_type" {
 // BYOL License format to create FortiGate-VM
 // Provide the license type for FortiGate-VM Instances, either token or file.
 variable "license_format" {
-  default = "token"
+  default = "file"
+}
+
+// instance architect
+// Either arm or x86
+variable "arch" {
+  default = "x86"
 }
 
 // enable accelerate network, either true or false, default is false
@@ -63,22 +71,32 @@ variable "publisher" {
 
 variable "fgtoffer" {
   type    = string
-  default = "fortinet_fortigate-vm_v5"
+  default = "fortinet_fortigate-vm"
 }
 
-// BYOL sku: fortinet_fg-vm
-// PAYG sku: fortinet_fg-vm_payg_2022
+// x86
+// BYOL sku: fortinet_fg-vm_byol_74_g2
+// PAYG sku: fortinet_fg-vm_payg_74_g2
+// arm
+// BYOL sku: fortinet_fg-vm_byol_74_arm64
+// PAYG sku: fortinet_fg-vm_payg_74_arm64
 variable "fgtsku" {
   type = map(any)
   default = {
-    byol = "fortinet_fg-vm"
-    payg = "fortinet_fg-vm_payg_2023"
+    x86 = {
+      byol = "fortinet_fg-vm_byol_74_g2"
+      payg = "fortinet_fg-vm_payg_74_g2"
+    },
+    arm = {
+      byol = "fortinet_fg-vm_byol_74_arm64"
+      payg = "fortinet_fg-vm_payg_74_arm64"
+    }
   }
 }
 
 variable "fgtversion" {
   type    = string
-  default = "7.4.9"
+  default = "7.4.13"
 }
 
 variable "adminusername" {
