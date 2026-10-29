@@ -114,9 +114,9 @@ resource "azurerm_network_security_rule" "outgoing_private" {
 
 // FGT Network Interface port1
 resource "azurerm_network_interface" "fgtport1" {
-  name                = "fgtport1"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.myterraformgroup.name
+  name                           = "fgtport1"
+  location                       = var.location
+  resource_group_name            = azurerm_resource_group.myterraformgroup.name
   accelerated_networking_enabled = var.accelerate == "true" ? true : false
 
   ip_configuration {
@@ -133,10 +133,10 @@ resource "azurerm_network_interface" "fgtport1" {
 }
 
 resource "azurerm_network_interface" "fgtport2" {
-  name                 = "fgtport2"
-  location             = var.location
-  resource_group_name  = azurerm_resource_group.myterraformgroup.name
-  ip_forwarding_enabled         = true
+  name                           = "fgtport2"
+  location                       = var.location
+  resource_group_name            = azurerm_resource_group.myterraformgroup.name
+  ip_forwarding_enabled          = true
   accelerated_networking_enabled = var.accelerate == "true" ? true : false
 
   ip_configuration {

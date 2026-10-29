@@ -7,9 +7,11 @@ variable "tenant_id" {}
 
 //  For HA, choose instance size that support 4 nics at least
 //  Check : https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes
+// x86 - Standard_D8s_v5
+// arm - Standard_D8ps_v5
 variable "size" {
   type    = string
-  default = "Standard_F4"
+  default = "Standard_D8s_v5"
 }
 
 variable "location" {
@@ -51,6 +53,18 @@ variable "license_format" {
   default = "file"
 }
 
+// instance architect
+// Either arm or x86
+variable "arch" {
+  default = "x86"
+}
+
+// To accept marketplace agreement
+// Default is false
+variable "accept" {
+  default = "false"
+}
+
 // enable accelerate network, either true or false, default is false
 // Make the the instance choosed supports accelerated networking.
 // Check: https://docs.microsoft.com/en-us/azure/virtual-network/accelerated-networking-overview#supported-vm-instances
@@ -65,23 +79,27 @@ variable "publisher" {
 
 variable "fgtoffer" {
   type    = string
-  default = "fortinet_fortigate-vm_v5"
+  default = "fortinet_fortigate-vm"
 }
 
-// BYOL sku: fortinet_fg-vm
-// PAYG sku: fortinet_fg-vm_payg_2023
 variable "fgtsku" {
   type = map(any)
   default = {
-    byol = "fortinet_fg-vm"
-    payg = "fortinet_fg-vm_payg_2023"
+    x86 = {
+      byol = "fortinet_fg-vm_byol_74_g2"
+      payg = "fortinet_fg-vm_payg_74_g2"
+    },
+    arm = {
+      byol = "fortinet_fg-vm_byol_74_arm64"
+      payg = "fortinet_fg-vm_payg_74_arm64"
+    }
   }
 }
 
 // FOS version
 variable "fgtversion" {
   type    = string
-  default = "7.4.9"
+  default = "7.4.13"
 }
 
 variable "adminusername" {
