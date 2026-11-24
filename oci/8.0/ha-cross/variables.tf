@@ -182,11 +182,11 @@ variable "instance_memory" {
 }
 
 // instance shape
-// "VM.Standard3.Flex" //x86
+// "VM.Standard.E5.Flex" //x86
 // "VM.Standard.A1.Flex" //arm
 variable "instance_shape" {
   type    = string
-  default = "VM.Standard.A1.Flex" //x86
+  default = "VM.Standard.E5.Flex" //x86
 }
 
 # Choose an Availability Domain (1,2,3)

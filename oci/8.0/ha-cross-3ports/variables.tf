@@ -19,37 +19,37 @@ variable "instance_memory" {
 }
 
 // instance shape
-// "VM.Standard3.Flex" //x86
+// "VM.Standard.E5.Flex" //x86
 // "VM.Standard.A1.Flex" //arm
 variable "instance_shape" {
   type    = string
-  default = "VM.Standard.A1.Flex" //x86
+  default = "VM.Standard.E5.Flex" //x86
 }
 
-# FOS 8.0.0
+# FOS 8.0.2
 # BYOL
-# x64:  ocid1.image.oc1..aaaaaaaazacuc3dgo7pfsqgvbkg5crwjxcvzohv6frbvj7jtmz63omxgz75a
-# ARM64: ocid1.image.oc1..aaaaaaaa3wgxsyqcdcfcgawewlttsjilzxpuwr64rdxftdzftdfd4hb7tk5a
-#2 OCPU
-#  x64: ocid1.image.oc1..aaaaaaaaaankgxcsnrrcjlvgwixwl3brl3hsum6ie2lozj7y37rlu5yttlha
-#  ARM64: ocid1.image.oc1..aaaaaaaaw6iuqo5e7twpkyprvn5d2bo3ce63yryukirakdb2haelngveds2q
-#4 OCPU
-#  x64: ocid1.image.oc1..aaaaaaaa43wo4z7av4q25lfxq5pziujszzivs47jmxbspotowpgb5hc5kyla
-#  ARM64: ocid1.image.oc1..aaaaaaaau6a52q4deltnqljnjnmrifduv5v3dfiu5snors3bph3anz7y6nza
-#8 OCPU
-#  x64: ocid1.image.oc1..aaaaaaaaz7dl6fglwotae4f2gwro4z55arkmgujitpq3jogvpvvr22wrbgka
-#  ARM64: ocid1.image.oc1..aaaaaaaazjjpgvvfhzuxivepm7mx4mgkvuywaktcrqlr77xopeqjwvbnthfq
-#16 OCPU
-#  x64: ocid1.image.oc1..aaaaaaaa6bycl4cdlqomr7ntj6jtofly2rh5csuupz5sjikgb2gkliqlyggq
-#  ARM64: ocid1.image.oc1..aaaaaaaaknryvvv4phygodf7x7t64dbpi5bjp7rz6g7bjbi6mxdebbm2yqya
-#24 OCPU
-# x64: ocid1.image.oc1..aaaaaaaapfdq7m5plo6wxyphfaqspthbbutbap5blkhryvlut46n3jipuy7a
-#  ARM64: ocid1.image.oc1..aaaaaaaaumefg5lobcpgwnldne4mfdmajytwnk7ssahil6vrp54u3zcde2ia
+#X64: ocid1.image.oc1..aaaaaaaaoapaaxm2ffo5jirk6d46et7fcotghvj3royqozia32fn7m72enha
+#ARM64: ocid1.image.oc1..aaaaaaaatkpizouts3h25us7e6f5phnuby4sdpjzxfj5y3azmppi65k2xb7a
+#PAYG 2OCPU
+#X64: ocid1.image.oc1..aaaaaaaaxmsln56cd6anqiez3asdslvlbwkzqjt5schf3aupo7vvyfwvdruq
+#ARM64: ocid1.image.oc1..aaaaaaaadzk4sc6bnppei7m62eqcxttgadugast3zbqhpdvq3z25wy3n53tq
+#PAYG 4OCPU
+#X64: ocid1.image.oc1..aaaaaaaajgbaawq3dhcz63rnz7q4u5di2nlnzbyun3hdw3wxlmkhdrqwse5q
+#ARM64: ocid1.image.oc1..aaaaaaaat6j7zukj5xqya5rxrqpvy7u2s6orfiuhd6fl3qrtnb354lwstd3q
+#PAYG 8OCPU
+#X64: ocid1.image.oc1..aaaaaaaa5tbtkqtqd25amgtvimhgiummllfkfcmaohyibu4n4pz45cyevp4a
+#ARM64: ocid1.image.oc1..aaaaaaaasvnnkxhhk4u5nbjuhkm5amotpiahk4tkujb67xdbb3wb4mc46orq
+#PAYG 16OCPU
+#X64: ocid1.image.oc1..aaaaaaaa2vihwodk53lsjzwugaq7ew6xoodfuqrrpgnyybwftjn2d4qqhpda
+#ARM64: ocid1.image.oc1..aaaaaaaa2q5lt574wokbeupjuzovg6j63ql2d4ixc3y6jn57xoglywi57hzq
+#PAYG 24OCPU
+#X64: ocid1.image.oc1..aaaaaaaakibjlm3btsxgj2yoocjankn5oqsdzfwbr6ybtwvtdnbj7e7eslnq
+#ARM64: ocid1.image.oc1..aaaaaaaakl7oxz6y5jxbjt3uxlyxfgdt4rwe26yfszrm4ichikdgr7imimiq
 
 // Image
 variable "oci_image" {
-  //     default = "ocid1.image.oc1..aaaaaaaaz7dl6fglwotae4f2gwro4z55arkmgujitpq3jogvpvvr22wrbgka"
-  default = "ocid1.image.oc1..aaaaaaaazjjpgvvfhzuxivepm7mx4mgkvuywaktcrqlr77xopeqjwvbnthfq"
+  default = "ocid1.image.oc1..aaaaaaaa5tbtkqtqd25amgtvimhgiummllfkfcmaohyibu4n4pz45cyevp4a"
+  //   default = "ocid1.image.oc1..aaaaaaaasvnnkxhhk4u5nbjuhkm5amotpiahk4tkujb67xdbb3wb4mc46orq"
 }
 
 // Cert use for SDN Connector setting
