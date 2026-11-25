@@ -30,7 +30,7 @@ resource "oci_core_instance" "passivevm" {
 
   source_details {
     source_type             = "image"
-    source_id               = var.oci_image
+    source_id               = var.mp_listing_resource_id
     boot_volume_size_in_gbs = "50"
   }
 

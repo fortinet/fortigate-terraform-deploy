@@ -6,6 +6,18 @@ variable "fingerprint" {}
 variable "compartment_ocid" {}
 variable "region" {}
 
+//BYOL  ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q
+//2 OCPU   ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba
+//4 core ocid1.appcataloglisting.oc1..aaaaaaaabepjdf2sw2jkr77a7zrbog7ukzxepoexzgkoyvbw2j2jn7l4y7lq
+//8 OCPU   ocid1.appcataloglisting.oc1..aaaaaaaa6e3iscizq3p24bfb5nr4wxsxzc3s6mzpekxgv7f2kse35akhg45q
+//16 OCPU   ocid1.appcataloglisting.oc1..aaaaaaaawyxdympmdyxagwj2kr77zybopywouiivxd7vxfttwftkvnw2lqla
+//24 core ocid1.appcataloglisting.oc1..aaaaaaaamc75m7b3rukv6vd573mdrdqnlqabrbhmz5fggvvtalq3ckfl3zqa
+
+variable "mp_listing_id" {
+  default = "ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba" //
+}
+
+
 # FOS 8.0.2
 # BYOL
 #X64: ocid1.image.oc1..aaaaaaaaoapaaxm2ffo5jirk6d46et7fcotghvj3royqozia32fn7m72enha
@@ -25,11 +37,15 @@ variable "region" {}
 #PAYG 24OCPU
 #X64: ocid1.image.oc1..aaaaaaaakibjlm3btsxgj2yoocjankn5oqsdzfwbr6ybtwvtdnbj7e7eslnq
 #ARM64: ocid1.image.oc1..aaaaaaaakl7oxz6y5jxbjt3uxlyxfgdt4rwe26yfszrm4ichikdgr7imimiq
+variable "mp_listing_resource_id" {
+  default = "ocid1.image.oc1..aaaaaaaaxmsln56cd6anqiez3asdslvlbwkzqjt5schf3aupo7vvyfwvdruq" //x86
+  //default = "ocid1.image.oc1..aaaaaaaadzk4sc6bnppei7m62eqcxttgadugast3zbqhpdvq3z25wy3n53tq"   //arm
+}
 
-// Image
-variable "oci_image" {
-  default = "ocid1.image.oc1..aaaaaaaa5tbtkqtqd25amgtvimhgiummllfkfcmaohyibu4n4pz45cyevp4a"
-  //   default = "ocid1.image.oc1..aaaaaaaasvnnkxhhk4u5nbjuhkm5amotpiahk4tkujb67xdbb3wb4mc46orq"
+// Version
+variable "mp_listing_resource_version" {
+  default = "8.0.2_(_X64_)"
+  //default = "8.0.2_(_ARM64_)"
 }
 
 // Cert use for SDN Connector setting
