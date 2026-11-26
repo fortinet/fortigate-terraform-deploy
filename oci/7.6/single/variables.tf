@@ -6,6 +6,17 @@ variable "fingerprint" {}
 variable "compartment_ocid" {}
 variable "region" {}
 
+//BYOL  ocid1.appcataloglisting.oc1..aaaaaaaam7ewzrjbltqiarxukuk72v2lqkdtpqtwxqpszqqvrm7likfnpt5q
+//2 OCPU   ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba
+//4 core ocid1.appcataloglisting.oc1..aaaaaaaabepjdf2sw2jkr77a7zrbog7ukzxepoexzgkoyvbw2j2jn7l4y7lq
+//8 OCPU   ocid1.appcataloglisting.oc1..aaaaaaaa6e3iscizq3p24bfb5nr4wxsxzc3s6mzpekxgv7f2kse35akhg45q
+//16 OCPU   ocid1.appcataloglisting.oc1..aaaaaaaawyxdympmdyxagwj2kr77zybopywouiivxd7vxfttwftkvnw2lqla
+//24 core ocid1.appcataloglisting.oc1..aaaaaaaamc75m7b3rukv6vd573mdrdqnlqabrbhmz5fggvvtalq3ckfl3zqa
+
+variable "mp_listing_id" {
+  default = "ocid1.appcataloglisting.oc1..aaaaaaaaif6zctibx6njnmob2a23l5if7voquhgsfqxi2ftog2yy3jxmuaba" //
+}
+
 # FOS 7.6.8
 #BYOL
 #X64: ocid1.image.oc1..aaaaaaaamtrufkrf7yhgsifrqo7y4up4ykflpkpcritrkkzqskw45xb6vrjq
@@ -32,10 +43,17 @@ variable "region" {}
 #ARM64: ocid1.image.oc1..aaaaaaaahqd5ggeiwijkwe4vmkfdvzf2ataldi3y22pgrsfayhc4un6dlt6q
 
 // Image
-variable "oci_image" {
-     default = "ocid1.image.oc1..aaaaaaaamfot32duqte26brev6gnvunfbgrbw2evpxakybrizzv22gn4cyoa"
-//   default = "ocid1.image.oc1..aaaaaaaagwsaopxxs7mpq7oujzrc4kyn5cje3dnpwj3625zxng5m2zx33hiq"
+variable "mp_listing_resource_id" {
+  default = "ocid1.image.oc1..aaaaaaaamfot32duqte26brev6gnvunfbgrbw2evpxakybrizzv22gn4cyoa"
+  //   default = "ocid1.image.oc1..aaaaaaaagwsaopxxs7mpq7oujzrc4kyn5cje3dnpwj3625zxng5m2zx33hiq"
 }
+
+// Version
+variable "mp_listing_resource_version" {
+  default = "7.6.8_(_X64_)"
+  //default = "7.6.8_(_ARM64_)"
+}
+
 
 // Environment configuration
 variable "vcn_cidr" {
